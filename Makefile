@@ -8,5 +8,9 @@ application.o: application.cpp
 	$(CC) -c application.cpp
 board.o: board.cpp board.h 
 	$(CC) -c board.cpp
+run: $(exe_file)
+	./$(exe_file)
+valgrind: $(exe_file)
+	valgrind ./$(exe_file)
 clean:
 	rm -f out *.o $(exe_file)
