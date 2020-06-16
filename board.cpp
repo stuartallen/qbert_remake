@@ -17,6 +17,7 @@ Board::Board() {
             total_cubes++;
         }
     }
+    cubes[1][1] = FINAL_COLOR;
 }
 
 //  Updates the color at the input row and col  
@@ -25,6 +26,12 @@ void Board::update_color(int r, int c) {
     cubes[r][c] = FINAL_COLOR;
 }
 
+//  draw one trapezoid
+void draw_trapezoid(SDL_Renderer* renderer) {
+    
+}
+
+//  draws all the platforms
 void Board::animate(SDL_Renderer* renderer) {
     SDL_RenderClear(renderer);
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);

@@ -24,7 +24,9 @@ class Board {
         int correct_color;
         //  represents how many cubes there are total   
         int total_cubes;
-        //  TODO create array of platform positions 
+
+        //  draw a trapezoid
+        void draw_trapezoid(SDL_Renderer*);
     public:
         Board();
         ~Board();

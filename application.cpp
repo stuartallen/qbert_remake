@@ -6,6 +6,7 @@
 #include "board.h"
 
 #include <SDL.h>
+#include <SDL2_gfxPrimitives.h>
 #include <stdio.h>
 
 //Screen dimension constants
@@ -49,12 +50,20 @@ void guiMainLoop(Board& board)  {
             }
         }
 
+        // draw background
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
 
+        // draw foreground & player
         board.animate(renderer);
 
-        /*  Draw background and update screen   */
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        Sint16 vx[] = {100, 200, 200, 100};
+        Sint16 vy[] = {100, 100, 200, 200};
+        filledPolygonRGBA(renderer,
+            vx, vy,
+            4, 250, 150, 0, 255);
+
+        // present to screen
         SDL_RenderPresent(renderer);
     }
     destroy_window_renderer(window, renderer);
