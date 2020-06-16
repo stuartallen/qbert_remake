@@ -16,20 +16,21 @@ using namespace std;
 
 void guiMainLoop();
 
-int main() {
+int main(int argc, char* argv[]) {
     guiMainLoop();
 
     return 0;
 }
 
-void guiMainLoop()
-{
-    int windowSize = 800;
-
-    SDL_Window *window = SDL_CreateWindow("Demo Game",
+/*  creates screen  */
+void guiMainLoop()  {
+    int windowSizeX = 1200;
+    int windowSizeY = 800;
+    
+    SDL_Window *window = SDL_CreateWindow("Qbert Screen",
                                       SDL_WINDOWPOS_UNDEFINED,
                                       SDL_WINDOWPOS_UNDEFINED,
-                                      windowSize, windowSize,
+                                      windowSizeX, windowSizeY,
                                       SDL_WINDOW_OPENGL);
     if (window == nullptr) {
         SDL_Log("Could not create a window: %s", SDL_GetError());
@@ -41,6 +42,12 @@ void guiMainLoop()
         SDL_Log("Could not create a renderer: %s", SDL_GetError());
         return;
     }
+
+    /* Select the color for drawing. It is set to red here. */
+    SDL_SetRenderDrawColor(renderer, 150, 150, 0, 255);
+
+    /* Clear the entire screen to our selected color. */
+    SDL_RenderClear(renderer);
 
     bool got_quit_event = false;
     while (!got_quit_event) {
