@@ -1,12 +1,18 @@
 #ifndef BOARD_H
 #define BOARD_H
 #include <iostream>
+
+#include <SDL.h>
+#include <stdio.h>
+
 using namespace std;
 
 //  TODO make Board the parent class of level class 
 class Board {
     private:
-
+        const int ORIGIN_X = 250;
+        const int ORIGIN_Y = 250;
+        const int SQUARE_SIZE = 50;
         const int BOARD_LEN = 7;
 
         const int NO_TOUCH_COLOR = 0;
@@ -22,7 +28,9 @@ class Board {
     public:
         Board();
         ~Board();
-        //  TODO add animate function   
+
+        void animate(SDL_Renderer*);
+
         void update_color(int, int);
         bool in_board(int,int);
         bool board_filled();

@@ -1,4 +1,8 @@
 #include <iostream>
+
+#include <SDL.h>
+#include <stdio.h>
+
 #include "board.h"
 using namespace std;
 
@@ -19,6 +23,29 @@ Board::Board() {
 void Board::update_color(int r, int c) {
     //  TODO this will work differently for higher levels   
     cubes[r][c] = FINAL_COLOR;
+}
+
+void Board::animate(SDL_Renderer* renderer) {
+    SDL_RenderClear(renderer);
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+
+    for(int i = 0; i < BOARD_LEN; i++) {
+        for(int j = 0; j < BOARD_LEN - i; j++) {
+            SDL_SetRenderDrawColor(renderer,0,0,0,255);
+            SDL_Rect rect;
+            rect.x = ORIGIN_X + SQUARE_SIZE * i;
+            rect.y = ORIGIN_Y + SQUARE_SIZE * j;
+            rect.w = SQUARE_SIZE;
+            rect.h = SQUARE_SIZE;
+            SDL_RenderDrawRect(renderer, &rect);
+            if(cubes[i][j] == NO_TOUCH_COLOR) {
+                SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+            } else {
+                SDL_SetRenderDrawColor(renderer, 250, 150, 0, 255);
+            }
+            SDL_RenderFillRect(renderer, &rect);
+        }
+    }
 }
 
 //  returns if a row and column is in the board 

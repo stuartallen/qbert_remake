@@ -17,16 +17,17 @@ using namespace std;
 SDL_Window* set_up_window();
 SDL_Renderer* set_up_renderer(SDL_Window*);
 void destroy_window_renderer(SDL_Window*, SDL_Renderer*);
-void guiMainLoop();
+void guiMainLoop(Board&);
 
 int main(int argc, char* argv[]) {
-    guiMainLoop();
+    Board board;
+    guiMainLoop(board);
 
     return 0;
 }
 
 //  does animating for game
-void guiMainLoop()  {
+void guiMainLoop(Board& board)  {
     SDL_Window* window = set_up_window();
     SDL_Renderer* renderer = set_up_renderer(window);
 
@@ -50,14 +51,7 @@ void guiMainLoop()  {
 
         SDL_RenderClear(renderer);
 
-        SDL_Rect rect;
-        rect.x = 250;
-        rect.y = 150;
-        rect.w = 200;
-        rect.h = 200;
-
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        SDL_RenderDrawRect(renderer, &rect);
+        board.animate(renderer);
 
         /*  Draw background and update screen   */
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
