@@ -1,3 +1,2 @@
-/application.o
-/board.o
-/qbert
+build/
+.vscode/
