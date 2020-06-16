@@ -44,7 +44,7 @@ void guiMainLoop()  {
     }
 
     /* Select the color for drawing. It is set to red here. */
-    SDL_SetRenderDrawColor(renderer, 150, 150, 0, 255);
+    SDL_SetRenderDrawColor(renderer, 250, 150, 0, 255);
 
     /* Clear the entire screen to our selected color. */
     SDL_RenderClear(renderer);
