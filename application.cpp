@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
-/*  creates screen  */
+//  does animating for game
 void guiMainLoop()  {
     SDL_Window* window = set_up_window();
     SDL_Renderer* renderer = set_up_renderer(window);
@@ -66,7 +66,7 @@ void guiMainLoop()  {
     destroy_window_renderer(window, renderer);
 }
 
-/*  creates window object for the game  */
+//  creates window object for the game
 SDL_Window* set_up_window() {
     const int windowSizeX = 1200;
     const int windowSizeY = 800;
@@ -81,7 +81,7 @@ SDL_Window* set_up_window() {
     return window;
 }
 
-/*  creates renderer object for game    */
+//  creates renderer object for game    
 SDL_Renderer* set_up_renderer(SDL_Window* window) {
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (renderer == nullptr) {
@@ -90,7 +90,7 @@ SDL_Renderer* set_up_renderer(SDL_Window* window) {
     return renderer;
 }
 
-/*  Handles the memory from renderer and window and quits SDL   */
+//  Handles the memory from renderer and window and quits SDL   
 void destroy_window_renderer(SDL_Window* window, SDL_Renderer* renderer) {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
