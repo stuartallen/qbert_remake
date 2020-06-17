@@ -17,7 +17,7 @@ add_executable(qbert
 #   1) extract https://www.libsdl.org/release/SDL2-devel-2.0.12-VC.zip and install here
 #   2) put sdl2-config.cmake in that SDL_ROOT
 # MAC: 
-#   1) brew install sdl2 sdl2_gfx
+#   1) brew install sdl2 sdl2_gfx SDL2_mixer
 #   2) edit SDL2_DIR if necessary
 if(WIN32)
   set( SDL2_DIR ${CMAKE_CURRENT_SOURCE_DIR}/SDL2-2.0.12 )
@@ -26,6 +26,7 @@ endif()
 #if(MAC)
   set( SDL2_DIR /usr/local/Cellar/sdl2/2.0.12_1 )
   set( SDL2_GFX_DIR /usr/local/Cellar/sdl2_gfx/1.0.4 )
+  set( SDL2_MIXER_DIR /usr/local/Cellar/sdl2_mixer/2.0.4 )
 #endif()
 
 find_package(SDL2 REQUIRED)
@@ -38,6 +39,9 @@ include_directories(${SDL2_GFX_DIR}/include/SDL2 )
 target_link_libraries(qbert -L${SDL2_GFX_DIR}/lib )
 target_link_libraries(qbert -lSDL2_gfx )
 
+include_directories(${SDL2_MIXER_DIR}/include/SDL2 )
+target_link_libraries(qbert -L${SDL2_MIXER_DIR}/lib )
+target_link_libraries(qbert -lSDL2_mixer )
 
 # Windows: copy the dll as a post-build step
 if(WIN32)

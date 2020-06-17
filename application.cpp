@@ -3,10 +3,12 @@
 //  stupid but it works
 #include <iostream>
 #include <time.h>
+#include <string.h>
 #include "board.h"
 #include "sound.h"
 
 #include <SDL.h>
+#include <SDL_mixer.h>
 #include <SDL2_gfxPrimitives.h>
 #include <stdio.h>
 
@@ -15,6 +17,7 @@
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
+
 
 using namespace std;
 
@@ -27,25 +30,46 @@ void play_sound();
 SDL_Window* set_up_window();
 SDL_Renderer* set_up_renderer(SDL_Window*);
 void destroy_window_renderer(SDL_Window*, SDL_Renderer*);
-void guiMainLoop(Board&, Sound&);
+void guiMainLoop(Board&, Sound&, Mix_Chunk*);
 
 int main(int argc, char* argv[]) {
     // Initialize SDL.
-	if (SDL_Init(SDL_INIT_AUDIO) < 0)
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
+            cerr << "Could not initialize sdl" << endl;
 			return 1;
+    }
+
+    //Initialize SDL_mixer
+    if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )   {
+        cerr << "Could not initialize mixer" << endl;
+        return 1;
+    }
+
+    Mix_Chunk* jump = NULL;
+    jump = Mix_LoadWAV("jump-9.wav");
+    if(jump == NULL) {
+        cerr << "Could not load audio" << endl;
+        return 1;
+    }
+
+
+    
 
 	//play_sound();
     Sound qbert_jump(MUS_PATH);
 
 
     Board board;
-    guiMainLoop(board, qbert_jump);
+    guiMainLoop(board, qbert_jump, jump);
 
+
+    Mix_FreeChunk(jump);
+    jump = NULL;
     return 0;
 }
 
 //  does animating for game
-void guiMainLoop(Board& board, Sound& sound)  {
+void guiMainLoop(Board& board, Sound& sound, Mix_Chunk* jump)  {
     SDL_Window* window = set_up_window();
     SDL_Renderer* renderer = set_up_renderer(window);
 
@@ -63,8 +87,7 @@ void guiMainLoop(Board& board, Sound& sound)  {
                     got_quit_event = true;
                     break;
                 case SDLK_SPACE:
-                    //play_sound();
-                    sound.play_audio();
+                    Mix_PlayChannel(-1,jump,0);
                     break;
                 }
                 break;

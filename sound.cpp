@@ -2,6 +2,8 @@
 #include "sound.h"
 using namespace std;
 
+//TODO use sdl_mixer    
+
 Sound::Sound(const char* sound_path) {
     /* Load the WAV */
 	// the specs, length and buffer of our wav are filled
