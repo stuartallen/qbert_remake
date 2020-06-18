@@ -10,7 +10,6 @@
 #include <SDL.h>
 #include <SDL_mixer.h>
 #include <SDL2_gfxPrimitives.h>
-#include <stdio.h>
 
 #define MUS_PATH "jump-9.wav"
 
@@ -21,16 +20,10 @@ const int SCREEN_HEIGHT = 480;
 
 using namespace std;
 
-void my_audio_callback(void *userdata, Uint8 *stream, int len);
-// variable declarations
-static Uint8 *audio_pos; // global pointer to the audio buffer to be played
-static Uint32 audio_len; // remaining length of the sample we have to play
-void play_sound();
-
 SDL_Window* set_up_window();
 SDL_Renderer* set_up_renderer(SDL_Window*);
 void destroy_window_renderer(SDL_Window*, SDL_Renderer*);
-void guiMainLoop(Board&, Sound&, Mix_Chunk*);
+void guiMainLoop(Board&, Sound&);
 
 int main(int argc, char* argv[]) {
     // Initialize SDL.
@@ -39,39 +32,26 @@ int main(int argc, char* argv[]) {
 			return 1;
     }
 
-    //Initialize SDL_mixer
     if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )   {
         cerr << "Could not initialize mixer" << endl;
         return 1;
     }
 
-    Mix_Chunk* jump = NULL;
-    jump = Mix_LoadWAV("jump-9.wav");
-    if(jump == NULL) {
-        cerr << "Could not load audio" << endl;
-        return 1;
-    }
+    Mix_Chunk* jump_noise = Mix_LoadWAV(MUS_PATH);
 
-
-    
-
-	//play_sound();
-    Sound qbert_jump(MUS_PATH);
-
+    Sound jump(MUS_PATH);
+    jump.play();
 
     Board board;
-    guiMainLoop(board, qbert_jump, jump);
-
-
-    Mix_FreeChunk(jump);
-    jump = NULL;
+    guiMainLoop(board, jump);
     return 0;
 }
 
 //  does animating for game
-void guiMainLoop(Board& board, Sound& sound, Mix_Chunk* jump)  {
+void guiMainLoop(Board& board, Sound& jump)  {
     SDL_Window* window = set_up_window();
     SDL_Renderer* renderer = set_up_renderer(window);
+
 
     bool got_quit_event = false;
     while (!got_quit_event) {
@@ -87,7 +67,7 @@ void guiMainLoop(Board& board, Sound& sound, Mix_Chunk* jump)  {
                     got_quit_event = true;
                     break;
                 case SDLK_SPACE:
-                    Mix_PlayChannel(-1,jump,0);
+                    jump.play();
                     break;
                 }
                 break;
@@ -142,60 +122,4 @@ void destroy_window_renderer(SDL_Window* window, SDL_Renderer* renderer) {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
-}
-
-void play_sound() {
-    // local variables
-	static Uint32 wav_length; // length of our sample
-	static Uint8 *wav_buffer; // buffer containing our audio file
-	static SDL_AudioSpec wav_spec; // the specs of our piece of music
-	
-	
-	/* Load the WAV */
-	// the specs, length and buffer of our wav are filled
-	if( SDL_LoadWAV(MUS_PATH, &wav_spec, &wav_buffer, &wav_length) == NULL ){
-	  cerr << "Audio file NULL" << endl;
-	}
-	// set the callback function
-	wav_spec.callback = my_audio_callback;
-	wav_spec.userdata = NULL;
-	// set our global static variables
-	audio_pos = wav_buffer; // copy sound buffer
-	audio_len = wav_length; // copy file length
-	
-	/* Open the audio device */
-	if ( SDL_OpenAudio(&wav_spec, NULL) < 0 ){
-	  fprintf(stderr, "Couldn't open audio: %s\n", SDL_GetError());
-	  exit(-1);
-	}
-	
-	/* Start playing */
-	SDL_PauseAudio(0);
-
-	// wait until we're don't playing
-	while ( audio_len > 0 ) {
-		SDL_Delay(100); 
-	}
-	
-	// shut everything down
-	SDL_CloseAudio();
-	SDL_FreeWAV(wav_buffer);
-}
-
-// audio callback function
-// here you have to copy the data of your audio buffer into the
-// requesting audio buffer (stream)
-// you should only copy as much as the requested length (len)
-void my_audio_callback(void *userdata, Uint8 *stream, int len) {
-	
-	if (audio_len ==0)
-		return;
-	
-	len = ( len > audio_len ? audio_len : len );
-	SDL_memcpy (stream, audio_pos, len); 					// simply copy from one buffer into the other
-
-	//SDL_MixAudio(stream, audio_pos, len, SDL_MIX_MAXVOLUME);// mix from one buffer into another
-	
-	audio_pos += len;
-	audio_len -= len;
 }
