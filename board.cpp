@@ -1,8 +1,3 @@
-#include <iostream>
-
-#include <SDL.h>
-#include <stdio.h>
-
 #include "board.h"
 using namespace std;
 
@@ -20,6 +15,12 @@ Board::Board() {
     cubes[1][1] = FINAL_COLOR;
 }
 
+
+
+void Board::set_renderer(SDL_Renderer* in_r) {
+    renderer = in_r;
+}
+
 //  Updates the color at the input row and col  
 void Board::update_color(int r, int c) {
     //  TODO this will work differently for higher levels   
@@ -27,32 +28,68 @@ void Board::update_color(int r, int c) {
 }
 
 //  draw one trapezoid
-void draw_trapezoid(SDL_Renderer* renderer) {
+void Board::draw_cube(unsigned int x, unsigned int y) {
+    //TODO some fuckery is happening with the memory here
+    Sint16** points = new Sint16*[7];
+    for(int i = 0; i < 6; i++) {
+        points[i] = new Sint16[2];
+        points[i][0] = (Sint16) 100 * cos(2/6 * M_PI * i) + x;
+        points[i][1] = (Sint16) 100 * sin(2/6 * M_PI * i) + y;
+    }
+    points[6] = new Sint16[2];
+    points[6][0] = x;
+    points[6][1] = y;
+    cout << endl;
+    for(int i = 0; i < 7; i++) {
+        cout << points[i][0] << "\t" << points[i][1] << endl;
+    }
+
+    //  Top
+    Sint16 points_x_top[] = {points[0][0], points[1][0], points[2][0], points[3][0], points[4][0], points[5][0], points[6][0]};
     
+    Sint16 points_y_top[] = {points[0][1], points[1][1], points[2][1], points[3][1], points[4][1], points[5][1], points[6][1]};
+    /*
+    Sint16 points_x_top[] = {   (Sint16) x, 
+                                (Sint16) (x - SQUARE_WIDTH/2), 
+                                (Sint16) x, 
+                                (Sint16) (x + SQUARE_WIDTH/2)};
+    Sint16 points_y_top[] = {   (Sint16) (y + SQUARE_WIDTH/HEIGHT_DILATION), 
+                                (Sint16) y, 
+                                (Sint16) (y - SQUARE_WIDTH/HEIGHT_DILATION), 
+                                (Sint16) y};
+         */                       
+    // args are: renderer, x coords, y coords, point #, and rgba
+    filledPolygonRGBA(renderer, points_x_top, points_y_top, 7, 250, 150, 0, 250);
+    //  Bottom Left
+
+    for(int i = 0; i < 7; i++) {
+        delete [] points[i];
+    }
+    delete [] points;
 }
 
 //  draws all the platforms
-void Board::animate(SDL_Renderer* renderer) {
+void Board::animate() {
     SDL_RenderClear(renderer);
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-
+    unsigned int x_orig = SCREEN_WIDTH/2;
+    unsigned int y_orig = SCREEN_HEIGHT/4;
     for(int i = 0; i < BOARD_LEN; i++) {
         for(int j = 0; j < BOARD_LEN - i; j++) {
-            SDL_SetRenderDrawColor(renderer,0,0,0,255);
-            SDL_Rect rect;
-            rect.x = ORIGIN_X + SQUARE_SIZE * i;
-            rect.y = ORIGIN_Y + SQUARE_SIZE * j;
-            rect.w = SQUARE_SIZE;
-            rect.h = SQUARE_SIZE;
-            SDL_RenderDrawRect(renderer, &rect);
+            unsigned int x_pos = x_orig + SQUARE_WIDTH/2 * i - SQUARE_WIDTH/2 * j;
+            unsigned int y_pos = y_orig + SQUARE_WIDTH * i + SQUARE_WIDTH * j;
             if(cubes[i][j] == NO_TOUCH_COLOR) {
                 SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
             } else {
                 SDL_SetRenderDrawColor(renderer, 250, 150, 0, 255);
             }
-            SDL_RenderFillRect(renderer, &rect);
+            draw_cube(x_pos, y_pos);
         }
     }
+}
+
+void Board::set_screen_size(int in_w, int in_h) {
+    SCREEN_WIDTH = in_w;
+    SCREEN_HEIGHT = in_h;
 }
 
 //  returns if a row and column is in the board 

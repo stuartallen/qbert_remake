@@ -31,16 +31,13 @@ int main(int argc, char* argv[]) {
             cerr << "Could not initialize sdl" << endl;
 			return 1;
     }
-
+    /// Initialize Audio Mixer
     if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )   {
         cerr << "Could not initialize mixer" << endl;
         return 1;
     }
 
-    Mix_Chunk* jump_noise = Mix_LoadWAV(MUS_PATH);
-
     Sound jump(MUS_PATH);
-    jump.play();
 
     Board board;
     guiMainLoop(board, jump);
@@ -51,7 +48,8 @@ int main(int argc, char* argv[]) {
 void guiMainLoop(Board& board, Sound& jump)  {
     SDL_Window* window = set_up_window();
     SDL_Renderer* renderer = set_up_renderer(window);
-
+    board.set_renderer(renderer);
+    board.set_screen_size(SCREEN_WIDTH, SCREEN_HEIGHT);
 
     bool got_quit_event = false;
     while (!got_quit_event) {
@@ -79,13 +77,7 @@ void guiMainLoop(Board& board, Sound& jump)  {
         SDL_RenderClear(renderer);
 
         // draw foreground & player
-        board.animate(renderer);
-
-        Sint16 vx[] = {100, 300, 200, 100};
-        Sint16 vy[] = {100, 100, 200, 200};
-        filledPolygonRGBA(renderer,
-            vx, vy,
-            4, 250, 150, 0, 255);
+        board.animate();
 
         // present to screen
         SDL_RenderPresent(renderer);
@@ -95,12 +87,10 @@ void guiMainLoop(Board& board, Sound& jump)  {
 
 //  creates window object for the game
 SDL_Window* set_up_window() {
-    const int windowSizeX = 1200;
-    const int windowSizeY = 800;
     SDL_Window *window = SDL_CreateWindow("Qbert Screen",
                                       SDL_WINDOWPOS_UNDEFINED,
                                       SDL_WINDOWPOS_UNDEFINED,
-                                      windowSizeX, windowSizeY,
+                                      SCREEN_WIDTH, SCREEN_HEIGHT,
                                       SDL_WINDOW_OPENGL);
     if (window == nullptr) {
         SDL_Log("Could not create a window: %s", SDL_GetError());
