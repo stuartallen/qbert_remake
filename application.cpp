@@ -77,7 +77,8 @@ void guiMainLoop(Board& board, Sound& jump)  {
         SDL_RenderClear(renderer);
 
         // draw foreground & player
-        board.animate();
+        //board.animate();
+        board.draw_cube(250,250);
 
         // present to screen
         SDL_RenderPresent(renderer);
