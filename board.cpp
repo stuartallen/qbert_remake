@@ -29,40 +29,31 @@ void Board::update_color(int r, int c) {
 
 //  draw one trapezoid
 void Board::draw_cube(unsigned int x, unsigned int y) {
+    //  points are labeled clockwise starting from 10'o'clock
     Sint16** points = new Sint16*[7];
     for(int i = 0; i < 6; i++) {
         points[i] = new Sint16[2];
-        points[i][0] = SQUARE_WIDTH * cos(2.0/6 * M_PI * i + M_PI/6) + x;
-        points[i][1] = SQUARE_WIDTH * sin(2.0/6 * M_PI * i + M_PI/6) + y;
+        points[i][0] = SQUARE_WIDTH * cos(2.0/6 * M_PI * i + 7*M_PI/6) + x;
+        points[i][1] = SQUARE_WIDTH * sin(2.0/6 * M_PI * i + 7*M_PI/6) + y;
     }
     points[6] = new Sint16[2];
     points[6][0] = x;
     points[6][1] = y;
-    cout << endl;
-    for(int i = 0; i < 7; i++) {
-        cout << points[i][0] << "\t" << points[i][1] << endl;
-    }
 
     //  Top
-    
-    Sint16 points_x_top[] = {points[0][0], points[1][0], points[2][0], points[3][0], points[4][0], points[5][0], points[6][0]};
-    
-    Sint16 points_y_top[] = {points[0][1], points[1][1], points[2][1], points[3][1], points[4][1], points[5][1], points[6][1]};
-    
-    
-    /*
-    Sint16 points_x_top[] = {   (Sint16) x, 
-                                (Sint16) (x - SQUARE_WIDTH/2), 
-                                (Sint16) x, 
-                                (Sint16) (x + SQUARE_WIDTH/2)};
-    Sint16 points_y_top[] = {   (Sint16) (y + SQUARE_WIDTH/HEIGHT_DILATION), 
-                                (Sint16) y, 
-                                (Sint16) (y - SQUARE_WIDTH/HEIGHT_DILATION), 
-                                (Sint16) y};
-    */                
+    Sint16 points_x_top[] = {points[0][0], points[1][0], points[2][0], points[6][0]};
+    Sint16 points_y_top[] = {points[0][1], points[1][1], points[2][1], points[6][1]};               
     // args are: renderer, x coords, y coords, point #, and rgba
-    filledPolygonRGBA(renderer, points_x_top, points_y_top, 6, 250, 150, 0, 250);
+    filledPolygonRGBA(renderer, points_x_top, points_y_top, 4, 250, 150, 0, 250);
+    //  Bottom Right
+    Sint16 points_x_right[] = {points[2][0], points[3][0], points[4][0], points[6][0]};
+    Sint16 points_y_right[] = {points[2][1], points[3][1], points[4][1], points[6][1]};               
+    filledPolygonRGBA(renderer, points_x_right, points_y_right, 4, 0, 250, 150, 250);
     //  Bottom Left
+    Sint16 points_x_left[] = {points[0][0], points[5][0], points[4][0], points[6][0]};
+    Sint16 points_y_left[] = {points[0][1], points[5][1], points[4][1], points[6][1]};               
+    // args are: renderer, x coords, y coords, point #, and rgba
+    filledPolygonRGBA(renderer, points_x_left, points_y_left, 4, 150, 0, 250, 250);
 
     for(int i = 0; i < 7; i++) {
         delete [] points[i];
