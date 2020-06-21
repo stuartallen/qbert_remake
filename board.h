@@ -16,7 +16,6 @@ class Board {
         int SCREEN_HEIGHT;
         const int ORIGIN_X = 250;
         const int ORIGIN_Y = 250;
-        //const int SQUARE_SIZE = 50;
         const int BOARD_LEN = 7;
 
         const unsigned int SQUARE_WIDTH = 50;

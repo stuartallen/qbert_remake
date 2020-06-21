@@ -29,12 +29,11 @@ void Board::update_color(int r, int c) {
 
 //  draw one trapezoid
 void Board::draw_cube(unsigned int x, unsigned int y) {
-    //TODO some fuckery is happening with the memory here
     Sint16** points = new Sint16*[7];
     for(int i = 0; i < 6; i++) {
         points[i] = new Sint16[2];
-        points[i][0] = (Sint16) 100 * cos(2/6 * M_PI * i) + x;
-        points[i][1] = (Sint16) 100 * sin(2/6 * M_PI * i) + y;
+        points[i][0] = SQUARE_WIDTH * cos(2.0/6 * M_PI * i) + x;
+        points[i][1] = SQUARE_WIDTH * sin(2.0/6 * M_PI * i) + y;
     }
     points[6] = new Sint16[2];
     points[6][0] = x;
@@ -45,10 +44,12 @@ void Board::draw_cube(unsigned int x, unsigned int y) {
     }
 
     //  Top
+    /*
     Sint16 points_x_top[] = {points[0][0], points[1][0], points[2][0], points[3][0], points[4][0], points[5][0], points[6][0]};
     
     Sint16 points_y_top[] = {points[0][1], points[1][1], points[2][1], points[3][1], points[4][1], points[5][1], points[6][1]};
-    /*
+    */
+    
     Sint16 points_x_top[] = {   (Sint16) x, 
                                 (Sint16) (x - SQUARE_WIDTH/2), 
                                 (Sint16) x, 
@@ -57,9 +58,9 @@ void Board::draw_cube(unsigned int x, unsigned int y) {
                                 (Sint16) y, 
                                 (Sint16) (y - SQUARE_WIDTH/HEIGHT_DILATION), 
                                 (Sint16) y};
-         */                       
+                                
     // args are: renderer, x coords, y coords, point #, and rgba
-    filledPolygonRGBA(renderer, points_x_top, points_y_top, 7, 250, 150, 0, 250);
+    filledPolygonRGBA(renderer, points_x_top, points_y_top, 4, 250, 150, 0, 250);
     //  Bottom Left
 
     for(int i = 0; i < 7; i++) {
