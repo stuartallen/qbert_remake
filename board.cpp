@@ -28,7 +28,7 @@ void Board::update_color(int r, int c) {
 }
 
 //  Draw one cube. Inputs should be center of cube
-void Board::draw_cube(unsigned int x, unsigned int y) {
+void Board::draw_cube(unsigned int x, unsigned int y, unsigned int row, unsigned int col) {
     //  points are labeled clockwise starting from 10'o'clock
     Sint16** points = new Sint16*[7];
     for(int i = 0; i < 6; i++) {
@@ -44,7 +44,11 @@ void Board::draw_cube(unsigned int x, unsigned int y) {
     Sint16 points_x_top[] = {points[0][0], points[1][0], points[2][0], points[6][0]};
     Sint16 points_y_top[] = {points[0][1], points[1][1], points[2][1], points[6][1]};               
     // args are: renderer, x coords, y coords, point #, and rgba
-    filledPolygonRGBA(renderer, points_x_top, points_y_top, 4, 250, 150, 0, 250);
+    if(cubes[row][col] == 0) {
+        filledPolygonRGBA(renderer, points_x_top, points_y_top, 4, 250, 150, 0, 250);
+    } else {
+        filledPolygonRGBA(renderer, points_x_top, points_y_top, 4, 0, 0, 250, 250);
+    }
     //  Bottom Right
     Sint16 points_x_right[] = {points[2][0], points[3][0], points[4][0], points[6][0]};
     Sint16 points_y_right[] = {points[2][1], points[3][1], points[4][1], points[6][1]};               
@@ -68,16 +72,11 @@ void Board::animate() {
     const unsigned int y_orig = SCREEN_HEIGHT/4;
     const unsigned int x_mov = SQUARE_WIDTH * cos(2.0/6 * M_PI * 3 + 7*M_PI/6);
     const unsigned int y_mov = SQUARE_WIDTH*HEIGHT_DILATION * (sin(2.0/6 * M_PI * 4 + 7*M_PI/6) + sin(2.0/6 * M_PI * 3 + 7*M_PI/6));
-    for(int i = 0; i < BOARD_LEN; i++) {
-        for(int j = 0; j < BOARD_LEN - i; j++) {
+    for(unsigned int i = 0; i < BOARD_LEN; i++) {
+        for(unsigned int j = 0; j < BOARD_LEN - i; j++) {
             unsigned int x_pos = x_orig + x_mov * i - x_mov * j;
             unsigned int y_pos = y_orig + y_mov * i + y_mov * j;
-            if(cubes[i][j] == NO_TOUCH_COLOR) {
-                SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-            } else {
-                SDL_SetRenderDrawColor(renderer, 250, 150, 0, 255);
-            }
-            draw_cube(x_pos, y_pos);
+            draw_cube(x_pos, y_pos, i, j);
         }
     }
 }

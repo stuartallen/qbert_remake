@@ -38,7 +38,7 @@ class Board {
         Board();
         ~Board();
 
-        void draw_cube(unsigned int x, unsigned int y);
+        void draw_cube(unsigned int, unsigned int, unsigned int, unsigned int);
         void set_renderer(SDL_Renderer*);
 
         void animate();
