@@ -27,14 +27,14 @@ void Board::update_color(int r, int c) {
     cubes[r][c] = FINAL_COLOR;
 }
 
-//  draw one trapezoid
+//  Draw one cube. Inputs should be center of cube
 void Board::draw_cube(unsigned int x, unsigned int y) {
     //  points are labeled clockwise starting from 10'o'clock
     Sint16** points = new Sint16*[7];
     for(int i = 0; i < 6; i++) {
         points[i] = new Sint16[2];
         points[i][0] = SQUARE_WIDTH * cos(2.0/6 * M_PI * i + 7*M_PI/6) + x;
-        points[i][1] = SQUARE_WIDTH * sin(2.0/6 * M_PI * i + 7*M_PI/6) + y;
+        points[i][1] = SQUARE_WIDTH*HEIGHT_DILATION * sin(2.0/6 * M_PI * i + 7*M_PI/6) + y;
     }
     points[6] = new Sint16[2];
     points[6][0] = x;
@@ -64,12 +64,14 @@ void Board::draw_cube(unsigned int x, unsigned int y) {
 //  draws all the platforms
 void Board::animate() {
     SDL_RenderClear(renderer);
-    unsigned int x_orig = SCREEN_WIDTH/2;
-    unsigned int y_orig = SCREEN_HEIGHT/4;
+    const unsigned int x_orig = SCREEN_WIDTH/2;
+    const unsigned int y_orig = SCREEN_HEIGHT/4;
+    const unsigned int x_mov = SQUARE_WIDTH * cos(2.0/6 * M_PI * 3 + 7*M_PI/6);
+    const unsigned int y_mov = SQUARE_WIDTH*HEIGHT_DILATION * (sin(2.0/6 * M_PI * 4 + 7*M_PI/6) + sin(2.0/6 * M_PI * 3 + 7*M_PI/6));
     for(int i = 0; i < BOARD_LEN; i++) {
         for(int j = 0; j < BOARD_LEN - i; j++) {
-            unsigned int x_pos = x_orig + SQUARE_WIDTH/2 * i - SQUARE_WIDTH/2 * j;
-            unsigned int y_pos = y_orig + SQUARE_WIDTH * i + SQUARE_WIDTH * j;
+            unsigned int x_pos = x_orig + x_mov * i - x_mov * j;
+            unsigned int y_pos = y_orig + y_mov * i + y_mov * j;
             if(cubes[i][j] == NO_TOUCH_COLOR) {
                 SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
             } else {

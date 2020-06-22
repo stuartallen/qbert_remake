@@ -19,7 +19,7 @@ class Board {
         const int BOARD_LEN = 7;
 
         const unsigned int SQUARE_WIDTH = 50;
-        const unsigned int HEIGHT_DILATION = 2;
+        const double HEIGHT_DILATION = 0.75;
 
         const int NO_TOUCH_COLOR = 0;
         const int FINAL_COLOR = 1;

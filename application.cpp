@@ -14,8 +14,8 @@
 #define MUS_PATH "jump-9.wav"
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+const int SCREEN_WIDTH = 1200;
+const int SCREEN_HEIGHT = 600;
 
 
 using namespace std;
@@ -77,8 +77,8 @@ void guiMainLoop(Board& board, Sound& jump)  {
         SDL_RenderClear(renderer);
 
         // draw foreground & player
-        //board.animate();
-        board.draw_cube(250,250);
+        board.animate();
+        //board.draw_cube(250,250);
 
         // present to screen
         SDL_RenderPresent(renderer);
