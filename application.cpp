@@ -14,16 +14,21 @@
 #define MUS_PATH "jump-9.wav"
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 1200;
-const int SCREEN_HEIGHT = 600;
+const int SCREEN_WIDTH = 1440;
+const int SCREEN_HEIGHT = 900;
 
 
 using namespace std;
 
+//  Functions with SDL
 SDL_Window* set_up_window();
 SDL_Renderer* set_up_renderer(SDL_Window*);
 void destroy_window_renderer(SDL_Window*, SDL_Renderer*);
-void guiMainLoop(Board&, Sound&);
+
+//  My functions
+Sound* setUpSounds();
+void guiMainLoop(Board&, Sound*);
+void keyEvent(bool&, SDL_Event&, Sound*);
 
 int main(int argc, char* argv[]) {
     // Initialize SDL.
@@ -37,15 +42,29 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    //  Initialize sounds
     Sound jump(MUS_PATH);
 
+    Sound* sounds = new Sound[1];
+    sounds[0] = jump;
+
     Board board;
-    guiMainLoop(board, jump);
+    guiMainLoop(board, sounds);
     return 0;
 }
 
+//  Sets up all the sounds for the entire game
+//  TODO Make the sounds initialized here
+Sound* setUpSounds() {
+    Sound* sounds = new Sound[1];
+    sounds[0] = Sound(MUS_PATH);
+    
+    sounds[0].play();
+    return sounds;
+}
+
 //  does animating for game
-void guiMainLoop(Board& board, Sound& jump)  {
+void guiMainLoop(Board& board, Sound* sounds)  {
     SDL_Window* window = set_up_window();
     SDL_Renderer* renderer = set_up_renderer(window);
     board.set_renderer(renderer);
@@ -55,21 +74,7 @@ void guiMainLoop(Board& board, Sound& jump)  {
     while (!got_quit_event) {
         SDL_Event event;
         if (SDL_PollEvent(&event)) {
-            switch (event.type) {
-            case SDL_QUIT:
-                got_quit_event = true;
-                break;
-            case SDL_KEYDOWN:
-                switch(event.key.keysym.sym) {
-                case SDLK_ESCAPE:
-                    got_quit_event = true;
-                    break;
-                case SDLK_SPACE:
-                    jump.play();
-                    break;
-                }
-                break;
-            }
+            keyEvent(got_quit_event, event, sounds);
         }
 
         // draw background
@@ -78,12 +83,30 @@ void guiMainLoop(Board& board, Sound& jump)  {
 
         // draw foreground & player
         board.animate();
-        //board.draw_cube(250,250);
 
         // present to screen
         SDL_RenderPresent(renderer);
     }
     destroy_window_renderer(window, renderer);
+}
+
+//  Handles the events when a key is pressed
+void keyEvent(bool& got_quit_event, SDL_Event& event, Sound* sounds) {
+    switch (event.type) {
+        case SDL_QUIT:
+            got_quit_event = true;
+            break;
+        case SDL_KEYDOWN:
+            switch(event.key.keysym.sym) {
+            case SDLK_ESCAPE:
+                got_quit_event = true;
+                break;
+            case SDLK_SPACE:
+                sounds[0].play();
+                break;
+            }
+            break;
+        }
 }
 
 //  creates window object for the game

@@ -6,13 +6,15 @@
 #include <SDL_mixer.h>
 
 class Sound {
-    private:
-        Mix_Chunk* noise_p;
-	public:
-        Sound(const char*);
-        ~Sound();
+        private:
+                Mix_Chunk* noise_p;
+        public:
+                Sound();
+                Sound(const char*);
+                void operator=(const Sound&);
+                ~Sound();
 
-        void play();
+                void play();
 };
 
 #endif
