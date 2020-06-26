@@ -14,8 +14,8 @@ class Board {
     private:
         int SCREEN_WIDTH;
         int SCREEN_HEIGHT;
-        const int ORIGIN_X = 250;
-        const int ORIGIN_Y = 250;
+        int x_orig = 250;
+        int y_orig = 250;
         const int BOARD_LEN = 7;
 
         const unsigned int SQUARE_WIDTH = 50;
@@ -52,6 +52,8 @@ class Board {
         void print();
 
         int get_board_len();
+        int get_x_orig();
+        int get_y_orig();
 };
 
 #endif

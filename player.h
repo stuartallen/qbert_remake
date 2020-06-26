@@ -11,9 +11,8 @@ class Player : public Creature {
         Player(Board*);
 
         void spawn();
-        void move();
-
-        
+        void move(int, int);
+        void animate();
 };
 
 #endif

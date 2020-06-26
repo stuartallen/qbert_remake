@@ -68,8 +68,6 @@ void Board::draw_cube(unsigned int x, unsigned int y, unsigned int row, unsigned
 //  draws all the platforms
 void Board::animate() {
     SDL_RenderClear(renderer);
-    const unsigned int x_orig = SCREEN_WIDTH/2;
-    const unsigned int y_orig = SCREEN_HEIGHT/4;
     const unsigned int x_mov = SQUARE_WIDTH * cos(2.0/6 * M_PI * 3 + 7*M_PI/6);
     const unsigned int y_mov = SQUARE_WIDTH*HEIGHT_DILATION * (sin(2.0/6 * M_PI * 4 + 7*M_PI/6) + sin(2.0/6 * M_PI * 3 + 7*M_PI/6));
     for(unsigned int i = 0; i < BOARD_LEN; i++) {
@@ -84,6 +82,8 @@ void Board::animate() {
 void Board::set_screen_size(int in_w, int in_h) {
     SCREEN_WIDTH = in_w;
     SCREEN_HEIGHT = in_h;
+    x_orig = SCREEN_WIDTH/2;
+    y_orig = SCREEN_HEIGHT/4;
 }
 
 //  returns if a row and column is in the board 
@@ -119,6 +119,6 @@ Board::~Board() {
     delete [] cubes;
 }
 
-int Board::get_board_len() {
-    return BOARD_LEN;
-}
+int Board::get_board_len() {    return BOARD_LEN;   }
+int Board::get_x_orig() {   return x_orig;  }
+int Board::get_y_orig() {   return y_orig;  }

@@ -29,7 +29,7 @@ void destroy_window_renderer(SDL_Window*, SDL_Renderer*);
 
 //  My functions
 Sound** setUpSounds();
-void guiMainLoop(Board&, Sound**);
+void guiMainLoop(Board&, Player&, Sound**);
 void keyEvent(bool&, SDL_Event&, Sound**);
 
 int main(int argc, char* argv[]) {
@@ -49,25 +49,18 @@ int main(int argc, char* argv[]) {
 
     Board board;
     Player player(&board);
-    guiMainLoop(board, sounds);
+    guiMainLoop(board, player, sounds);
     return 0;
 }
 
-//  Sets up all the sounds for the entire game
-//  TODO Make the sounds initialized here
-Sound** setUpSounds() {
-    Sound** sounds = new Sound*[1];
-    sounds[0] = new Sound(MUS_PATH);
-    return sounds;
-}
-
 //  does animating for game
-void guiMainLoop(Board& board, Sound** sounds)  {
+void guiMainLoop(Board& board, Player& player, Sound** sounds)  {
     SDL_Window* window = set_up_window();
     SDL_Renderer* renderer = set_up_renderer(window);
     board.set_renderer(renderer);
     board.set_screen_size(SCREEN_WIDTH, SCREEN_HEIGHT);
-
+    player.set_renderer(renderer)
+;
     bool got_quit_event = false;
     while (!got_quit_event) {
         SDL_Event event;
@@ -81,6 +74,7 @@ void guiMainLoop(Board& board, Sound** sounds)  {
 
         // draw foreground & player
         board.animate();
+        player.animate();
 
         // present to screen
         SDL_RenderPresent(renderer);
@@ -105,6 +99,14 @@ void keyEvent(bool& got_quit_event, SDL_Event& event, Sound** sounds) {
             }
             break;
     }
+}
+
+//  Sets up all the sounds for the entire game
+//  TODO Make the sounds initialized here
+Sound** setUpSounds() {
+    Sound** sounds = new Sound*[1];
+    sounds[0] = new Sound(MUS_PATH);
+    return sounds;
 }
 
 //  creates window object for the game

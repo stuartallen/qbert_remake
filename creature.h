@@ -2,6 +2,11 @@
 #ifndef CREATURE_H
 #define CREATURE_H
 
+#include <SDL.h>
+#include <SDL2_gfxPrimitives.h>
+#include <stdio.h>
+#include <stdlib.h>
+
 #include <iostream>
 #include <string.h>
 #include "board.h"
@@ -14,6 +19,7 @@ class Creature {
         float start_time;
         float wait_time;
         Board* board;
+        SDL_Renderer* renderer;
     public:
         //  TODO Make this include time
         //  Won't do anything here because constructors
@@ -23,7 +29,11 @@ class Creature {
         
         //  virtual functions
         virtual void spawn() = 0;
-        virtual void move() = 0;
+        //  All derived classes have a move function but some will
+        //  take different parameters
+        virtual void animate() = 0;
+
+        void set_renderer(SDL_Renderer*);
 
         int get_row();
         int get_col();
