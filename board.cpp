@@ -118,3 +118,7 @@ Board::~Board() {
     }
     delete [] cubes;
 }
+
+int Board::get_board_len() {
+    return BOARD_LEN;
+}

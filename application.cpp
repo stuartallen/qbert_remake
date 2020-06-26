@@ -6,6 +6,8 @@
 #include <string.h>
 #include "board.h"
 #include "sound.h"
+#include "creature.h"
+#include "player.h"
 
 #include <SDL.h>
 #include <SDL_mixer.h>
@@ -26,9 +28,9 @@ SDL_Renderer* set_up_renderer(SDL_Window*);
 void destroy_window_renderer(SDL_Window*, SDL_Renderer*);
 
 //  My functions
-Sound* setUpSounds();
-void guiMainLoop(Board&, Sound*);
-void keyEvent(bool&, SDL_Event&, Sound*);
+Sound** setUpSounds();
+void guiMainLoop(Board&, Sound**);
+void keyEvent(bool&, SDL_Event&, Sound**);
 
 int main(int argc, char* argv[]) {
     // Initialize SDL.
@@ -43,28 +45,24 @@ int main(int argc, char* argv[]) {
     }
 
     //  Initialize sounds
-    Sound jump(MUS_PATH);
-
-    Sound* sounds = new Sound[1];
-    sounds[0] = jump;
+    Sound** sounds = setUpSounds();
 
     Board board;
+    Player player(&board);
     guiMainLoop(board, sounds);
     return 0;
 }
 
 //  Sets up all the sounds for the entire game
 //  TODO Make the sounds initialized here
-Sound* setUpSounds() {
-    Sound* sounds = new Sound[1];
-    sounds[0] = Sound(MUS_PATH);
-    
-    sounds[0].play();
+Sound** setUpSounds() {
+    Sound** sounds = new Sound*[1];
+    sounds[0] = new Sound(MUS_PATH);
     return sounds;
 }
 
 //  does animating for game
-void guiMainLoop(Board& board, Sound* sounds)  {
+void guiMainLoop(Board& board, Sound** sounds)  {
     SDL_Window* window = set_up_window();
     SDL_Renderer* renderer = set_up_renderer(window);
     board.set_renderer(renderer);
@@ -91,7 +89,7 @@ void guiMainLoop(Board& board, Sound* sounds)  {
 }
 
 //  Handles the events when a key is pressed
-void keyEvent(bool& got_quit_event, SDL_Event& event, Sound* sounds) {
+void keyEvent(bool& got_quit_event, SDL_Event& event, Sound** sounds) {
     switch (event.type) {
         case SDL_QUIT:
             got_quit_event = true;
@@ -102,11 +100,11 @@ void keyEvent(bool& got_quit_event, SDL_Event& event, Sound* sounds) {
                 got_quit_event = true;
                 break;
             case SDLK_SPACE:
-                sounds[0].play();
+                sounds[0]->play();
                 break;
             }
             break;
-        }
+    }
 }
 
 //  creates window object for the game

@@ -50,6 +50,8 @@ class Board {
         bool board_filled();
         int** get_cubes();
         void print();
+
+        int get_board_len();
 };
 
 #endif
