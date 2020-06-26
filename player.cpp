@@ -3,8 +3,8 @@
 using namespace std;
 
 Player::Player(Board* in_board) {
-    row = 4;
-    col = 2;
+    row = 0;
+    col = 0;
     board = in_board;
 }
 
@@ -18,9 +18,10 @@ void Player::move(int d_row, int d_col) {
     col += d_col;
 }
 
+
+
 void Player::animate() {
-    unsigned int x_pos = board->get_x_orig() + board->get_x_mov() * row - board->get_x_mov() * col;
-    unsigned int y_pos = board->get_y_orig() + board->get_y_mov() * row + board->get_y_mov() * col - board->get_orig_to_on_top();
+    set_screen_pos();
     filledCircleRGBA(   renderer, 
                         x_pos, 
                         y_pos, 

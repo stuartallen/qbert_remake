@@ -16,6 +16,8 @@ class Creature {
     protected:
         int row;
         int col;
+        unsigned int x_pos;
+        unsigned int y_pos;
         float start_time;
         float wait_time;
         Board* board;
@@ -31,7 +33,8 @@ class Creature {
         virtual void spawn() = 0;
         //  All derived classes have a move function but some will
         //  take different parameters
-        virtual void animate() = 0;
+        virtual void animate();
+        void set_screen_pos();
 
         void set_renderer(SDL_Renderer*);
 

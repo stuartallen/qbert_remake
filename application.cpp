@@ -30,7 +30,7 @@ void destroy_window_renderer(SDL_Window*, SDL_Renderer*);
 //  My functions
 Sound** setUpSounds();
 void guiMainLoop(Board&, Player&, Sound**);
-void keyEvent(bool&, SDL_Event&, Sound**);
+void keyEvent(Player&, bool&, SDL_Event&, Sound**);
 
 int main(int argc, char* argv[]) {
     // Initialize SDL.
@@ -64,7 +64,7 @@ void guiMainLoop(Board& board, Player& player, Sound** sounds)  {
     while (!got_quit_event) {
         SDL_Event event;
         if (SDL_PollEvent(&event)) {
-            keyEvent(got_quit_event, event, sounds);
+            keyEvent(player, got_quit_event, event, sounds);
         }
 
         // draw background
@@ -82,7 +82,7 @@ void guiMainLoop(Board& board, Player& player, Sound** sounds)  {
 }
 
 //  Handles the events when a key is pressed
-void keyEvent(bool& got_quit_event, SDL_Event& event, Sound** sounds) {
+void keyEvent(Player& player, bool& got_quit_event, SDL_Event& event, Sound** sounds) {
     switch (event.type) {
         case SDL_QUIT:
             got_quit_event = true;
@@ -94,6 +94,18 @@ void keyEvent(bool& got_quit_event, SDL_Event& event, Sound** sounds) {
                 break;
             case SDLK_SPACE:
                 sounds[0]->play();
+                break;
+            case SDLK_w:
+                player.move(0,-1);
+                break;
+            case SDLK_a:
+                player.move(-1,0);
+                break;
+            case SDLK_s:
+                player.move(0,1);
+                break;
+            case SDLK_d:
+                player.move(1,0);
                 break;
             }
             break;
