@@ -13,6 +13,8 @@ Board::Board() {
         }
     }
     cubes[1][1] = FINAL_COLOR;
+    x_mov = SQUARE_WIDTH * cos(2.0/6 * M_PI * 3 + 7*M_PI/6);
+    y_mov = SQUARE_WIDTH*HEIGHT_DILATION * (sin(2.0/6 * M_PI * 4 + 7*M_PI/6) + sin(2.0/6 * M_PI * 3 + 7*M_PI/6));
 }
 
 
@@ -45,7 +47,7 @@ void Board::draw_cube(unsigned int x, unsigned int y, unsigned int row, unsigned
     Sint16 points_y_top[] = {points[0][1], points[1][1], points[2][1], points[6][1]};               
     // args are: renderer, x coords, y coords, point #, and rgba
     if(cubes[row][col] == 0) {
-        filledPolygonRGBA(renderer, points_x_top, points_y_top, 4, 250, 150, 0, 250);
+        filledPolygonRGBA(renderer, points_x_top, points_y_top, 4, 100, 200, 100, 250);
     } else {
         filledPolygonRGBA(renderer, points_x_top, points_y_top, 4, 0, 0, 250, 250);
     }
@@ -68,8 +70,6 @@ void Board::draw_cube(unsigned int x, unsigned int y, unsigned int row, unsigned
 //  draws all the platforms
 void Board::animate() {
     SDL_RenderClear(renderer);
-    const unsigned int x_mov = SQUARE_WIDTH * cos(2.0/6 * M_PI * 3 + 7*M_PI/6);
-    const unsigned int y_mov = SQUARE_WIDTH*HEIGHT_DILATION * (sin(2.0/6 * M_PI * 4 + 7*M_PI/6) + sin(2.0/6 * M_PI * 3 + 7*M_PI/6));
     for(unsigned int i = 0; i < BOARD_LEN; i++) {
         for(unsigned int j = 0; j < BOARD_LEN - i; j++) {
             unsigned int x_pos = x_orig + x_mov * i - x_mov * j;
@@ -122,3 +122,6 @@ Board::~Board() {
 int Board::get_board_len() {    return BOARD_LEN;   }
 int Board::get_x_orig() {   return x_orig;  }
 int Board::get_y_orig() {   return y_orig;  }
+int Board::get_orig_to_on_top() {   return SQUARE_WIDTH * HEIGHT_DILATION;  }
+int Board::get_x_mov() {    return x_mov;   }
+int Board::get_y_mov() {    return y_mov;   }

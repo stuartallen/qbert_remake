@@ -59,8 +59,7 @@ void guiMainLoop(Board& board, Player& player, Sound** sounds)  {
     SDL_Renderer* renderer = set_up_renderer(window);
     board.set_renderer(renderer);
     board.set_screen_size(SCREEN_WIDTH, SCREEN_HEIGHT);
-    player.set_renderer(renderer)
-;
+    player.set_renderer(renderer);
     bool got_quit_event = false;
     while (!got_quit_event) {
         SDL_Event event;

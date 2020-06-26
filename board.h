@@ -16,6 +16,8 @@ class Board {
         int SCREEN_HEIGHT;
         int x_orig = 250;
         int y_orig = 250;
+        unsigned int x_mov;
+        unsigned int y_mov;
         const int BOARD_LEN = 7;
 
         const unsigned int SQUARE_WIDTH = 50;
@@ -54,6 +56,9 @@ class Board {
         int get_board_len();
         int get_x_orig();
         int get_y_orig();
+        int get_orig_to_on_top();
+        int get_x_mov();
+        int get_y_mov();
 };
 
 #endif
