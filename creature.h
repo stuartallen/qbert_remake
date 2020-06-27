@@ -16,8 +16,8 @@ class Creature {
     protected:
         int row;
         int col;
-        unsigned int x_pos;
-        unsigned int y_pos;
+        int x_pos;
+        int y_pos;
         float start_time;
         float wait_time;
         Board* board;

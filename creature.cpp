@@ -32,8 +32,8 @@ int Creature::get_pos() {
 }
 
 bool Creature::on_board() {
-    return  row > 0 &&
-            col > 0 &&
+    return  row >= 0 &&
+            col >= 0 &&
             row < board->get_board_len() - col;
 }
 

@@ -20,5 +20,7 @@ void Player::animate() {
                         y_pos, 
                         20,
                         255, 120, 0, 255);
-    board->update_color(row, col);
+    if(on_board()) {
+        board->update_color(row, col);
+    }
 }
