@@ -1,3 +1,5 @@
 build/
 .vscode/
 *.wav
+SDL2-devel-2.0.12-VC.zip
+SDL2-2.0.12/
