@@ -13,13 +13,6 @@ void Player::spawn() {
     col = 0;
 }
 
-void Player::move(int d_row, int d_col) {
-    row += d_row;
-    col += d_col;
-}
-
-
-
 void Player::animate() {
     set_screen_pos();
     filledCircleRGBA(   renderer, 
@@ -27,4 +20,5 @@ void Player::animate() {
                         y_pos, 
                         20,
                         255, 120, 0, 255);
+    board->update_color(row, col);
 }

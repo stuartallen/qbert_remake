@@ -31,8 +31,8 @@ class Creature {
         
         //  virtual functions
         virtual void spawn() = 0;
-        //  All derived classes have a move function but some will
-        //  take different parameters
+        void move(int, int);
+        void jump(int, int);
         virtual void animate();
         void set_screen_pos();
 

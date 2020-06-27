@@ -15,6 +15,11 @@ void Creature::set_screen_pos() {
     y_pos = board->get_y_orig() + board->get_y_mov() * row + board->get_y_mov() * col - board->get_orig_to_on_top();
 }
 
+void Creature::move(int d_row, int d_col) {
+    row += d_row;
+    col += d_col;
+}
+
 void Creature::set_renderer(SDL_Renderer* in_renderer) {
     renderer = in_renderer;
 }

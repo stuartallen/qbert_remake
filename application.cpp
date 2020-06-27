@@ -19,7 +19,6 @@
 const int SCREEN_WIDTH = 1440;
 const int SCREEN_HEIGHT = 900;
 
-
 using namespace std;
 
 //  Functions with SDL
@@ -92,20 +91,21 @@ void keyEvent(Player& player, bool& got_quit_event, SDL_Event& event, Sound** so
             case SDLK_ESCAPE:
                 got_quit_event = true;
                 break;
-            case SDLK_SPACE:
-                sounds[0]->play();
-                break;
             case SDLK_w:
                 player.move(0,-1);
+                sounds[0]->play();
                 break;
             case SDLK_a:
                 player.move(-1,0);
+                sounds[0]->play();
                 break;
             case SDLK_s:
                 player.move(0,1);
+                sounds[0]->play();
                 break;
             case SDLK_d:
                 player.move(1,0);
+                sounds[0]->play();
                 break;
             }
             break;
