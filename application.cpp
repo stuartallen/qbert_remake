@@ -13,16 +13,27 @@
 #include <SDL_mixer.h>
 #include <SDL2_gfxPrimitives.h>
 
+#ifdef WIN32
+// don't interfere with std::min,max
+#define NOMINMAX
+// https://seabird.handmade.network/blogs/p/2460-be_aware_of_high_dpi
+#pragma comment(lib, "Shcore.lib")
+// helpers for high DPI window scaling
+#include <ShellScalingAPI.h>
+#include <comdef.h>
+#include <windows.h>
+#endif
+
 #define MUS_PATH "jump-9.wav"
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 1440;
-const int SCREEN_HEIGHT = 900;
+//const int SCREEN_WIDTH = 1440;
+//const int SCREEN_HEIGHT = 900;
 
 using namespace std;
 
 //  Functions with SDL
-SDL_Window* set_up_window();
+SDL_Window* set_up_window(int&,int&);
 SDL_Renderer* set_up_renderer(SDL_Window*);
 void destroy_window_renderer(SDL_Window*, SDL_Renderer*);
 
@@ -54,10 +65,11 @@ int main(int argc, char* argv[]) {
 
 //  does animating for game
 void guiMainLoop(Board& board, Player& player, Sound** sounds)  {
-    SDL_Window* window = set_up_window();
+    int screen_width, screen_height;
+    SDL_Window* window = set_up_window(screen_width, screen_height);
     SDL_Renderer* renderer = set_up_renderer(window);
     board.set_renderer(renderer);
-    board.set_screen_size(SCREEN_WIDTH, SCREEN_HEIGHT);
+    board.set_screen_size(screen_width, screen_height);
     player.set_renderer(renderer);
     bool got_quit_event = false;
     while (!got_quit_event) {
@@ -121,14 +133,36 @@ Sound** setUpSounds() {
 }
 
 //  creates window object for the game
-SDL_Window* set_up_window() {
+SDL_Window* set_up_window(int &screen_width, int &screen_height) {
+#ifdef WIN32
+    SetProcessDpiAwareness(PROCESS_PER_MONITOR_DPI_AWARE);
+#endif
+    // NOTE: doing debug in fullscreen sucks.  The fullscreen window seems to prevent GUI of Visual Studio to work.
+    // So, explicitly change this when you want to go fullscreen
+    bool fullscreen = false; // FIXME - add this as a commandline option?
+    if(fullscreen) {
+        // get w/h after creating fullscreen window
+        screen_width = 0;
+        screen_height = 0;
+    }
+    else {
+        // in high-dpi display, this will not give you a fullscreen window, but a scaled-down window size
+        SDL_DisplayMode DM;
+        SDL_GetCurrentDisplayMode(0, &DM);
+        screen_width = DM.w;
+        screen_height = DM.h;
+    }
     SDL_Window *window = SDL_CreateWindow("Qbert Screen",
                                       SDL_WINDOWPOS_UNDEFINED,
                                       SDL_WINDOWPOS_UNDEFINED,
-                                      SCREEN_WIDTH, SCREEN_HEIGHT,
-                                      SDL_WINDOW_OPENGL);
+                                      screen_width, screen_height,
+                                      SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI | (fullscreen ? SDL_WINDOW_FULLSCREEN : 0));
     if (window == nullptr) {
         SDL_Log("Could not create a window: %s", SDL_GetError());
+    }
+    if (fullscreen) {
+        // for fullscreen find out after the window is created how big it really is
+        SDL_GetWindowSize(window, &screen_width, &screen_height);
     }
     return window;
 }

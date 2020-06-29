@@ -13,8 +13,8 @@ Board::Board() {
         }
     }
     cubes[1][1] = FINAL_COLOR;
-    x_mov = SQUARE_WIDTH * cos(2.0/6 * M_PI * 3 + 7*M_PI/6);
-    y_mov = SQUARE_WIDTH*HEIGHT_DILATION * (sin(2.0/6 * M_PI * 4 + 7*M_PI/6) + sin(2.0/6 * M_PI * 3 + 7*M_PI/6));
+    x_mov = (unsigned int)(SQUARE_WIDTH * cos(2.0/6 * M_PI * 3 + 7*M_PI/6));
+    y_mov = (unsigned int)(SQUARE_WIDTH*HEIGHT_DILATION * (sin(2.0/6 * M_PI * 4 + 7*M_PI/6) + sin(2.0/6 * M_PI * 3 + 7*M_PI/6)));
 }
 
 
@@ -35,8 +35,8 @@ void Board::draw_cube(unsigned int x, unsigned int y, unsigned int row, unsigned
     Sint16** points = new Sint16*[7];
     for(int i = 0; i < 6; i++) {
         points[i] = new Sint16[2];
-        points[i][0] = SQUARE_WIDTH * cos(2.0/6 * M_PI * i + 7*M_PI/6) + x;
-        points[i][1] = SQUARE_WIDTH*HEIGHT_DILATION * sin(2.0/6 * M_PI * i + 7*M_PI/6) + y;
+        points[i][0] = (Sint16)(SQUARE_WIDTH * cos(2.0/6 * M_PI * i + 7*M_PI/6)) + x;
+        points[i][1] = (Sint16)(SQUARE_WIDTH*HEIGHT_DILATION * sin(2.0/6 * M_PI * i + 7*M_PI/6)) + y;
     }
     points[6] = new Sint16[2];
     points[6][0] = x;
@@ -70,8 +70,8 @@ void Board::draw_cube(unsigned int x, unsigned int y, unsigned int row, unsigned
 //  draws all the platforms
 void Board::animate() {
     SDL_RenderClear(renderer);
-    for(unsigned int i = 0; i < BOARD_LEN; i++) {
-        for(unsigned int j = 0; j < BOARD_LEN - i; j++) {
+    for(int i = 0; i < BOARD_LEN; i++) {
+        for(int j = 0; j < BOARD_LEN - i; j++) {
             unsigned int x_pos = x_orig + x_mov * i - x_mov * j;
             unsigned int y_pos = y_orig + y_mov * i + y_mov * j;
             draw_cube(x_pos, y_pos, i, j);
@@ -80,10 +80,10 @@ void Board::animate() {
 }
 
 void Board::set_screen_size(int in_w, int in_h) {
-    SCREEN_WIDTH = in_w;
-    SCREEN_HEIGHT = in_h;
-    x_orig = SCREEN_WIDTH/2;
-    y_orig = SCREEN_HEIGHT/4;
+    screen_width = in_w;
+    screen_height = in_h;
+    x_orig = screen_width/2;
+    y_orig = screen_height/4;
 }
 
 //  returns if a row and column is in the board 
@@ -122,6 +122,6 @@ Board::~Board() {
 int Board::get_board_len() {    return BOARD_LEN;   }
 int Board::get_x_orig() {   return x_orig;  }
 int Board::get_y_orig() {   return y_orig;  }
-int Board::get_orig_to_on_top() {   return SQUARE_WIDTH * HEIGHT_DILATION;  }
+int Board::get_orig_to_on_top() {   return (int)(SQUARE_WIDTH * HEIGHT_DILATION);  }
 int Board::get_x_mov() {    return x_mov;   }
 int Board::get_y_mov() {    return y_mov;   }

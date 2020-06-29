@@ -12,8 +12,8 @@ using namespace std;
 //  TODO make Board the parent class of level class 
 class Board {
     private:
-        int SCREEN_WIDTH;
-        int SCREEN_HEIGHT;
+        int screen_width;
+        int screen_height;
         int x_orig = 250;
         int y_orig = 250;
         unsigned int x_mov;
