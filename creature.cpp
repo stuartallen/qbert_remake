@@ -32,9 +32,14 @@ void Creature::animate() {
 }
 
 void Creature::set_screen_pos() {
-    if(jumping) {   jump(); }
-    x_pos = board->get_x_orig() + board->get_x_mov() * old_row - board->get_x_mov() * old_col + jump_x;
-    y_pos = board->get_y_orig() + board->get_y_mov() * old_row + board->get_y_mov() * old_col - board->get_orig_to_on_top() + jump_y;
+    if(jumping) {   
+        jump(); 
+        x_pos = jump_x;
+        y_pos = jump_y;
+    } else {
+        x_pos = board->get_x_orig() + board->get_x_mov() * old_row - board->get_x_mov() * old_col + jump_x;
+        y_pos = board->get_y_orig() + board->get_y_mov() * old_row + board->get_y_mov() * old_col - board->get_orig_to_on_top() + jump_y;
+    }
 }
 
 void Creature::move(int d_row, int d_col) {
@@ -48,24 +53,19 @@ void Creature::move(int d_row, int d_col) {
 }
 
 //  Calibrates the jump animation
+//  Assume jumping is true
 void Creature::init_jump(int d_row, int d_col) {
-    if(!jumping) {
-        cout << "start jump" << endl;
-        //  Set bezie points
-        bez_pts[0][0] = x_pos;  bez_pts[0][1] = y_pos;
-        int* last_point = board->get_cube_location(row + d_row, col + d_col);
-        bez_pts[1][0] = 1/3 * x_pos + 2/3 * last_point[0];  bez_pts[1][1] = 1/3 * y_pos + 2/3 * last_point[1] + JUMP_HEIGHT;
-        bez_pts[2][0] = 2/3 * x_pos + 1/3 * last_point[0];  bez_pts[1][1] = 2/3 * y_pos + 1/3 * last_point[1] + JUMP_HEIGHT;
-        bez_pts[3][0] = last_point[0];  bez_pts[3][1] = last_point[1];
+    cout << "start jump" << endl;
+    //  Set bezie points
+    bez_pts[0][0] = x_pos;  bez_pts[0][1] = y_pos;
+    int* last_point = board->get_cube_location(row + d_row, col + d_col);
+    bez_pts[1][0] = 2 * x_pos/3 + last_point[0]/3;  bez_pts[1][1] = 2 * y_pos/3 + last_point[1]/3 - JUMP_HEIGHT;
+    bez_pts[2][0] = x_pos/3 + 2 * last_point[0]/3;  bez_pts[2][1] = y_pos/3 + 2 * last_point[1]/3 - 1.5 * JUMP_HEIGHT;
+    bez_pts[3][0] = last_point[0];  bez_pts[3][1] = last_point[1];
 
-        jumping = true;
-        cout << y_pos << endl;
-        for(int i = 0; i < 4; i++) {
-            cout << bez_pts[i][0] << "\t" << bez_pts[i][1] << endl;
-        }
-        delete [] last_point;
-        start_jump_time = SDL_GetTicks();
-    }
+    jumping = true;
+    delete [] last_point;
+    start_jump_time = SDL_GetTicks();
 }
 
 //  Alters jump_x/y

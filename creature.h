@@ -23,7 +23,7 @@ class Creature {
         int jump_x;
         int jump_y;
         bool jumping;
-        const int JUMP_TIME = 1000;
+        const int JUMP_TIME = 500;
         const int JUMP_HEIGHT = 50;
         unsigned int start_jump_time;
 
