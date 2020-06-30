@@ -130,6 +130,7 @@ Sound** setUpSounds() {
 
 //  creates window object for the game
 SDL_Window* set_up_window(int &screen_width, int &screen_height) {
+// FIXME - not sure what to do for High DPI Macintoshes 
 #ifdef WIN32
     SetProcessDpiAwareness(PROCESS_PER_MONITOR_DPI_AWARE);
 #endif
@@ -152,7 +153,11 @@ SDL_Window* set_up_window(int &screen_width, int &screen_height) {
                                       SDL_WINDOWPOS_UNDEFINED,
                                       SDL_WINDOWPOS_UNDEFINED,
                                       screen_width, screen_height,
-                                      SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI | (fullscreen ? SDL_WINDOW_FULLSCREEN : 0));
+                                      SDL_WINDOW_OPENGL | 
+#ifdef WIN32
+                                      SDL_WINDOW_ALLOW_HIGHDPI |
+#endif
+                                      (fullscreen ? SDL_WINDOW_FULLSCREEN : 0));
     if (window == nullptr) {
         SDL_Log("Could not create a window: %s", SDL_GetError());
     }
