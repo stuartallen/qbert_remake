@@ -130,6 +130,6 @@ int Board::get_y_mov() {    return y_mov;   }
 int* Board::get_cube_location(int row, int col) {
     int* pos = new int[2];
     pos[0] = x_orig + x_mov * row - x_mov * col;
-    pos[1] = y_orig + y_mov * row + y_mov * col + get_orig_to_on_top();
+    pos[1] = y_orig + y_mov * row + y_mov * col - get_orig_to_on_top();
     return pos;
 }

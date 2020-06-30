@@ -55,12 +55,11 @@ void Creature::move(int d_row, int d_col) {
 //  Calibrates the jump animation
 //  Assume jumping is true
 void Creature::init_jump(int d_row, int d_col) {
-    cout << "start jump" << endl;
     //  Set bezie points
     bez_pts[0][0] = x_pos;  bez_pts[0][1] = y_pos;
-    int* last_point = board->get_cube_location(row + d_row, col + d_col);
+    int* last_point = board->get_cube_location(old_row + d_row, old_col + d_col);
     bez_pts[1][0] = 2 * x_pos/3 + last_point[0]/3;  bez_pts[1][1] = 2 * y_pos/3 + last_point[1]/3 - JUMP_HEIGHT;
-    bez_pts[2][0] = x_pos/3 + 2 * last_point[0]/3;  bez_pts[2][1] = y_pos/3 + 2 * last_point[1]/3 - 1.5 * JUMP_HEIGHT;
+    bez_pts[2][0] = x_pos/3 + 2 * last_point[0]/3;  bez_pts[2][1] = y_pos/3 + 2 * last_point[1]/3 - JUMP_HEIGHT;
     bez_pts[3][0] = last_point[0];  bez_pts[3][1] = last_point[1];
 
     jumping = true;
