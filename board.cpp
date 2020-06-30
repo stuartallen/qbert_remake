@@ -12,7 +12,6 @@ Board::Board() {
             total_cubes++;
         }
     }
-    cubes[1][1] = FINAL_COLOR;
     x_mov = (unsigned int)(SQUARE_WIDTH * cos(2.0/6 * M_PI * 3 + 7*M_PI/6));
     y_mov = (unsigned int)(SQUARE_WIDTH*HEIGHT_DILATION * (sin(2.0/6 * M_PI * 4 + 7*M_PI/6) + sin(2.0/6 * M_PI * 3 + 7*M_PI/6)));
 }
@@ -125,3 +124,12 @@ int Board::get_y_orig() {   return y_orig;  }
 int Board::get_orig_to_on_top() {   return (int)(SQUARE_WIDTH * HEIGHT_DILATION);  }
 int Board::get_x_mov() {    return x_mov;   }
 int Board::get_y_mov() {    return y_mov;   }
+
+//  Returns the pixel coordinate of a cube
+//  Remember to handle memory after calling
+int* Board::get_cube_location(int row, int col) {
+    int* pos = new int[2];
+    pos[0] = x_orig + x_mov * row - x_mov * col;
+    pos[1] = y_orig + y_mov * row + y_mov * col + get_orig_to_on_top();
+    return pos;
+}

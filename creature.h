@@ -9,17 +9,28 @@
 
 #include <iostream>
 #include <string.h>
+#include <cmath>
 #include "board.h"
 using namespace std;
 
 class Creature {
     protected:
+        int old_row;
+        int old_col;
         int row;
         int col;
+
+        int jump_x;
+        int jump_y;
+        bool jumping;
+        const int JUMP_TIME = 1000;
+        const int JUMP_HEIGHT = 50;
+        unsigned int start_jump_time;
+
         int x_pos;
         int y_pos;
-        float start_time;
-        float wait_time;
+
+        int** bez_pts;
         Board* board;
         SDL_Renderer* renderer;
     public:
@@ -28,13 +39,16 @@ class Creature {
         //  cannot be virtual
         Creature();
         Creature(Board*);
+        ~Creature();
         
         //  virtual functions
         virtual void spawn() = 0;
-        void move(int, int);
-        void jump(int, int);
         virtual void animate();
         void set_screen_pos();
+
+        void move(int, int);
+        void init_jump(int, int);
+        void jump();
 
         void set_renderer(SDL_Renderer*);
 

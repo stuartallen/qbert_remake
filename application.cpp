@@ -26,10 +26,6 @@
 
 #define MUS_PATH "jump-9.wav"
 
-//Screen dimension constants
-//const int SCREEN_WIDTH = 1440;
-//const int SCREEN_HEIGHT = 900;
-
 using namespace std;
 
 //  Functions with SDL
