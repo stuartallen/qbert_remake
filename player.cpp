@@ -24,6 +24,5 @@ void Player::animate() {
 
 void Player::jump() {
     Creature::jump();
-    cout << "here" << endl;
     if(!jumping) {  board->update_color(row, col);  }
 }

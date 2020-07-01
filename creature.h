@@ -48,7 +48,8 @@ class Creature {
 
         void move(int, int);
         void init_jump(int, int);
-        void jump();
+        //  For non player objects just implement the code already there
+        virtual void jump();
 
         void set_renderer(SDL_Renderer*);
 
