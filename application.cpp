@@ -55,6 +55,7 @@ int main(int argc, char* argv[]) {
 
     Board board;
     Player player(&board);
+    player.set_jump_sound(sounds[0]);
     guiMainLoop(board, player, sounds);
     return 0;
 }
@@ -101,19 +102,15 @@ void keyEvent(Player& player, bool& got_quit_event, SDL_Event& event, Sound** so
                 break;
             case SDLK_w:
                 player.move(0,-1);
-                sounds[0]->play();
                 break;
             case SDLK_a:
                 player.move(-1,0);
-                sounds[0]->play();
                 break;
             case SDLK_s:
                 player.move(0,1);
-                sounds[0]->play();
                 break;
             case SDLK_d:
                 player.move(1,0);
-                sounds[0]->play();
                 break;
             }
             break;

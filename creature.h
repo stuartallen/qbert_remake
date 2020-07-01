@@ -11,6 +11,7 @@
 #include <string.h>
 #include <cmath>
 #include "board.h"
+#include "sound.h"
 using namespace std;
 
 class Creature {
@@ -26,6 +27,7 @@ class Creature {
         const int JUMP_TIME = 500;
         const int JUMP_HEIGHT = 100;
         unsigned int start_jump_time;
+        Sound* jump_sound = nullptr;
 
         int x_pos;
         int y_pos;
@@ -52,6 +54,7 @@ class Creature {
         virtual void jump();
 
         void set_renderer(SDL_Renderer*);
+        void set_jump_sound(Sound*);
 
         int get_row();
         int get_col();

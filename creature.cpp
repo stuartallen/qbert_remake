@@ -44,6 +44,7 @@ void Creature::set_screen_pos() {
 
 void Creature::move(int d_row, int d_col) {
     if(!jumping) {
+        jump_sound->play();
         old_row = row;
         old_col = col;
         row += d_row;
@@ -84,9 +85,8 @@ void Creature::jump() {
     }
 }
 
-void Creature::set_renderer(SDL_Renderer* in_renderer) {
-    renderer = in_renderer;
-}
+void Creature::set_renderer(SDL_Renderer* in_renderer) {    renderer = in_renderer; }
+void Creature::set_jump_sound(Sound* js) {  jump_sound = js;    }
 
 int Creature::get_row() {   return row; }
 int Creature::get_col() {   return col; }
