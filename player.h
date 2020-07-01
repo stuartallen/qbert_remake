@@ -12,6 +12,7 @@ class Player : public Creature {
 
         void spawn();
         void animate();
+        void jump();
 };
 
 #endif

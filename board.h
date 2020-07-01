@@ -20,7 +20,7 @@ class Board {
         unsigned int y_mov;
         const int BOARD_LEN = 7;
 
-        const unsigned int SQUARE_WIDTH = 50;
+        unsigned int SQUARE_WIDTH;
         const double HEIGHT_DILATION = 0.75;
 
         const int NO_TOUCH_COLOR = 0;

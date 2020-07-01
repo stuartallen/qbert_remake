@@ -20,7 +20,10 @@ void Player::animate() {
                         y_pos, 
                         20,
                         255, 120, 0, 255);
-    if(on_board()) {
-        board->update_color(row, col);
-    }
+}
+
+void Player::jump() {
+    Creature::jump();
+    cout << "here" << endl;
+    if(!jumping) {  board->update_color(row, col);  }
 }
