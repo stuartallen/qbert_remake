@@ -8,6 +8,7 @@
 #include "sound.h"
 #include "creature.h"
 #include "player.h"
+#include "spriteSheet.h"
 
 #include <SDL.h>
 #include <SDL_mixer.h>
@@ -25,6 +26,7 @@
 #endif
 
 #define MUS_PATH "jump-9.wav"
+#define SPRITE_SHEET "QBert3Sheet1.bmp"
 
 using namespace std;
 
@@ -65,9 +67,15 @@ void guiMainLoop(Board& board, Player& player, Sound** sounds)  {
     int screen_width, screen_height;
     SDL_Window* window = set_up_window(screen_width, screen_height);
     SDL_Renderer* renderer = set_up_renderer(window);
+
     board.set_renderer(renderer);
     board.set_screen_size(screen_width, screen_height);
     player.set_renderer(renderer);
+
+    SpriteSheet* sprites = new SpriteSheet(SPRITE_SHEET, renderer);
+    int cur_ticks, last_ticks = SDL_GetTicks();
+    int qbert_index = 0, qbert_direction = 1;
+
     bool got_quit_event = false;
     while (!got_quit_event) {
         SDL_Event event;
@@ -82,6 +90,27 @@ void guiMainLoop(Board& board, Player& player, Sound** sounds)  {
         // draw foreground & player
         board.animate();
         player.animate();
+
+        // FIXME draw qbert (move this to a better spot)
+        {
+            SDL_Rect qbert_pos;
+            qbert_pos.x = 250;
+            qbert_pos.y = 250;
+            qbert_pos.w = 250 + 2 * 30;
+            qbert_pos.h = 250 + 2 * 48;
+            cur_ticks = SDL_GetTicks(); // ms
+            if (cur_ticks - last_ticks > 100) {
+                last_ticks = cur_ticks;
+                qbert_index = qbert_index + qbert_direction;
+                if (qbert_index == 3) {
+                    qbert_direction = -1;
+                }
+                else if (qbert_index == 0) {
+                    qbert_direction = 1;
+                }
+            }
+            sprites->draw_qbert(renderer, &qbert_pos, qbert_index);
+        }
 
         // present to screen
         SDL_RenderPresent(renderer);
