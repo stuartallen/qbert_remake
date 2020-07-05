@@ -73,6 +73,8 @@ void guiMainLoop(Board& board, Player& player, Sound** sounds)  {
     player.set_renderer(renderer);
 
     SpriteSheet* sprites = new SpriteSheet(SPRITE_SHEET, renderer);
+    // offset_x, offset_y, width, height, frames, time in frame
+    sprites[0].set_up(76, 0, 30, 48, 4, 100);
     int cur_ticks, last_ticks = SDL_GetTicks();
     int qbert_index = 0, qbert_direction = 1;
 
@@ -91,26 +93,13 @@ void guiMainLoop(Board& board, Player& player, Sound** sounds)  {
         board.animate();
         player.animate();
 
-        // FIXME draw qbert (move this to a better spot)
-        {
-            SDL_Rect qbert_pos;
-            qbert_pos.x = 250;
-            qbert_pos.y = 250;
-            qbert_pos.w = 250 + 2 * 30;
-            qbert_pos.h = 250 + 2 * 48;
-            cur_ticks = SDL_GetTicks(); // ms
-            if (cur_ticks - last_ticks > 100) {
-                last_ticks = cur_ticks;
-                qbert_index = qbert_index + qbert_direction;
-                if (qbert_index == 3) {
-                    qbert_direction = -1;
-                }
-                else if (qbert_index == 0) {
-                    qbert_direction = 1;
-                }
-            }
-            sprites->draw_qbert(renderer, &qbert_pos, qbert_index);
-        }
+        
+        SDL_Rect qbert_pos;
+        qbert_pos.x = 250;
+        qbert_pos.y = 250;
+        qbert_pos.w = 250 + 2 * 30;
+        qbert_pos.h = 250 + 2 * 48;
+        sprites[0].draw_qbert(&qbert_pos);
 
         // present to screen
         SDL_RenderPresent(renderer);
