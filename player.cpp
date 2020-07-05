@@ -2,10 +2,11 @@
 #include "player.h"
 using namespace std;
 
-Player::Player(Board* in_board) {
+Player::Player(Board* in_board, SpriteSheet* in_sprites) {
     row = 0;
     col = 0;
     board = in_board;
+    sprites = in_sprites;
 }
 
 void Player::spawn() {
@@ -15,11 +16,12 @@ void Player::spawn() {
 
 void Player::animate() {
     set_screen_pos();
-    filledCircleRGBA(   renderer, 
-                        x_pos, 
-                        y_pos, 
-                        20,
-                        255, 120, 0, 255);
+    SDL_Rect rect;
+    rect.x = x_pos;
+    rect.y = y_pos;
+    rect.w = 100;
+    rect.h = 100;
+    sprites->draw_qbert(&rect);
 }
 
 void Player::jump() {

@@ -8,7 +8,7 @@ using namespace std;
 
 class Player : public Creature {
     public:
-        Player(Board*);
+        Player(Board*, SpriteSheet*);
 
         void spawn();
         void animate();

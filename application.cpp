@@ -37,7 +37,7 @@ void destroy_window_renderer(SDL_Window*, SDL_Renderer*);
 
 //  My functions
 Sound** setUpSounds();
-void guiMainLoop(Board&, Player&, Sound**);
+void guiMainLoop(Board&, Sound**);
 void keyEvent(Player&, bool&, SDL_Event&, Sound**);
 
 int main(int argc, char* argv[]) {
@@ -56,27 +56,27 @@ int main(int argc, char* argv[]) {
     Sound** sounds = setUpSounds();
 
     Board board;
-    Player player(&board);
-    player.set_jump_sound(sounds[0]);
-    guiMainLoop(board, player, sounds);
+    guiMainLoop(board, sounds);
     return 0;
 }
 
 //  does animating for game
-void guiMainLoop(Board& board, Player& player, Sound** sounds)  {
+void guiMainLoop(Board& board, Sound** sounds)  {
     int screen_width, screen_height;
     SDL_Window* window = set_up_window(screen_width, screen_height);
     SDL_Renderer* renderer = set_up_renderer(window);
 
     board.set_renderer(renderer);
     board.set_screen_size(screen_width, screen_height);
-    player.set_renderer(renderer);
 
+    //  Set up sprites
     SpriteSheet* sprites = new SpriteSheet(SPRITE_SHEET, renderer);
     // offset_x, offset_y, width, height, frames, time in frame
     sprites[0].set_up(76, 0, 30, 48, 4, 100);
-    int cur_ticks, last_ticks = SDL_GetTicks();
-    int qbert_index = 0, qbert_direction = 1;
+
+    Player player(&board, sprites);
+    player.set_renderer(renderer);
+    player.set_jump_sound(sounds[0]);
 
     bool got_quit_event = false;
     while (!got_quit_event) {
@@ -92,14 +92,6 @@ void guiMainLoop(Board& board, Player& player, Sound** sounds)  {
         // draw foreground & player
         board.animate();
         player.animate();
-
-        
-        SDL_Rect qbert_pos;
-        qbert_pos.x = 250;
-        qbert_pos.y = 250;
-        qbert_pos.w = 250 + 2 * 30;
-        qbert_pos.h = 250 + 2 * 48;
-        sprites[0].draw_qbert(&qbert_pos);
 
         // present to screen
         SDL_RenderPresent(renderer);

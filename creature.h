@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string.h>
 #include <cmath>
+#include "spriteSheet.h"
 #include "board.h"
 #include "sound.h"
 using namespace std;
@@ -35,12 +36,14 @@ class Creature {
         int** bez_pts;
         Board* board;
         SDL_Renderer* renderer;
+
+        SpriteSheet* sprites;
     public:
         //  TODO Make this include time
         //  Won't do anything here because constructors
         //  cannot be virtual
         Creature();
-        Creature(Board*);
+        Creature(Board*, SpriteSheet*);
         ~Creature();
         
         //  virtual functions

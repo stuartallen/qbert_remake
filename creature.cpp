@@ -16,8 +16,9 @@ Creature::Creature() {
     return; 
 }
 
-Creature::Creature(Board* in_board) {
+Creature::Creature(Board* in_board, SpriteSheet* in_sprites) {
     board = in_board;
+    sprites = in_sprites;
 }
 
 Creature::~Creature() {
