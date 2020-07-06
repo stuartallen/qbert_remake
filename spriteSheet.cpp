@@ -7,6 +7,8 @@ const int QBERT_SPRITE_OFFSET_X = 76;
 const int QBERT_SPRITE_OFFSET_Y = 0;
 */
 
+SpriteSheet::SpriteSheet() {}
+
 SpriteSheet::SpriteSheet(   char const *path,
                             SDL_Renderer* in_renderer) {
     SDL_Surface* surface = NULL;
@@ -22,13 +24,26 @@ SpriteSheet::SpriteSheet(   char const *path,
     }
 }
 
-void SpriteSheet::set_up(   int x,
+void SpriteSheet::set_up(   char const *path, 
+                            SDL_Renderer* in_renderer,
+                            int x,
                             int y,
                             int w,
                             int h,
                             int max_sprite,
                             int c_ticks,
                             bool directional) {
+    SDL_Surface* surface = NULL;
+    surface = SDL_LoadBMP(path);
+    if(surface != NULL) {
+        renderer = in_renderer;
+        cur_ticks = SDL_GetTicks();
+        last_ticks = SDL_GetTicks();
+        m_spritesheet_image = SDL_CreateTextureFromSurface(renderer, surface);
+        SDL_FreeSurface(surface);
+    } else {
+        cerr << "Sprite sheet is NULL\t" << SDL_GetError() << endl;
+    }
     m_clip.x = x;
     m_clip.y = y;
     m_clip.w = w;
@@ -74,7 +89,7 @@ void SpriteSheet::next_sprite()    {
 }
 
 //  Bases position off center of input rectangle    
-void SpriteSheet::draw_qbert(SDL_Rect *render_rect)  {
+void SpriteSheet::draw(SDL_Rect *render_rect)  {
     next_sprite();
     render_rect->x -= (render_rect->w)/2;
     render_rect->y -= (render_rect->h)/2;

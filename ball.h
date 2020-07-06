@@ -2,14 +2,19 @@
 #define BALL_H
 
 #include <iostream>
+#include <stdlib.h>
 #include "creature.h"
 using namespace std;
 
 class Ball : public Creature {
     private:
     public:
-        void move();
+        Ball(Board*, SpriteSheet*);
         void spawn() override;
-        void animate() override;
         void jump() override;
-}
+
+
+        void move();
+};
+
+#endif

@@ -33,16 +33,19 @@ class SpriteSheet {
         const static int TR = 3;
 
         //  Default constructor only here so can be assigned dynamically
+        SpriteSheet();
         SpriteSheet(char const *path, SDL_Renderer* renderer);
-        void set_up( int x,
-                int y,
-                int w,
-                int h,
-                int max_sprite,
-                int c_ticks,
-                bool directional);
+        void set_up(char const *path, 
+                    SDL_Renderer* renderer,
+                    int x,
+                    int y,
+                    int w,
+                    int h,
+                    int max_sprite,
+                    int c_ticks,
+                    bool directional);
         ~SpriteSheet();
-        void draw_qbert(SDL_Rect *position);
+        void draw(SDL_Rect *position);
 
         void set_offsets(   int bl_x, int bl_y,
                             int br_x, int br_y,

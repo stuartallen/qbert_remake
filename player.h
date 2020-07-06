@@ -11,7 +11,6 @@ class Player : public Creature {
         Player(Board*, SpriteSheet*);
 
         void spawn();
-        void animate();
         void jump();
 };
 

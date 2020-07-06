@@ -4,11 +4,13 @@
 #include <iostream>
 #include <time.h>
 #include <string.h>
+#include <stdlib.h>
 #include "board.h"
 #include "sound.h"
 #include "creature.h"
 #include "player.h"
 #include "spriteSheet.h"
+#include "ball.h"
 
 #include <SDL.h>
 #include <SDL_mixer.h>
@@ -52,6 +54,9 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    //  Seed random
+    srand( time(NULL));
+
     //  Initialize sounds
     Sound** sounds = setUpSounds();
 
@@ -70,16 +75,21 @@ void guiMainLoop(Board& board, Sound** sounds)  {
     board.set_screen_size(screen_width, screen_height);
 
     //  Set up sprites
-    SpriteSheet* sprites = new SpriteSheet(SPRITE_SHEET, renderer);
+    SpriteSheet* sprites = new SpriteSheet[2];
     // offset_x, offset_y, width, height, frames, time in frame
-    sprites[0].set_up(76 + 30, 0, 30, 48, 3, 100, true);
+    sprites[0].set_up(SPRITE_SHEET, renderer, 76 + 30, 0, 30, 48, 3, 100, true);
     sprites[0].set_offsets( 76 + 30, 0,
                             76 + 4 * 30, 0,
                             76 + 30, 48,
                             76 + 4 * 30, 48);
+    //sprites[1].set_up(SPRITE_SHEET, renderer, )
     Player player(&board, sprites);
     player.set_renderer(renderer);
     player.set_jump_sound(sounds[0]);
+
+    Ball red_ball(&board, sprites);
+    red_ball.set_renderer(renderer);
+
 
     bool got_quit_event = false;
     while (!got_quit_event) {
@@ -95,6 +105,7 @@ void guiMainLoop(Board& board, Sound** sounds)  {
         // draw foreground & player
         board.animate();
         player.animate();
+        red_ball.animate();
 
         // present to screen
         SDL_RenderPresent(renderer);

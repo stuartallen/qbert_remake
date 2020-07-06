@@ -30,6 +30,12 @@ Creature::~Creature() {
 
 void Creature::animate() {
     set_screen_pos();
+    SDL_Rect rect;
+    rect.x = x_pos;
+    rect.y = y_pos;
+    rect.w = 100;
+    rect.h = 100;
+    sprites->draw(&rect);
 }
 
 void Creature::set_screen_pos() {
