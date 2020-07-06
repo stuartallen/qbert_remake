@@ -99,3 +99,7 @@ bool Creature::on_board() {
             col >= 0 &&
             row < board->get_board_len() - col;
 }
+
+void Creature::set_sprite_dir(int dir) {
+    sprites->set_dir(dir);
+}

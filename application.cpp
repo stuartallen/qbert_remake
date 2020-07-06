@@ -72,8 +72,11 @@ void guiMainLoop(Board& board, Sound** sounds)  {
     //  Set up sprites
     SpriteSheet* sprites = new SpriteSheet(SPRITE_SHEET, renderer);
     // offset_x, offset_y, width, height, frames, time in frame
-    sprites[0].set_up(76, 0, 30, 48, 4, 100);
-
+    sprites[0].set_up(76 + 30, 0, 30, 48, 3, 100, true);
+    sprites[0].set_offsets( 76 + 30, 0,
+                            76 + 4 * 30, 0,
+                            76 + 30, 48,
+                            76 + 4 * 30, 48);
     Player player(&board, sprites);
     player.set_renderer(renderer);
     player.set_jump_sound(sounds[0]);
@@ -111,15 +114,19 @@ void keyEvent(Player& player, bool& got_quit_event, SDL_Event& event, Sound** so
                 got_quit_event = true;
                 break;
             case SDLK_w:
+                player.set_sprite_dir(SpriteSheet::TR);
                 player.move(0,-1);
                 break;
             case SDLK_a:
+                player.set_sprite_dir(SpriteSheet::TL);
                 player.move(-1,0);
                 break;
             case SDLK_s:
+                player.set_sprite_dir(SpriteSheet::BL);
                 player.move(0,1);
                 break;
             case SDLK_d:
+                player.set_sprite_dir(SpriteSheet::BR);
                 player.move(1,0);
                 break;
             }
