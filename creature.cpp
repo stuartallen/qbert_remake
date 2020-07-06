@@ -38,8 +38,8 @@ void Creature::set_screen_pos() {
         x_pos = jump_x;
         y_pos = jump_y;
     } else {
-        x_pos = board->get_x_orig() + board->get_x_mov() * old_row - board->get_x_mov() * old_col + jump_x;
-        y_pos = board->get_y_orig() + board->get_y_mov() * old_row + board->get_y_mov() * old_col - board->get_orig_to_on_top() + jump_y;
+        x_pos = board->get_x_orig() + board->get_x_mov() * old_row - board->get_x_mov() * old_col;
+        y_pos = board->get_y_orig() + board->get_y_mov() * old_row + board->get_y_mov() * old_col - board->get_orig_to_on_top();
     }
 }
 
@@ -79,8 +79,6 @@ void Creature::jump() {
     } else {
         old_row = row;
         old_col = col;
-        jump_x = 0;
-        jump_y = 0;
         jumping = false;
         start_jump_time = 0;
     }
