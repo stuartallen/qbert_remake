@@ -95,7 +95,8 @@ void Creature::jump() {
 
 void Creature::set_renderer(SDL_Renderer* in_renderer) {    renderer = in_renderer; }
 void Creature::set_jump_sound(Sound* js) {  jump_sound = js;    }
-
+int Creature::get_old_row() {   return old_row; }
+int Creature::get_old_col() {   return old_col; }
 int Creature::get_row() {   return row; }
 int Creature::get_col() {   return col; }
 

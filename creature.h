@@ -59,6 +59,8 @@ class Creature {
         void set_renderer(SDL_Renderer*);
         void set_jump_sound(Sound*);
 
+        int get_old_row();
+        int get_old_col();
         int get_row();
         int get_col();
         //  returns row and col concatenated

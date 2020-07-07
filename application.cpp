@@ -112,11 +112,10 @@ void guiMainLoop(Board& board, Sound** sounds)  {
         SDL_RenderClear(renderer);
 
         // draw foreground & player
-        if(player.get_col() >= 0 && player.get_row() >= 0) {
+        if(player.get_old_row() >= 0 && player.get_old_col() >= 0) {
             board.animate();
             player.animate();
         } else {
-            //SDL_Delay(500);
             player.animate();
             board.animate();
         }
