@@ -111,9 +111,15 @@ void guiMainLoop(Board& board, Sound** sounds)  {
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
 
-        // draw foreground & playerx
-        board.animate();
-        player.animate();
+        // draw foreground & player
+        if(player.get_col() >= 0 && player.get_row() >= 0) {
+            board.animate();
+            player.animate();
+        } else {
+            //SDL_Delay(500);
+            player.animate();
+            board.animate();
+        }
         red_ball.animate();
 
         // present to screen

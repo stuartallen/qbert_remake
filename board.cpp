@@ -65,7 +65,6 @@ void Board::draw_cube(unsigned int x, unsigned int y, unsigned int row, unsigned
 
 //  draws all the platforms
 void Board::animate() {
-    SDL_RenderClear(renderer);
     for(int i = 0; i < BOARD_LEN; i++) {
         for(int j = 0; j < BOARD_LEN - i; j++) {
             unsigned int x_pos = x_orig + x_mov * i - x_mov * j;
