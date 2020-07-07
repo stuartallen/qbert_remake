@@ -3,6 +3,7 @@
 using namespace std;
 
 Player::Player(Board* in_board, SpriteSheet* in_sprites) {
+    JUMP_TIME = 500;
     row = 0;
     col = 0;
     board = in_board;

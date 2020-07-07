@@ -25,7 +25,7 @@ class Creature {
         int jump_x;
         int jump_y;
         bool jumping;
-        const int JUMP_TIME = 500;
+        int JUMP_TIME;
         const int JUMP_HEIGHT = 100;
         unsigned int start_jump_time;
         Sound* jump_sound = nullptr;

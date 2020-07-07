@@ -27,7 +27,8 @@
 #include <windows.h>
 #endif
 
-#define MUS_PATH "jump-9.wav"
+#define QBERT_JUMP "jump-9.wav"
+#define ENEMY_JUMP "jump-5.wav"
 #define SPRITE_SHEET "QBert3Sheet1.bmp"
 
 using namespace std;
@@ -82,13 +83,16 @@ void guiMainLoop(Board& board, Sound** sounds)  {
                             76 + 4 * 30, 0,
                             76 + 30, 48,
                             76 + 4 * 30, 48);
-    //sprites[1].set_up(SPRITE_SHEET, renderer, )
-    Player player(&board, sprites);
+    //  122 to 147, 173 to 198, 148 to 172
+    //  98 to 130
+    sprites[1].set_up(SPRITE_SHEET, renderer, 122, 98, 25, 32, 3, 200, false);
+    Player player(&board, &sprites[0]);
     player.set_renderer(renderer);
     player.set_jump_sound(sounds[0]);
 
-    Ball red_ball(&board, sprites);
+    Ball red_ball(&board, &sprites[1]);
     red_ball.set_renderer(renderer);
+    red_ball.set_jump_sound(sounds[1]);
 
 
     bool got_quit_event = false;
@@ -148,8 +152,9 @@ void keyEvent(Player& player, bool& got_quit_event, SDL_Event& event, Sound** so
 //  Sets up all the sounds for the entire game
 //  TODO Make the sounds initialized here
 Sound** setUpSounds() {
-    Sound** sounds = new Sound*[1];
-    sounds[0] = new Sound(MUS_PATH);
+    Sound** sounds = new Sound*[2];
+    sounds[0] = new Sound(QBERT_JUMP);
+    sounds[1] = new Sound(ENEMY_JUMP);
     return sounds;
 }
 
