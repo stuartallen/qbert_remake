@@ -39,11 +39,13 @@ void Creature::animate() {
 }
 
 void Creature::set_screen_pos() {
-    if(jumping) {   
+    if(!board->in_board(old_row, old_col)) {
+        y_pos += 10;
+    } else if(jumping) {   
         jump(); 
         x_pos = jump_x;
         y_pos = jump_y;
-    } else {
+    } else {    
         x_pos = board->get_x_orig() + board->get_x_mov() * old_row - board->get_x_mov() * old_col;
         y_pos = board->get_y_orig() + board->get_y_mov() * old_row + board->get_y_mov() * old_col - board->get_orig_to_on_top();
     }

@@ -87,7 +87,9 @@ void Board::set_screen_size(int in_w, int in_h) {
 
 //  returns if a row and column is in the board 
 bool Board::in_board(int r, int c) {
-    return r < BOARD_LEN && c < BOARD_LEN;
+    return  r >= 0 &&
+            c >= 0 &&
+            r + c < BOARD_LEN;
 }
 
 //  returns if all the colors are the final color   
