@@ -29,6 +29,9 @@
 
 #define QBERT_JUMP "jump-9.wav"
 #define ENEMY_JUMP "jump-5.wav"
+#define COLLIDE "explode-3.wav"
+#define FALL_LOSE "lose-5.wav"
+
 #define SPRITE_SHEET "QBert3Sheet1.bmp"
 
 using namespace std;
@@ -94,6 +97,8 @@ void guiMainLoop(Board& board, Sound** sounds)  {
     red_ball.set_renderer(renderer);
     red_ball.set_jump_sound(sounds[1]);
 
+    player.set_enemies(&red_ball, 1);
+    player.set_coll_sound(sounds[2]);
 
     bool got_quit_event = false;
     while (!got_quit_event) {
@@ -106,7 +111,7 @@ void guiMainLoop(Board& board, Sound** sounds)  {
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
 
-        // draw foreground & player
+        // draw foreground & playerx
         board.animate();
         player.animate();
         red_ball.animate();
@@ -152,9 +157,10 @@ void keyEvent(Player& player, bool& got_quit_event, SDL_Event& event, Sound** so
 //  Sets up all the sounds for the entire game
 //  TODO Make the sounds initialized here
 Sound** setUpSounds() {
-    Sound** sounds = new Sound*[2];
+    Sound** sounds = new Sound*[3];
     sounds[0] = new Sound(QBERT_JUMP);
     sounds[1] = new Sound(ENEMY_JUMP);
+    sounds[2] = new Sound(COLLIDE);
     return sounds;
 }
 

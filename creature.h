@@ -63,6 +63,8 @@ class Creature {
         int get_col();
         //  returns row and col concatenated
         int get_pos();
+        int get_x_pos();
+        int get_y_pos();
         bool on_board();
 
         void set_sprite_dir(int);

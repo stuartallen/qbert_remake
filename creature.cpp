@@ -39,8 +39,9 @@ void Creature::animate() {
 }
 
 void Creature::set_screen_pos() {
-    if(!board->in_board(old_row, old_col)) {
+    if(!on_board()) {
         y_pos += 10;
+        x_pos = board->get_x_orig() + board->get_x_mov() * row - board->get_x_mov() * col;
     } else if(jumping) {   
         jump(); 
         x_pos = jump_x;
@@ -103,11 +104,14 @@ int Creature::get_pos() {
 }
 
 bool Creature::on_board() {
-    return  row >= 0 &&
-            col >= 0 &&
-            row < board->get_board_len() - col;
+    return  old_row >= 0 &&
+            old_col >= 0 &&
+            old_row + old_col < board->get_board_len();
 }
 
 void Creature::set_sprite_dir(int dir) {
     sprites->set_dir(dir);
 }
+
+int Creature::get_x_pos() { return x_pos;   }
+int Creature::get_y_pos() { return y_pos;   }
