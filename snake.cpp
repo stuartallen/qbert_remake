@@ -1,7 +1,7 @@
 #include "snake.h"
 
 Snake::Snake(Board* in_board, SpriteSheet* in_sprites) {
-    JUMP_TIME = 700;
+    JUMP_TIME = 1000;
     ball = new Ball(in_board, in_sprites);
     board = in_board;
     sprites = in_sprites;
@@ -37,12 +37,19 @@ void Snake::animate() {
         }
     } else {
         if(transition_timer_done()) {
-            
             Creature::animate();
             float cur_dist = player_dist();
-            if(player_dist(row + 1, col) < cur_dist) {  move(1,0);  }
-            else if(player_dist(row, col + 1) < cur_dist) {  move(0,1);  }
-            else if(player_dist(row - 1, col) < cur_dist) {  move(-1,0);  }
+            int min_dir = 0;
+            float dists[4] = {player_dist(row + 1, col),
+                            player_dist(row, col + 1),
+                            player_dist(row - 1, col),
+                            player_dist(row, col - 1)};
+            for(int i = 1; i < 4; i++) {
+                if(dists[i] <= dists[min_dir]) { min_dir = i;   }
+            }
+            if(min_dir == 0) {  move(1,0); }
+            else if(min_dir == 1) { move(0,1); }
+            else if(min_dir == 2) { move(-1,0);  }
             else {  move(0,-1);  }
         } else {
             row = ball->get_old_row();
@@ -65,11 +72,11 @@ bool Snake::transition_timer_done() {
 }
 
 float Snake::player_dist() {
-    return pow(pow(row - player->get_old_row(), 2) + pow(col - player->get_old_col(), 2), 0.5);
+    return pow(pow((float) (row - player->get_old_row()), 2) + pow((float) (col - player->get_old_col()), 2), 0.5);
 }
 
 float Snake::player_dist(int r, int c) {
-    return pow(pow(r - player->get_old_row(), 2) + pow(c - player->get_old_col(), 2), 0.5);
+    return pow(pow((float) (r - player->get_old_row()), 2) + pow((float) (c - player->get_old_col()), 2), 0.5);
 }
 
 bool Snake::check_if_bottom() {
