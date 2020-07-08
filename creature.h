@@ -70,6 +70,8 @@ class Creature {
         bool on_board();
 
         void set_sprite_dir(int);
+
+        SpriteSheet* get_sprites();
 };
 
 #endif

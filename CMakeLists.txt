@@ -8,7 +8,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_executable(qbert 
   application.cpp board.cpp sound.cpp creature.cpp player.cpp
-  spriteSheet.cpp ball.cpp
+  spriteSheet.cpp ball.cpp snake.cpp
   )
 
 # ======================================================================

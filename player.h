@@ -9,7 +9,7 @@ using namespace std;
 
 class Player : public Creature {
     private:
-        Creature* enemies;
+        Creature** enemies;
         int num_enemies = 0;
         bool alive;
 
@@ -19,7 +19,7 @@ class Player : public Creature {
         Player(Board*, SpriteSheet*);
         void set_coll_sound(Sound*);
         void set_fall_sound(Sound*);
-        void set_enemies(Creature*, int);
+        void set_enemies(Creature**, int);
         void spawn();
         void jump();
         void animate();

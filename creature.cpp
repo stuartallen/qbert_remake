@@ -116,3 +116,4 @@ void Creature::set_sprite_dir(int dir) {
 
 int Creature::get_x_pos() { return x_pos;   }
 int Creature::get_y_pos() { return y_pos;   }
+SpriteSheet* Creature::get_sprites() {  return sprites; }

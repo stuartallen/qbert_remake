@@ -11,6 +11,7 @@
 #include "player.h"
 #include "spriteSheet.h"
 #include "ball.h"
+#include "snake.h"
 
 #include <SDL.h>
 #include <SDL_mixer.h>
@@ -28,7 +29,8 @@
 #endif
 
 #define QBERT_JUMP "jump-9.wav"
-#define ENEMY_JUMP "jump-5.wav"
+#define BALL_JUMP "jump-5.wav"
+#define SNAKE_JUMP "jump-4.wav"
 #define COLLIDE "explode-3.wav"
 #define FALL_LOSE "lose-5.wav"
 
@@ -79,7 +81,7 @@ void guiMainLoop(Board& board, Sound** sounds)  {
     board.set_screen_size(screen_width, screen_height);
 
     //  Set up sprites
-    SpriteSheet* sprites = new SpriteSheet[2];
+    SpriteSheet* sprites = new SpriteSheet[3];
     // offset_x, offset_y, width, height, frames, time in frame
     sprites[0].set_up(SPRITE_SHEET, renderer, 76 + 30, 0, 30, 48, 3, 100, true);
     sprites[0].set_offsets( 76 + 30, 0,
@@ -89,6 +91,7 @@ void guiMainLoop(Board& board, Sound** sounds)  {
     //  122 to 147, 173 to 198, 148 to 172
     //  98 to 130
     sprites[1].set_up(SPRITE_SHEET, renderer, 122, 98, 25, 32, 3, 200, false);
+    sprites[2].set_up(SPRITE_SHEET, renderer, 193, 98, 30, 32, 3, 200, false);
     Player player(&board, &sprites[0]);
     player.set_renderer(renderer);
     player.set_jump_sound(sounds[0]);
@@ -97,7 +100,16 @@ void guiMainLoop(Board& board, Sound** sounds)  {
     red_ball.set_renderer(renderer);
     red_ball.set_jump_sound(sounds[1]);
 
-    player.set_enemies(&red_ball, 1);
+    Snake snake(&board, &sprites[2]);
+    snake.set_renderer(renderer);
+    snake.set_jump_sound(sounds[4]);
+    snake.set_player(&player);
+
+    Creature** enemies = new Creature*[2];
+    enemies[0] = &red_ball;
+    enemies[1] = &snake;
+
+    player.set_enemies(enemies, 2);
     player.set_coll_sound(sounds[2]);
     player.set_fall_sound(sounds[3]);
 
@@ -120,6 +132,7 @@ void guiMainLoop(Board& board, Sound** sounds)  {
             player.animate();
             board.animate();
         }
+        snake.animate();
         red_ball.animate();
 
         // present to screen
@@ -163,11 +176,12 @@ void keyEvent(Player& player, bool& got_quit_event, SDL_Event& event, Sound** so
 //  Sets up all the sounds for the entire game
 //  TODO Make the sounds initialized here
 Sound** setUpSounds() {
-    Sound** sounds = new Sound*[4];
+    Sound** sounds = new Sound*[5];
     sounds[0] = new Sound(QBERT_JUMP);
-    sounds[1] = new Sound(ENEMY_JUMP);
+    sounds[1] = new Sound(BALL_JUMP);
     sounds[2] = new Sound(COLLIDE);
     sounds[3] = new Sound(FALL_LOSE);
+    sounds[4] = new Sound(SNAKE_JUMP);
     return sounds;
 }
 
