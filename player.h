@@ -23,8 +23,6 @@ class Player : public Creature {
         void spawn();
         void jump();
         void animate();
-
-        bool on_board();
 };
 
 #endif

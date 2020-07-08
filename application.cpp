@@ -99,6 +99,7 @@ void guiMainLoop(Board& board, Sound** sounds)  {
 
     player.set_enemies(&red_ball, 1);
     player.set_coll_sound(sounds[2]);
+    player.set_fall_sound(sounds[3]);
 
     bool got_quit_event = false;
     while (!got_quit_event) {
@@ -162,10 +163,11 @@ void keyEvent(Player& player, bool& got_quit_event, SDL_Event& event, Sound** so
 //  Sets up all the sounds for the entire game
 //  TODO Make the sounds initialized here
 Sound** setUpSounds() {
-    Sound** sounds = new Sound*[3];
+    Sound** sounds = new Sound*[4];
     sounds[0] = new Sound(QBERT_JUMP);
     sounds[1] = new Sound(ENEMY_JUMP);
     sounds[2] = new Sound(COLLIDE);
+    sounds[3] = new Sound(FALL_LOSE);
     return sounds;
 }
 

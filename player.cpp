@@ -15,6 +15,10 @@ void Player::set_coll_sound(Sound* in_s) {
     coll_sound = in_s;
 }
 
+void Player::set_fall_sound(Sound* in_s) {
+    fall_sound = in_s;
+}
+
 void Player::set_enemies(Creature* in_enemies, int in_num_enemies) {
     enemies = in_enemies;
     num_enemies = in_num_enemies;
@@ -31,8 +35,14 @@ void Player::jump() {
 }
 
 void Player::animate() {
+    if(!on_board()) {   
+        if(alive) {
+            fall_sound->play();
+        }
+        alive = false;  
+    }
+    Creature::animate();
     if(alive) {
-        Creature::animate();
         for(int i = 0; i < num_enemies; i++) {
             if( enemies[i].get_x_pos() <= x_pos && 
                 enemies[i].get_x_pos() + 100 >= x_pos &&
@@ -42,5 +52,7 @@ void Player::animate() {
                 coll_sound->play();
             }
         }
-    } else {}
+    } else {
+        
+    }
 }
