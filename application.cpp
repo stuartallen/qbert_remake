@@ -104,6 +104,7 @@ void guiMainLoop(Board& board, Sound** sounds)  {
     snake.set_renderer(renderer);
     snake.set_jump_sound(sounds[4]);
     snake.set_player(&player);
+    snake.set_snake_sprite(&sprites[1]);
 
     Creature** enemies = new Creature*[2];
     enemies[0] = &red_ball;

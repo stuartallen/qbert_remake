@@ -19,6 +19,10 @@ void Snake::set_jump_sound(Sound* in_s) {
     ball->set_jump_sound(in_s);
 }
 
+void Snake::set_snake_sprite(SpriteSheet* in_s) {
+    sprites = in_s;
+}
+
 void Snake::set_player(Player* in_p) {
     player = in_p;
 }
@@ -26,17 +30,14 @@ void Snake::set_player(Player* in_p) {
 void Snake::animate() {
     if(!snake_mode) {
         snake_mode = check_if_bottom();
-        row = ball->get_row();
-        col = ball->get_col();
         if(!snake_mode) {
             ball->animate();
         } else {
             timer_start = SDL_GetTicks();
-            old_row = row;
-            old_col = col;
         }
     } else {
         if(transition_timer_done()) {
+            
             Creature::animate();
             float cur_dist = player_dist();
             if(player_dist(row + 1, col) < cur_dist) {  move(1,0);  }
@@ -44,13 +45,17 @@ void Snake::animate() {
             else if(player_dist(row - 1, col) < cur_dist) {  move(-1,0);  }
             else {  move(0,-1);  }
         } else {
-            //  stays still
+            row = ball->get_old_row();
+            col = ball->get_old_col();
+            old_row = row;
+            old_col = col;
             SDL_Rect rect;
             rect.x = ball->get_x_pos();
             rect.y = ball->get_y_pos();
             rect.w = 100;
             rect.h = 100;
             ball->get_sprites()->draw(&rect);
+            //cout << old_row << row << old_col << col << endl;
         }
     }
 }
@@ -68,5 +73,5 @@ float Snake::player_dist(int r, int c) {
 }
 
 bool Snake::check_if_bottom() {
-    return (row + col) == board->get_board_len();
+    return (ball->get_old_row() + ball->get_old_col()) == board->get_board_len() - 1;
 }
