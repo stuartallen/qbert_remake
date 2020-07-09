@@ -41,7 +41,6 @@ void Player::animate() {
         }
         alive = false;  
     }
-    Creature::animate();
     if(alive) {
         for(int i = 0; i < num_enemies; i++) {
             if( enemies[i]->get_x_pos() <= x_pos && 
@@ -51,6 +50,9 @@ void Player::animate() {
                 alive = false;
                 coll_sound->play();
             }
+            Creature::animate();
         }
-    } else {}
+    } else {
+
+    }
 }
