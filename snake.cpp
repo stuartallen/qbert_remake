@@ -1,7 +1,7 @@
 #include "snake.h"
 
 Snake::Snake(Board* in_board, SpriteSheet* in_sprites) {
-    JUMP_TIME = 1000;
+    JUMP_TIME = 700;
     ball = new Ball(in_board, in_sprites);
     board = in_board;
     sprites = in_sprites;

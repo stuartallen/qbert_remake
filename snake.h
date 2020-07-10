@@ -8,7 +8,7 @@
 
 class Snake : public Creature {
     private:
-        const int WAIT_TIME = 5000;
+        const int WAIT_TIME = 3000;
         int timer_start;
 
         Player* player;

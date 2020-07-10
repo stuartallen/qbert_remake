@@ -36,6 +36,7 @@ void Player::jump() {
 
 void Player::animate() {
     if(!on_board()) {   
+        Creature::animate();
         if(alive) {
             fall_sound->play();
         }
@@ -52,7 +53,5 @@ void Player::animate() {
             }
             Creature::animate();
         }
-    } else {
-
-    }
+    } else {    }
 }
