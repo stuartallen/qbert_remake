@@ -12,6 +12,7 @@
 #include "spriteSheet.h"
 #include "ball.h"
 #include "snake.h"
+#include "platform.h"
 
 #include <SDL.h>
 #include <SDL_mixer.h>
@@ -114,6 +115,8 @@ void guiMainLoop(Board& board, Sound** sounds)  {
     player.set_coll_sound(sounds[2]);
     player.set_fall_sound(sounds[3]);
 
+    Platform platform(&board, &sprites[0]);
+
     bool got_quit_event = false;
     while (!got_quit_event) {
         SDL_Event event;
@@ -126,6 +129,7 @@ void guiMainLoop(Board& board, Sound** sounds)  {
         SDL_RenderClear(renderer);
 
         // draw foreground & player
+        platform.animate();
         if(player.get_old_row() >= 0 && player.get_old_col() >= 0) {
             board.animate();
             player.animate();
