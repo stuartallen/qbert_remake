@@ -13,6 +13,7 @@
 #include "ball.h"
 #include "snake.h"
 #include "platform.h"
+#include "game.h"
 
 #include <SDL.h>
 #include <SDL_mixer.h>
