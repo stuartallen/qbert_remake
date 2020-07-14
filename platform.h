@@ -21,9 +21,9 @@ class Platform {
         Board* board;
         SpriteSheet* sprites;
 
-        const int JUMP_HEIGHT = 100;
+        const int JUMP_HEIGHT = 200;
         const int MOVE_TIME = 2000;
-        bool start_move;
+        bool start_move = false;
         bool moving = false;
         int start_move_time;
         void set_bez_pts();
@@ -35,7 +35,8 @@ class Platform {
         void set_loc(int, int);
         void animate();
 
-        int* get_pos();
+        int get_x_pos();
+        int get_y_pos();
         int get_row();
         int get_col();
         void start_moving();

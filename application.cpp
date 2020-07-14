@@ -111,7 +111,7 @@ void guiMainLoop(Board& board, Sound** sounds)  {
     enemies[0] = &red_ball;
     enemies[1] = &snake;
 
-    Platform platform(&board, &sprites[0]);
+    Platform platform(&board, &sprites[1]);
 
     player.set_enemies(enemies, 2);
     player.set_coll_sound(sounds[2]);
@@ -130,13 +130,14 @@ void guiMainLoop(Board& board, Sound** sounds)  {
         SDL_RenderClear(renderer);
 
         // draw foreground & player
-        platform.animate();
         if(player.get_old_row() >= 0 && player.get_old_col() >= 0) {
             board.animate();
+            platform.animate();
             player.animate();
         } else {
             player.animate();
             board.animate();
+            platform.animate();
         }
         snake.animate();
         red_ball.animate();

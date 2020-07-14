@@ -41,7 +41,6 @@ void Player::jump() {
 
 void Player::animate() {
     if(!on_board()) {   
-        Creature::animate();
         if(alive) {
             if(!transporting) {
                 for(int i = 0; i < num_platforms; i++) {
@@ -53,17 +52,34 @@ void Player::animate() {
                 }
             }
             if(transporting) {
-                int* loc = platforms[plat_id].get_pos();
-                x_pos = loc[0];
-                y_pos = loc[1];
+                x_pos = platforms[plat_id].get_x_pos();
+                y_pos = platforms[plat_id].get_y_pos();
+                SDL_Rect rect;
+                rect.x = x_pos;
+                rect.y = y_pos;
+                rect.w = 100;
+                rect.h = 100;
+                sprites->draw(&rect);
+
+                int* orig = board->get_cube_location(0,0);
+                transporting = x_pos != orig[0] && y_pos != orig[1];
+                /*
+                if(!transporting) {
+                    row = 0;
+                    col = 0;
+                }*/
+                delete orig;
             } else {
                 fall_sound->play();
                 alive = false;  
+                Creature::animate();
             }
         }
     }
     if(alive) {
-        Creature::animate();
+        if(!transporting) {
+            Creature::animate();
+        }
         for(int i = 0; i < num_enemies; i++) {
             if( enemies[i]->get_x_pos() <= x_pos && 
                 enemies[i]->get_x_pos() + 50 >= x_pos &&
@@ -74,4 +90,10 @@ void Player::animate() {
             }
         }
     } else {    }
+}
+
+void Player::set_screen_pos() {
+    if(!transporting) {
+        Creature::set_screen_pos();
+    }
 }

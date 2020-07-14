@@ -2,7 +2,7 @@
 
 void Platform::set_bez_pts() {
     bez_pts[0][0] = x_pos; bez_pts[0][1] = y_pos;
-    int* orig = board->get_cube_location(-1,-1);
+    int* orig = board->get_cube_location(0,0);
     bez_pts[1][0] = 2 * x_pos/3 + orig[0]/3;  bez_pts[1][1] = 2 * y_pos/3 + orig[1]/3 - JUMP_HEIGHT;
     bez_pts[2][0] = x_pos/3 + 2 * orig[0]/3;  bez_pts[2][1] = y_pos/3 + 2 * orig[1]/3 - JUMP_HEIGHT;
     bez_pts[3][0] = orig[0];  bez_pts[3][1] = orig[1];
@@ -75,13 +75,8 @@ void Platform::animate() {
     sprites->draw(&rect);
 }
 
-int* Platform::get_pos() {
-    int* pos = new int[2];
-    pos[0] = x_pos;
-    pos[1] = y_pos;
-    return pos;
-}
-
+int Platform::get_x_pos() { return x_pos;   }
+int Platform::get_y_pos() { return y_pos;   }
 int Platform::get_row() { return row;   }
 int Platform::get_col() { return col;   }
 void Platform::start_moving() {    start_move = true;   }

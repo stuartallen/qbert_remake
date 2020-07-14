@@ -31,6 +31,7 @@ class Player : public Creature {
         void spawn();
         void jump();
         void animate();
+        void set_screen_pos();
 };
 
 #endif
