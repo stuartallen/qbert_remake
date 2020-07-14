@@ -21,6 +21,7 @@ void Platform::move() {
         col = -1;
         moving = false;
         start_move_time = 0;
+        used = true;
     }
 }
 
@@ -59,21 +60,23 @@ void Platform::set_loc(int r, int c) {
 }
 
 void Platform::animate() {
-    if(start_move) {
-        start_move_time = SDL_GetTicks();
-        set_bez_pts();
-        moving = true;
-        start_move = false;
+    if(!used) {
+        if(start_move) {
+            start_move_time = SDL_GetTicks();
+            set_bez_pts();
+            moving = true;
+            start_move = false;
+        }
+        if(moving) {
+            move();
+        }
+        SDL_Rect rect;
+        rect.x = x_pos;
+        rect.y = y_pos;
+        rect.w = 100;
+        rect.h = 100;
+        sprites->draw(&rect);
     }
-    if(moving) {
-        move();
-    }
-    SDL_Rect rect;
-    rect.x = x_pos;
-    rect.y = y_pos;
-    rect.w = 100;
-    rect.h = 100;
-    sprites->draw(&rect);
 }
 
 int Platform::get_x_pos() { return x_pos;   }
