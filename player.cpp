@@ -68,6 +68,7 @@ void Player::animate() {
                     old_col = 0;
                     row = 0;
                     col = 0;
+                    board->update_color(0,0);
                 }
             } else {
                 fall_sound->play();
