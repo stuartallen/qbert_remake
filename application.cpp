@@ -135,9 +135,9 @@ void guiMainLoop(Board& board, Sound** sounds)  {
             platform.animate();
             player.animate();
         } else {
+            platform.animate();
             player.animate();
             board.animate();
-            platform.animate();
         }
         snake.animate();
         red_ball.animate();
