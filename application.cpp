@@ -46,6 +46,8 @@ SDL_Renderer* set_up_renderer(SDL_Window*);
 void destroy_window_renderer(SDL_Window*, SDL_Renderer*);
 
 //  My functions
+void test_game();
+
 Sound** setUpSounds();
 void guiMainLoop(Board&, Sound**);
 void keyEvent(Player&, bool&, SDL_Event&, Sound**);
@@ -69,8 +71,17 @@ int main(int argc, char* argv[]) {
     Sound** sounds = setUpSounds();
 
     Board board;
-    guiMainLoop(board, sounds);
+    //guiMainLoop(board, sounds);
+    test_game();
     return 0;
+}
+
+void test_game() {
+    int screen_width, screen_height;
+    SDL_Window* window = set_up_window(screen_width, screen_height);
+    SDL_Renderer* renderer = set_up_renderer(window);
+
+    Game game(renderer);
 }
 
 //  does animating for game
@@ -79,6 +90,7 @@ void guiMainLoop(Board& board, Sound** sounds)  {
     SDL_Window* window = set_up_window(screen_width, screen_height);
     SDL_Renderer* renderer = set_up_renderer(window);
 
+    
     board.set_renderer(renderer);
     board.set_screen_size(screen_width, screen_height);
 
