@@ -122,7 +122,7 @@ Board::~Board() {
 int Board::get_board_len() {    return BOARD_LEN;   }
 int Board::get_x_orig() {   return x_orig;  }
 int Board::get_y_orig() {   return y_orig;  }
-int Board::get_orig_to_on_top() {   return (int)(SQUARE_WIDTH * HEIGHT_DILATION);  }
+int Board::get_orig_to_on_top() {   return (int)(SQUARE_WIDTH * HEIGHT_DILATION + 10);  }
 int Board::get_x_mov() {    return x_mov;   }
 int Board::get_y_mov() {    return y_mov;   }
 
