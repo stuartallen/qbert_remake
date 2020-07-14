@@ -24,6 +24,11 @@ void Player::set_enemies(Creature** in_enemies, int in_num_enemies) {
     num_enemies = in_num_enemies;
 }
 
+void Player::set_platforms(Platform* in_platforms, int num_plats) {
+    platforms = in_platforms;
+    num_platforms = num_plats;
+}
+
 void Player::spawn() {
     row = 0;
     col = 0;
@@ -38,20 +43,35 @@ void Player::animate() {
     if(!on_board()) {   
         Creature::animate();
         if(alive) {
-            fall_sound->play();
+            if(!transporting) {
+                for(int i = 0; i < num_platforms; i++) {
+                    if(row == platforms[i].get_row() && col == platforms[i].get_col()) {
+                        transporting = true;
+                        plat_id = i;
+                        platforms[plat_id].start_moving();
+                    }
+                }
+            }
+            if(transporting) {
+                int* loc = platforms[plat_id].get_pos();
+                x_pos = loc[0];
+                y_pos = loc[1];
+            } else {
+                fall_sound->play();
+                alive = false;  
+            }
         }
-        alive = false;  
     }
     if(alive) {
+        Creature::animate();
         for(int i = 0; i < num_enemies; i++) {
             if( enemies[i]->get_x_pos() <= x_pos && 
-                enemies[i]->get_x_pos() + 100 >= x_pos &&
+                enemies[i]->get_x_pos() + 50 >= x_pos &&
                 enemies[i]->get_y_pos() <= y_pos &&
-                enemies[i]->get_y_pos() + 100 >= y_pos) {
+                enemies[i]->get_y_pos() + 50 >= y_pos) {
                 alive = false;
                 coll_sound->play();
             }
-            Creature::animate();
         }
     } else {    }
 }

@@ -13,7 +13,6 @@ Creature::Creature() {
     for(int i = 0; i < 4; i++) {
         bez_pts[i] = new int[2];
     }
-    return; 
 }
 
 Creature::Creature(Board* in_board, SpriteSheet* in_sprites) {

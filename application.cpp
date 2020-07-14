@@ -111,11 +111,12 @@ void guiMainLoop(Board& board, Sound** sounds)  {
     enemies[0] = &red_ball;
     enemies[1] = &snake;
 
+    Platform platform(&board, &sprites[0]);
+
     player.set_enemies(enemies, 2);
     player.set_coll_sound(sounds[2]);
     player.set_fall_sound(sounds[3]);
-
-    Platform platform(&board, &sprites[0]);
+    player.set_platforms(&platform, 1);
 
     bool got_quit_event = false;
     while (!got_quit_event) {

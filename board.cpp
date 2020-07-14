@@ -78,8 +78,8 @@ void Board::set_screen_size(int in_w, int in_h) {
     screen_width = in_w;
     screen_height = in_h;
     x_orig = screen_width/2;
-    y_orig = screen_height/7 + get_orig_to_on_top();
-    SQUARE_WIDTH = screen_width/17;
+    y_orig = screen_height/4 + get_orig_to_on_top();
+    SQUARE_WIDTH = screen_width/19;
     x_mov = (unsigned int)(SQUARE_WIDTH * cos(2.0/6 * M_PI * 3 + 7*M_PI/6));
     y_mov = (unsigned int)(SQUARE_WIDTH*HEIGHT_DILATION * (sin(2.0/6 * M_PI * 4 + 7*M_PI/6) + sin(2.0/6 * M_PI * 3 + 7*M_PI/6)));
 }
