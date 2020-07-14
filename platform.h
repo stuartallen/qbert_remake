@@ -24,7 +24,7 @@ class Platform {
         const int JUMP_HEIGHT = 200;
         const int MOVE_TIME = 2000;
         bool start_move = false;
-        bool moving = false;
+        bool moving;
         int start_move_time;
         void set_bez_pts();
         void move();
@@ -40,6 +40,11 @@ class Platform {
         int get_row();
         int get_col();
         void start_moving();
+
+        int get_x_orig();
+        int get_y_orig();
+        bool get_moving();
+        bool get_start_moving();
 };
 
 #endif

@@ -26,6 +26,7 @@ void Platform::move() {
 
 //  Rows and cols are set as random lengths
 Platform::Platform(Board* in_board, SpriteSheet* in_sprites) {
+    moving = false;
     board = in_board;
     sprites = in_sprites;
     if(rand() % 2) {
@@ -80,3 +81,8 @@ int Platform::get_y_pos() { return y_pos;   }
 int Platform::get_row() { return row;   }
 int Platform::get_col() { return col;   }
 void Platform::start_moving() {    start_move = true;   }
+
+int Platform::get_x_orig() {    return bez_pts[3][0];   };
+int Platform::get_y_orig() {    return bez_pts[3][1];   };
+bool Platform::get_moving() {   return moving;  }
+bool Platform::get_start_moving() { return start_move;    }

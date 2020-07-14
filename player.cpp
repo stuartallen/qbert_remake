@@ -61,14 +61,14 @@ void Player::animate() {
                 rect.h = 100;
                 sprites->draw(&rect);
 
-                int* orig = board->get_cube_location(0,0);
-                transporting = x_pos != orig[0] && y_pos != orig[1];
-                /*
+                transporting = platforms[plat_id].get_moving() || platforms[plat_id].get_start_moving();
+                
                 if(!transporting) {
+                    old_row = 0;
+                    old_col = 0;
                     row = 0;
                     col = 0;
-                }*/
-                delete orig;
+                }
             } else {
                 fall_sound->play();
                 alive = false;  
