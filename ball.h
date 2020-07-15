@@ -15,6 +15,7 @@ class Ball : public Creature {
 
         void animate() override;
 
+        void set_spawned_true();
 };
 
 #endif

@@ -1,8 +1,6 @@
 #include "snake.h"
 
 Snake::Snake(Board* in_board, SpriteSheet* in_sprites) {
-    row = -1;
-    col = -1;
     JUMP_TIME = 700;
     ball = new Ball(in_board, in_sprites);
     ball->set_renderer(renderer);
@@ -18,11 +16,11 @@ Snake::~Snake() {
 
 void Snake::spawn() {
     ball->spawn();
-    old_row = 0;
-    old_col = 0;
-    row = 0;
-    col = 0;
-
+    old_row = ball->get_old_row();
+    old_col = ball->get_old_col();
+    row = old_row;
+    col = old_col;
+    //cout << ball->get_old_row() << ball->get_row() << ball->get_old_col() << ball->get_col() << endl;
     spawned = true;
     snake_mode = false;
 }
@@ -45,6 +43,7 @@ void Snake::animate() {
         if(!snake_mode) {
             snake_mode = check_if_bottom();
             if(!snake_mode) {
+                ball->set_spawned_true();
                 ball->animate();
             } else {
                 timer_start = SDL_GetTicks();
@@ -52,9 +51,7 @@ void Snake::animate() {
         } else {
             if(transition_timer_done()) {
                 Creature::animate();
-                //  Move the ball off the board
-                ball->move(-10,-10);
-                ball->set_screen_pos();
+                
                 float cur_dist = player_dist();
                 int min_dir = 0;
                 float dists[4] = {player_dist(row + 1, col),
@@ -69,6 +66,7 @@ void Snake::animate() {
                 else if(min_dir == 2) { move(-1,0);  }
                 else {  move(0,-1);  }
             } else {
+                ball->set_spawned_true();
                 row = ball->get_old_row();
                 col = ball->get_old_col();
                 old_row = row;
@@ -103,3 +101,4 @@ bool Snake::check_if_bottom() {
 }
 
 Ball* Snake::get_ball() {   return ball;    }
+

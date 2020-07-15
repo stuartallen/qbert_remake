@@ -10,9 +10,9 @@ Ball::Ball(Board* in_board, SpriteSheet* in_sprites) {
 void Ball::spawn() {
     spawned = true;
     if(rand() % 2 == 0) {
-        row = 0; col = 1;
-    } else {
         row = 1; col = 0;
+    } else {
+        row = 0; col = 1;
     }
     old_row = row;
     old_col = col;
@@ -31,3 +31,5 @@ void Ball::animate() {
 }
 
 void Ball::jump() { Creature::jump();   }
+
+void Ball::set_spawned_true() { spawned = true; }

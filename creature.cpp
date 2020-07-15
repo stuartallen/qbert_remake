@@ -38,8 +38,9 @@ void Creature::animate() {
 }
 
 void Creature::set_screen_pos() {
-    spawned = (y_pos < (board->get_y_mov() * board->get_board_len() * 2));
+    //spawned = (y_pos > (board->get_y_mov() * board->get_board_len() * 2));
     if(!on_board()) {
+        spawned = (y_pos > (board->get_y_mov() * board->get_board_len() * 2));
         y_pos += 10;
         x_pos = board->get_x_orig() + board->get_x_mov() * old_row - board->get_x_mov() * old_col;
     } else if(jumping) {   
