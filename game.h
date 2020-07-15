@@ -30,7 +30,7 @@ class Game {
         int screen_height;
 
         const int QBERT_SPRITE_ID = 0;
-        const int QBERT_X_SPRITE_POS = 116;
+        const int QBERT_X_SPRITE_POS = 106;
         const int QBERT_Y_SPRITE_POS = 0;
         const int QBERT_SPRITE_WIDTH = 30;
         const int QBERT_SPRITE_HEIGHT = 48;
@@ -62,7 +62,7 @@ class Game {
         Board* board;
         Player* player = nullptr;
         Creature** enemies = nullptr;
-        const int NUM_ENEMIES = 2;
+        const int NUM_ENEMIES = 3;
         Platform** platforms = nullptr;
         const int NUM_PLATFORMS = 2;
         Sound** sounds = nullptr;

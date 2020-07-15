@@ -12,7 +12,7 @@ class Player : public Creature {
     private:
         Creature** enemies;
         int num_enemies = 0;
-        Platform* platforms;
+        Platform** platforms;
         int num_platforms;
         bool alive;
 
@@ -27,7 +27,7 @@ class Player : public Creature {
         void set_coll_sound(Sound*);
         void set_fall_sound(Sound*);
         void set_enemies(Creature**, int);
-        void set_platforms(Platform*, int);
+        void set_platforms(Platform**, int);
         void spawn();
         void jump();
         void animate();

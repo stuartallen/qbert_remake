@@ -1,12 +1,5 @@
 #include "spriteSheet.h"
 
-/*
-const int QBERT_SPRITE_HEIGHT = 48;
-const int QBERT_SPRITE_WIDTH = 30;
-const int QBERT_SPRITE_OFFSET_X = 76;
-const int QBERT_SPRITE_OFFSET_Y = 0;
-*/
-
 SpriteSheet::SpriteSheet() {}
 
 SpriteSheet::SpriteSheet(   char const *path,
@@ -115,15 +108,3 @@ void SpriteSheet::set_offsets( int bl_x, int bl_y,
 void SpriteSheet::set_dir(int in_dir) {
     if(has_dir) {  cur_dir = in_dir;   }
 }
-
-/*
-void SpriteSheet::operator=(const SpriteSheet& in_sprite) {
-    renderer = in_sprite.renderer;
-    m_spritesheet_image = in_sprite.m_spritesheet_image;
-    m_clip = in_sprite.m_clip;
-    MAX_SPRITE = in_sprite.MAX_SPRITE;
-    if(in_sprite.has_dir) {
-        cur_dir = in_sprite.dir;
-    }
-}
-*/

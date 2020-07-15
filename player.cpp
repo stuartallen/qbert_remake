@@ -24,7 +24,7 @@ void Player::set_enemies(Creature** in_enemies, int in_num_enemies) {
     num_enemies = in_num_enemies;
 }
 
-void Player::set_platforms(Platform* in_platforms, int num_plats) {
+void Player::set_platforms(Platform** in_platforms, int num_plats) {
     platforms = in_platforms;
     num_platforms = num_plats;
 }
@@ -44,16 +44,16 @@ void Player::animate() {
         if(alive) {
             if(!transporting) {
                 for(int i = 0; i < num_platforms; i++) {
-                    if(row == platforms[i].get_row() && col == platforms[i].get_col()) {
+                    if(row == platforms[i]->get_row() && col == platforms[i]->get_col()) {
                         transporting = true;
                         plat_id = i;
-                        platforms[plat_id].start_moving();
+                        platforms[plat_id]->start_moving();
                     }
                 }
             }
             if(transporting) {
-                x_pos = platforms[plat_id].get_x_pos();
-                y_pos = platforms[plat_id].get_y_pos();
+                x_pos = platforms[plat_id]->get_x_pos();
+                y_pos = platforms[plat_id]->get_y_pos();
                 SDL_Rect rect;
                 rect.x = x_pos;
                 rect.y = y_pos;
@@ -61,7 +61,7 @@ void Player::animate() {
                 rect.h = 100;
                 sprites->draw(&rect);
 
-                transporting = platforms[plat_id].get_moving() || platforms[plat_id].get_start_moving();
+                transporting = platforms[plat_id]->get_moving() || platforms[plat_id]->get_start_moving();
                 
                 if(!transporting) {
                     old_row = 0;
@@ -75,6 +75,8 @@ void Player::animate() {
                 alive = false;  
                 Creature::animate();
             }
+        } else {
+            Creature::animate();
         }
     }
     if(alive) {

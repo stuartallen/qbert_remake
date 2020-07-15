@@ -133,7 +133,7 @@ void guiMainLoop(Board& board, Sound** sounds)  {
     player.set_enemies(enemies, 2);
     player.set_coll_sound(sounds[2]);
     player.set_fall_sound(sounds[3]);
-    player.set_platforms(&platform, 1);
+    //player.set_platforms(&platform, 1);
 
     bool got_quit_event = false;
     while (!got_quit_event) {

@@ -5,6 +5,7 @@ Snake::Snake(Board* in_board, SpriteSheet* in_sprites) {
     col = -1;
     JUMP_TIME = 700;
     ball = new Ball(in_board, in_sprites);
+    ball->set_renderer(renderer);
     board = in_board;
     sprites = in_sprites;
     snake_mode = false;
@@ -38,7 +39,7 @@ void Snake::animate() {
             timer_start = SDL_GetTicks();
         }
     } else {
-        if(transition_timer_done()) {
+        if(false) {//transition_timer_done()) {
             Creature::animate();
             float cur_dist = player_dist();
             int min_dir = 0;
@@ -64,13 +65,14 @@ void Snake::animate() {
             rect.w = 100;
             rect.h = 100;
             ball->get_sprites()->draw(&rect);
-            //cout << old_row << row << old_col << col << endl;
         }
     }
 }
 
 bool Snake::transition_timer_done() {
-    return (SDL_GetTicks() - timer_start) >= WAIT_TIME;
+    int cur_time = SDL_GetTicks();
+    cout << cur_time - timer_start << endl;
+    return (cur_time - timer_start) >= WAIT_TIME;
 }
 
 float Snake::player_dist() {
@@ -84,3 +86,5 @@ float Snake::player_dist(int r, int c) {
 bool Snake::check_if_bottom() {
     return (ball->get_old_row() + ball->get_old_col()) == board->get_board_len() - 1;
 }
+
+Ball* Snake::get_ball() {   return ball;    }

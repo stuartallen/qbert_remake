@@ -17,6 +17,11 @@ Game::Game(SDL_Renderer* in_r, int s_w, int s_h) {
     set_up_qbert();
     set_up_enemies();
     set_up_platforms();
+
+    player->set_enemies(enemies, NUM_ENEMIES);
+    player->set_coll_sound(sounds[COLLIDE_SOUND_ID]);
+    player->set_fall_sound(sounds[FALL_SOUND_ID]);
+    player->set_platforms(platforms, NUM_PLATFORMS);
 }
 
 Game::~Game() {
@@ -40,9 +45,9 @@ void Game::set_up_sprites() {
                                     QBERT_SPRITE_SWITCH_TIME,
                                     true);
     sprites[QBERT_SPRITE_ID]->set_offsets(   QBERT_X_SPRITE_POS, QBERT_Y_SPRITE_POS,
-                                            QBERT_X_SPRITE_POS + (QBERT_SPRITE_FRAMES + 1) * QBERT_SPRITE_WIDTH, QBERT_SPRITE_HEIGHT,
-                                            QBERT_X_SPRITE_POS, QBERT_SPRITE_HEIGHT,
-                                            QBERT_X_SPRITE_POS + (QBERT_SPRITE_FRAMES + 1) * QBERT_SPRITE_WIDTH, QBERT_SPRITE_HEIGHT);
+                                            QBERT_X_SPRITE_POS + (QBERT_SPRITE_FRAMES) * QBERT_SPRITE_WIDTH, QBERT_Y_SPRITE_POS,
+                                            QBERT_X_SPRITE_POS, QBERT_Y_SPRITE_POS + QBERT_SPRITE_HEIGHT,
+                                            QBERT_X_SPRITE_POS + (QBERT_SPRITE_FRAMES) * QBERT_SPRITE_WIDTH, QBERT_Y_SPRITE_POS + QBERT_SPRITE_HEIGHT);
     sprites[RED_BALL_SPRITE_ID]->set_up( SPRITE_SHEET,
                                         renderer,
                                         RED_BALL_X_SPRITE_POS,
@@ -64,7 +69,7 @@ void Game::set_up_sprites() {
 }
 
 void Game::set_up_enemies() {
-    enemies = new Creature*[2];
+    enemies = new Creature*[NUM_ENEMIES];
 
     Ball* redball = new Ball(board, sprites[1]);
     redball->set_renderer(renderer);
@@ -78,6 +83,7 @@ void Game::set_up_enemies() {
 
     enemies[0] = redball;
     enemies[1] = snake;
+    enemies[2] = snake->get_ball();
 }
 
 void Game::set_up_qbert() {
@@ -87,7 +93,7 @@ void Game::set_up_qbert() {
 }
 
 void Game::set_up_platforms() {
-    platforms = new Platform*[2];
+    platforms = new Platform*[NUM_PLATFORMS];
     Platform* plat1 = new Platform(board, sprites[1]);
     Platform* plat2 = new Platform(board, sprites[1]);
     platforms[0] = plat1;
@@ -117,13 +123,21 @@ void Game::loop() {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
 
-    board->animate();
-    player->animate();
-    for(int i = 0; i < NUM_ENEMIES; i++) {
-        enemies[i]->animate();
+    if(player->on_board()) {
+        board->animate();
+        for(int i = 0; i < NUM_PLATFORMS; i++) {
+            platforms[i]->animate();
+        }
+        player->animate();
+    } else {
+        for(int i = 0; i < NUM_PLATFORMS; i++) {
+            platforms[i]->animate();
+        }
+        player->animate();
+        board->animate();
     }
-    for(int i = 0; i < NUM_PLATFORMS; i++) {
-        platforms[i]->animate();
+    for(int i = 0; i < NUM_ENEMIES - 1; i++) {
+        enemies[i]->animate();
     }
 
     SDL_RenderPresent(renderer);
@@ -138,38 +152,6 @@ void Game::handle_key_press(SDL_Event& event) {
             switch(event.key.keysym.sym) {
             case SDLK_ESCAPE:
                 game_going = false;
-                break;
-            case SDLK_w:
-                player->set_sprite_dir(SpriteSheet::TR);
-                player->move(0,-1);
-                break;
-            case SDLK_a:
-                player->set_sprite_dir(SpriteSheet::TL);
-                player->move(-1,0);
-                break;
-            case SDLK_s:
-                player->set_sprite_dir(SpriteSheet::BL);
-                player->move(0,1);
-                break;
-            case SDLK_d:
-                player->set_sprite_dir(SpriteSheet::BR);
-                player->move(1,0);
-                break;
-            }
-            break;
-    }
-}
-
-//  Handles the events when a key is pressed
-void keyEvent(Player* player, bool& got_quit_event, SDL_Event& event, Sound** sounds) {
-    switch (event.type) {
-        case SDL_QUIT:
-            got_quit_event = true;
-            break;
-        case SDL_KEYDOWN:
-            switch(event.key.keysym.sym) {
-            case SDLK_ESCAPE:
-                got_quit_event = true;
                 break;
             case SDLK_w:
                 player->set_sprite_dir(SpriteSheet::TR);

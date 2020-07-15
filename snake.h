@@ -29,6 +29,7 @@ class Snake : public Creature {
         float player_dist(int, int);
 
         bool check_if_bottom();
+        Ball* get_ball();
 };
 
 #endif
