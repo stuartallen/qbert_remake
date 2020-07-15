@@ -41,6 +41,9 @@ void Snake::animate() {
     } else {
         if(transition_timer_done()) {
             Creature::animate();
+            //  Move the ball off the board
+            ball->move(-10,-10);
+            ball->set_screen_pos();
             float cur_dist = player_dist();
             int min_dir = 0;
             float dists[4] = {player_dist(row + 1, col),
@@ -71,7 +74,6 @@ void Snake::animate() {
 
 bool Snake::transition_timer_done() {
     int cur_time = SDL_GetTicks();
-    cout << cur_time - timer_start << endl;
     return (cur_time - timer_start) >= WAIT_TIME;
 }
 

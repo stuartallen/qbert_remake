@@ -40,7 +40,7 @@ void Creature::animate() {
 void Creature::set_screen_pos() {
     if(!on_board()) {
         y_pos += 10;
-        x_pos = board->get_x_orig() + board->get_x_mov() * row - board->get_x_mov() * col;
+        x_pos = board->get_x_orig() + board->get_x_mov() * old_row - board->get_x_mov() * old_col;
     } else if(jumping) {   
         jump(); 
         x_pos = jump_x;

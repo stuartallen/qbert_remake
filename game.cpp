@@ -116,29 +116,23 @@ bool Game::going() {
 
 void Game::loop() {
     SDL_Event event;
-
-    if (SDL_PollEvent(&event)) {
-        handle_key_press(event);
-    }
+    if (SDL_PollEvent(&event)) {    handle_key_press(event);    }
+    
     // draw background
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
 
-    if(player->on_board()) {
-        board->animate();
-        for(int i = 0; i < NUM_PLATFORMS; i++) {
-            platforms[i]->animate();
-        }
-        player->animate();
-    } else {
-        for(int i = 0; i < NUM_PLATFORMS; i++) {
-            platforms[i]->animate();
-        }
-        player->animate();
-        board->animate();
+    for(int i = 0; i < NUM_PLATFORMS; i++) {
+        platforms[i]->animate();
     }
+    if(!player->on_board()) {   player->animate();  }
     for(int i = 0; i < NUM_ENEMIES; i++) {
-        enemies[i]->animate();
+        if(!enemies[i]->on_board()) {   enemies[i]->animate();  }
+    }
+    board->animate();
+    if(player->on_board()) {    player->animate();  }
+    for(int i = 0; i < NUM_ENEMIES; i++) {
+        if(enemies[i]->on_board()) {   enemies[i]->animate();  }
     }
 
     SDL_RenderPresent(renderer);

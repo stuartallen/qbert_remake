@@ -83,6 +83,10 @@ class Game {
 
         void loop();
 
+        bool snake_on_board = false;
+        bool snake_timer_done();
+        bool ball_on_board = false;
+        bool ball_time_done();
         bool going();
 };
 
