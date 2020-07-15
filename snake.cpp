@@ -39,7 +39,7 @@ void Snake::animate() {
             timer_start = SDL_GetTicks();
         }
     } else {
-        if(false) {//transition_timer_done()) {
+        if(transition_timer_done()) {
             Creature::animate();
             float cur_dist = player_dist();
             int min_dir = 0;

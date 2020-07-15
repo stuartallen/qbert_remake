@@ -18,7 +18,8 @@ Game::Game(SDL_Renderer* in_r, int s_w, int s_h) {
     set_up_enemies();
     set_up_platforms();
 
-    player->set_enemies(enemies, NUM_ENEMIES);
+    // the plus one is for the snake when it's in ball form
+    player->set_enemies(enemies, NUM_ENEMIES + 1);
     player->set_coll_sound(sounds[COLLIDE_SOUND_ID]);
     player->set_fall_sound(sounds[FALL_SOUND_ID]);
     player->set_platforms(platforms, NUM_PLATFORMS);
@@ -136,7 +137,7 @@ void Game::loop() {
         player->animate();
         board->animate();
     }
-    for(int i = 0; i < NUM_ENEMIES - 1; i++) {
+    for(int i = 0; i < NUM_ENEMIES; i++) {
         enemies[i]->animate();
     }
 

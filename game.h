@@ -62,7 +62,7 @@ class Game {
         Board* board;
         Player* player = nullptr;
         Creature** enemies = nullptr;
-        const int NUM_ENEMIES = 3;
+        const int NUM_ENEMIES = 2;
         Platform** platforms = nullptr;
         const int NUM_PLATFORMS = 2;
         Sound** sounds = nullptr;
