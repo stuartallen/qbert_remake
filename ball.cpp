@@ -33,3 +33,8 @@ void Ball::animate() {
 void Ball::jump() { Creature::jump();   }
 
 void Ball::set_spawned_true() { spawned = true; }
+
+void Ball::set_off_screen() {
+    x_pos = -10000;
+    y_pos = -10000;
+}

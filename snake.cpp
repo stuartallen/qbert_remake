@@ -51,7 +51,9 @@ void Snake::animate() {
         } else {
             if(transition_timer_done()) {
                 Creature::animate();
-                
+
+                ball->set_off_screen();
+
                 float cur_dist = player_dist();
                 int min_dir = 0;
                 float dists[4] = {player_dist(row + 1, col),
@@ -80,6 +82,9 @@ void Snake::animate() {
                 ball->get_sprites()->draw(&rect);
             }
         }
+    } else {
+        x_pos = -1000;
+        y_pos = -1000;
     }
 }
 
