@@ -38,6 +38,7 @@ void Creature::animate() {
 }
 
 void Creature::set_screen_pos() {
+    spawned = on_board();
     if(!on_board()) {
         y_pos += 10;
         x_pos = board->get_x_orig() + board->get_x_mov() * old_row - board->get_x_mov() * old_col;
@@ -102,6 +103,8 @@ int Creature::get_col() {   return col; }
 int Creature::get_pos() {
     return 10 * row + col;
 }
+
+bool Creature::get_spawned() {  return spawned; }
 
 bool Creature::on_board() {
     return  old_row >= 0 &&

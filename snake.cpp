@@ -9,13 +9,23 @@ Snake::Snake(Board* in_board, SpriteSheet* in_sprites) {
     board = in_board;
     sprites = in_sprites;
     snake_mode = false;
+    spawned = false;
 }
 
 Snake::~Snake() {
     delete ball;
 }
 
-void Snake::spawn() {}
+void Snake::spawn() {
+    ball->spawn();
+    old_row = 0;
+    old_col = 0;
+    row = 0;
+    col = 0;
+
+    spawned = true;
+    snake_mode = false;
+}
 
 void Snake::set_jump_sound(Sound* in_s) {
     Creature::set_jump_sound(in_s);
@@ -31,43 +41,47 @@ void Snake::set_player(Player* in_p) {
 }
 
 void Snake::animate() {
-    if(!snake_mode) {
-        snake_mode = check_if_bottom();
+    if(spawned) {
         if(!snake_mode) {
-            ball->animate();
-        } else {
-            timer_start = SDL_GetTicks();
-        }
-    } else {
-        if(transition_timer_done()) {
-            Creature::animate();
-            //  Move the ball off the board
-            ball->move(-10,-10);
-            ball->set_screen_pos();
-            float cur_dist = player_dist();
-            int min_dir = 0;
-            float dists[4] = {player_dist(row + 1, col),
-                            player_dist(row, col + 1),
-                            player_dist(row - 1, col),
-                            player_dist(row, col - 1)};
-            for(int i = 1; i < 4; i++) {
-                if(dists[i] <= dists[min_dir]) { min_dir = i;   }
+            snake_mode = check_if_bottom();
+            if(!snake_mode) {
+                ball->animate();
+            } else {
+                timer_start = SDL_GetTicks();
             }
-            if(min_dir == 0) {  move(1,0); }
-            else if(min_dir == 1) { move(0,1); }
-            else if(min_dir == 2) { move(-1,0);  }
-            else {  move(0,-1);  }
         } else {
-            row = ball->get_old_row();
-            col = ball->get_old_col();
-            old_row = row;
-            old_col = col;
-            SDL_Rect rect;
-            rect.x = ball->get_x_pos();
-            rect.y = ball->get_y_pos();
-            rect.w = 100;
-            rect.h = 100;
-            ball->get_sprites()->draw(&rect);
+            if(transition_timer_done()) {
+                Creature::animate();
+                //  Move the ball off the board
+                ball->move(-10,-10);
+                ball->set_screen_pos();
+                float cur_dist = player_dist();
+                int min_dir = 0;
+                float dists[4] = {player_dist(row + 1, col),
+                                player_dist(row, col + 1),
+                                player_dist(row - 1, col),
+                                player_dist(row, col - 1)};
+                for(int i = 1; i < 4; i++) {
+                    if(dists[i] <= dists[min_dir]) { min_dir = i;   }
+                }
+                if(min_dir == 0) {  move(1,0); }
+                else if(min_dir == 1) { move(0,1); }
+                else if(min_dir == 2) { move(-1,0);  }
+                else {  move(0,-1);  }
+            } else {
+                cout << old_row << row << old_col << col << endl;
+                row = ball->get_old_row();
+                col = ball->get_old_col();
+                old_row = row;
+                old_col = col;
+                Creature::set_screen_pos();
+                SDL_Rect rect;
+                rect.x = ball->get_x_pos();
+                rect.y = ball->get_y_pos();
+                rect.w = 100;
+                rect.h = 100;
+                ball->get_sprites()->draw(&rect);
+            }
         }
     }
 }

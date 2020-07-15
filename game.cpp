@@ -23,6 +23,9 @@ Game::Game(SDL_Renderer* in_r, int s_w, int s_h) {
     player->set_coll_sound(sounds[COLLIDE_SOUND_ID]);
     player->set_fall_sound(sounds[FALL_SOUND_ID]);
     player->set_platforms(platforms, NUM_PLATFORMS);
+
+    snake_timer_start = SDL_GetTicks();
+    ball_timer_start = SDL_GetTicks();
 }
 
 Game::~Game() {
@@ -114,17 +117,38 @@ bool Game::going() {
     return game_going;
 }
 
+void Game::update_snake_timer() {
+    if(!enemies[SNAKE_ENEMY_ID]->get_spawned()) {
+        if(SDL_GetTicks() - snake_timer_start >= SNAKE_WAIT) {
+            enemies[SNAKE_ENEMY_ID]->spawn();
+        }
+    } else {
+        snake_timer_start = SDL_GetTicks();
+    }
+}
+
+void Game::update_ball_timer() {
+    if(!enemies[BALL_ENEMY_ID]->get_spawned()) {
+        if(SDL_GetTicks() - ball_timer_start >= BALL_WAIT) {
+            enemies[BALL_ENEMY_ID]->spawn();
+        }
+    } else {
+        ball_timer_start = SDL_GetTicks();
+    }
+}
+
 void Game::loop() {
     SDL_Event event;
     if (SDL_PollEvent(&event)) {    handle_key_press(event);    }
-    
+
     // draw background
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
 
-    for(int i = 0; i < NUM_PLATFORMS; i++) {
-        platforms[i]->animate();
-    }
+    update_ball_timer();
+    update_snake_timer();
+
+    for(int i = 0; i < NUM_PLATFORMS; i++) {    platforms[i]->animate();    }
     if(!player->on_board()) {   player->animate();  }
     for(int i = 0; i < NUM_ENEMIES; i++) {
         if(!enemies[i]->on_board()) {   enemies[i]->animate();  }

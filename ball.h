@@ -13,7 +13,8 @@ class Ball : public Creature {
         void spawn() override;
         void jump() override;
 
-        void animate();
+        void animate() override;
+
 };
 
 #endif

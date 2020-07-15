@@ -59,6 +59,9 @@ class Game {
         const int FALL_SOUND_ID = 3;
         const int SNAKE_JUMP_SOUND_ID = 4;
 
+        const int SNAKE_ENEMY_ID = 1;
+        const int BALL_ENEMY_ID = 0;
+
         Board* board;
         Player* player = nullptr;
         Creature** enemies = nullptr;
@@ -76,6 +79,11 @@ class Game {
         void set_up_sounds();
 
         void handle_key_press(SDL_Event&);
+
+        int snake_timer_start;
+        const int SNAKE_WAIT = 10000;
+        int ball_timer_start;
+        const int BALL_WAIT = 5000;
     public:
         Game();
         Game(SDL_Renderer*, int, int);
@@ -83,10 +91,9 @@ class Game {
 
         void loop();
 
-        bool snake_on_board = false;
-        bool snake_timer_done();
-        bool ball_on_board = false;
-        bool ball_time_done();
+        void update_snake_timer();
+        void update_ball_timer();
+
         bool going();
 };
 

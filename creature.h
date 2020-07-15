@@ -38,6 +38,8 @@ class Creature {
         SDL_Renderer* renderer;
 
         SpriteSheet* sprites;
+
+        bool spawned;
     public:
         //  TODO Make this include time
         //  Won't do anything here because constructors
@@ -67,6 +69,7 @@ class Creature {
         int get_pos();
         int get_x_pos();
         int get_y_pos();
+        bool get_spawned();
         bool on_board();
 
         void set_sprite_dir(int);

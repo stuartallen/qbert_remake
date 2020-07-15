@@ -3,6 +3,7 @@
 using namespace std;
 
 Player::Player(Board* in_board, SpriteSheet* in_sprites) {
+    spawned = true;
     alive = true;
     JUMP_TIME = 500;
     row = 0;
