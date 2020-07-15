@@ -1,5 +1,7 @@
 #include "platform.h"
 
+Platform::Platform() {}
+
 void Platform::set_bez_pts() {
     bez_pts[0][0] = x_pos; bez_pts[0][1] = y_pos;
     int* orig = board->get_cube_location(0,0);
@@ -27,6 +29,7 @@ void Platform::move() {
 
 //  Rows and cols are set as random lengths
 Platform::Platform(Board* in_board, SpriteSheet* in_sprites) {
+    used = false;
     moving = false;
     board = in_board;
     sprites = in_sprites;

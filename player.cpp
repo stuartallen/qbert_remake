@@ -98,3 +98,5 @@ void Player::set_screen_pos() {
         Creature::set_screen_pos();
     }
 }
+
+bool Player::get_alive() {  return alive;   }

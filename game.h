@@ -24,9 +24,10 @@ using namespace std;
 class Game {
     private:
         SDL_Renderer* renderer;
-        SpriteSheet* sprites;
+        SpriteSheet** sprites;
 
-        const int SPRITE_SWITCH_TIME = 100;
+        int screen_width;
+        int screen_height;
 
         const int QBERT_SPRITE_ID = 0;
         const int QBERT_X_SPRITE_POS = 116;
@@ -34,16 +35,55 @@ class Game {
         const int QBERT_SPRITE_WIDTH = 30;
         const int QBERT_SPRITE_HEIGHT = 48;
         const int QBERT_SPRITE_FRAMES = 3;
+        const int QBERT_SPRITE_SWITCH_TIME = 100;
 
-        Board* board = nullptr;
+        const int RED_BALL_SPRITE_ID = 1;
+        const int RED_BALL_X_SPRITE_POS = 122;
+        const int RED_BALL_Y_SPRITE_POS = 98;
+        const int RED_BALL_SPRITE_WIDTH = 25;
+        const int RED_BALL_SPRITE_HEIGHT = 32;
+        const int RED_BALL_SPRITE_FRAMES = 3;
+        const int RED_BALL_SPRITE_SWITCH_TIME = 200;
+
+        const int SNAKE_BALL_SPRITE_ID = 2;
+        const int SNAKE_BALL_X_SPRITE_POS = 193;
+        const int SNAKE_BALL_Y_SPRITE_POS = 98;
+        const int SNAKE_BALL_SPRITE_WIDTH = 30;
+        const int SNAKE_BALL_SPRITE_HEIGHT = 32;
+        const int SNAKE_BALL_SPRITE_FRAMES = 3;
+        const int SNAKE_BALL_SPRITE_SWITCH_TIME = 200;
+
+        const int QBERT_JUMP_SOUND_ID = 0;
+        const int BALL_JUMP_SOUND_ID = 1;
+        const int COLLIDE_SOUND_ID = 2;
+        const int FALL_SOUND_ID = 3;
+        const int SNAKE_JUMP_SOUND_ID = 4;
+
+        Board* board;
         Player* player = nullptr;
         Creature** enemies = nullptr;
+        const int NUM_ENEMIES = 2;
+        Platform** platforms = nullptr;
+        const int NUM_PLATFORMS = 2;
+        Sound** sounds = nullptr;
+
+        bool game_going = true;
 
         void set_up_sprites();
+        void set_up_enemies();
+        void set_up_qbert();
+        void set_up_platforms();
+        void set_up_sounds();
+
+        void handle_key_press(SDL_Event&);
     public:
         Game();
-        Game(SDL_Renderer*);
+        Game(SDL_Renderer*, int, int);
+        ~Game();
 
+        void loop();
+
+        bool going();
 };
 
 #endif

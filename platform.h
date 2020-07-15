@@ -29,6 +29,7 @@ class Platform {
         void set_bez_pts();
         void move();
     public:
+        Platform();
         Platform(Board*, SpriteSheet*);
         ~Platform();
 

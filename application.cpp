@@ -68,9 +68,9 @@ int main(int argc, char* argv[]) {
     srand( time(NULL));
 
     //  Initialize sounds
-    Sound** sounds = setUpSounds();
+    //Sound** sounds = setUpSounds();
 
-    Board board;
+    //Board board;
     //guiMainLoop(board, sounds);
     test_game();
     return 0;
@@ -81,7 +81,11 @@ void test_game() {
     SDL_Window* window = set_up_window(screen_width, screen_height);
     SDL_Renderer* renderer = set_up_renderer(window);
 
-    Game game(renderer);
+    //Game *game = new Game(renderer, screen_width, screen_height);
+    Game game(renderer, screen_width, screen_height);
+    while(game.going()) {
+        game.loop();
+    }
 }
 
 //  does animating for game

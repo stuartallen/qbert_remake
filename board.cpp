@@ -6,6 +6,15 @@ Board::Board() {
     SQUARE_WIDTH = 50;
     total_cubes = 0;
     cubes = new int*[BOARD_LEN];
+}
+
+void Board::set_renderer(SDL_Renderer* in_r) {
+    NO_TOUCH_COLOR = 0;
+    FINAL_COLOR = 1;
+    renderer = in_r;
+    SQUARE_WIDTH = 50;
+    total_cubes = 0;
+    cubes = new int*[BOARD_LEN];
     for(int i = 0; i < BOARD_LEN; i++) {
         cubes[i] = new int[BOARD_LEN - i];
         for(int j = 0; j < BOARD_LEN - i; j++) {
@@ -13,10 +22,6 @@ Board::Board() {
             total_cubes++;
         }
     }
-}
-
-void Board::set_renderer(SDL_Renderer* in_r) {
-    renderer = in_r;
 }
 
 //  Updates the color at the input row and col  

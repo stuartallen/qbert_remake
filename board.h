@@ -23,8 +23,8 @@ class Board {
         unsigned int SQUARE_WIDTH;
         const double HEIGHT_DILATION = 0.75;
 
-        const int NO_TOUCH_COLOR = 0;
-        const int FINAL_COLOR = 1;
+        int NO_TOUCH_COLOR = 0;
+        int FINAL_COLOR = 1;
 
         SDL_Renderer* renderer;
 
