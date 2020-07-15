@@ -69,7 +69,6 @@ void Snake::animate() {
                 else if(min_dir == 2) { move(-1,0);  }
                 else {  move(0,-1);  }
             } else {
-                cout << old_row << row << old_col << col << endl;
                 row = ball->get_old_row();
                 col = ball->get_old_col();
                 old_row = row;

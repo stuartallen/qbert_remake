@@ -158,7 +158,6 @@ void Game::loop() {
     for(int i = 0; i < NUM_ENEMIES; i++) {
         if(enemies[i]->on_board()) {   enemies[i]->animate();  }
     }
-
     SDL_RenderPresent(renderer);
 }
 
