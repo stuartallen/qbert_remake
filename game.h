@@ -19,6 +19,7 @@ using namespace std;
 #define COLLIDE "resources/explode-3.wav"
 #define FALL_LOSE "resources/lose-5.wav"
 #define PRE_SPAWN "resources/cancel-1.wav"
+#define WIN "resources/win-1.wav"
 
 #define SPRITE_SHEET "resources/QBert3Sheet1.bmp"
 
@@ -55,13 +56,14 @@ class Game {
         const int SNAKE_BALL_SPRITE_SWITCH_TIME = 200;
 
 
-        const int NUM_SOUNDS = 6;
+        const int NUM_SOUNDS = 8;
         const int QBERT_JUMP_SOUND_ID = 0;
         const int BALL_JUMP_SOUND_ID = 1;
         const int COLLIDE_SOUND_ID = 2;
         const int FALL_SOUND_ID = 3;
         const int SNAKE_JUMP_SOUND_ID = 4;
         const int PRE_SPAWN_SOUND_ID = 5;
+        const int WIN_SOUND_ID = 6;
 
         const int SNAKE_ENEMY_ID = 1;
         const int BALL_ENEMY_ID = 0;
@@ -91,6 +93,8 @@ class Game {
         const int BALL_WAIT = 2000;
         bool ball_spawn_sound_played = false;
         const int MINI_TIMER_WAIT = 500;
+
+        int won_or_lost = 1;
     public:
         Game();
         Game(SDL_Renderer*, int, int);
@@ -102,6 +106,8 @@ class Game {
         void update_ball_timer();
 
         bool going();
+
+        void check_won_lost();
 };
 
 #endif

@@ -30,14 +30,6 @@
 #include <windows.h>
 #endif
 
-#define QBERT_JUMP "jump-9.wav"
-#define BALL_JUMP "jump-5.wav"
-#define SNAKE_JUMP "jump-4.wav"
-#define COLLIDE "explode-3.wav"
-#define FALL_LOSE "lose-5.wav"
-
-#define SPRITE_SHEET "QBert3Sheet1.bmp"
-
 using namespace std;
 
 //  Functions with SDL
@@ -83,6 +75,7 @@ void test_game() {
 
     //Game *game = new Game(renderer, screen_width, screen_height);
     Game game(renderer, screen_width, screen_height);
+
     while(game.going()) {
         game.loop();
     }
