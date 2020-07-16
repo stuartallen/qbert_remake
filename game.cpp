@@ -166,7 +166,6 @@ void Game::check_won_lost() {
 }
 
 void Game::loop() {
-    check_won_lost();
     SDL_Event event;
 
 
@@ -197,6 +196,8 @@ void Game::loop() {
             }
         }
     }
+
+    check_won_lost();
     SDL_RenderPresent(renderer);
 }
 
