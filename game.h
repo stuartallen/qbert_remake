@@ -13,14 +13,14 @@ using namespace std;
 #include "spriteSheet.h"
 #include "board.h"
 
-#define QBERT_JUMP "jump-9.wav"
-#define BALL_JUMP "jump-5.wav"
-#define SNAKE_JUMP "jump-4.wav"
-#define COLLIDE "explode-3.wav"
-#define FALL_LOSE "lose-5.wav"
-#define PRE_SPAWN "cancel-1.wav"
+#define QBERT_JUMP "resources/jump-9.wav"
+#define BALL_JUMP "resources/jump-5.wav"
+#define SNAKE_JUMP "resources/jump-4.wav"
+#define COLLIDE "resources/explode-3.wav"
+#define FALL_LOSE "resources/lose-5.wav"
+#define PRE_SPAWN "resources/cancel-1.wav"
 
-#define SPRITE_SHEET "QBert3Sheet1.bmp"
+#define SPRITE_SHEET "resources/QBert3Sheet1.bmp"
 
 class Game {
     private:
