@@ -75,6 +75,7 @@ void test_game() {
 
     //Game *game = new Game(renderer, screen_width, screen_height);
     Game game(renderer, screen_width, screen_height);
+
     while(game.going()) {
         game.loop();
     }

@@ -11,6 +11,7 @@ Game::Game(SDL_Renderer* in_r, int s_w, int s_h) {
     board = new Board();
     board->set_renderer(renderer);
     board->set_screen_size(screen_width, screen_height);
+    won_or_lost = 1;
 
     set_up_sounds();
     set_up_sprites();
@@ -112,11 +113,15 @@ void Game::set_up_sounds() {
     sounds[FALL_SOUND_ID] = new Sound(FALL_LOSE);
     sounds[SNAKE_JUMP_SOUND_ID] = new Sound(SNAKE_JUMP);
     sounds[PRE_SPAWN_SOUND_ID] = new Sound(PRE_SPAWN);
+    sounds[WIN_SOUND_ID] = new Sound(WIN);
 }
 
 bool Game::going() {
     return game_going;
 }
+
+
+
 
 void Game::update_snake_timer() {
     if(!enemies[SNAKE_ENEMY_ID]->get_spawned()) {
@@ -148,31 +153,51 @@ void Game::update_ball_timer() {
     }
 }
 
+void Game::check_won_lost() {
+    if(won_or_lost == 1) {
+        if(player->get_alive() == false) {
+            won_or_lost = 0;
+        }
+        if(board->board_filled() == true) {
+            won_or_lost = 2;
+            sounds[WIN_SOUND_ID]->play();
+        }
+    }
+}
+
 void Game::loop() {
     SDL_Event event;
+
+
     if (SDL_PollEvent(&event)) {    handle_key_press(event);    }
 
-    // draw background
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    SDL_RenderClear(renderer);
+    if(won_or_lost == 1) {
 
-    update_ball_timer();
-    update_snake_timer();
 
-    for(int i = 0; i < NUM_PLATFORMS; i++) {    platforms[i]->animate();    }
-    if(!player->on_board()) {   player->animate();  }
-    for(int i = 0; i < NUM_ENEMIES-2; i++) {
-        if(!enemies[i]->on_board()) {  
-            enemies[i]->animate();
+        // draw background
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_RenderClear(renderer);
+
+        update_ball_timer();
+        update_snake_timer();
+
+        for(int i = 0; i < NUM_PLATFORMS; i++) {    platforms[i]->animate();    }
+        if(!player->on_board()) {   player->animate();  }
+        for(int i = 0; i < NUM_ENEMIES; i++) {
+            if(!enemies[i]->on_board()) {  
+                enemies[i]->animate();
+            }
+        }
+        board->animate();
+        if(player->on_board()) {    player->animate();  }
+        for(int i = 0; i < NUM_ENEMIES; i++) {
+            if(enemies[i]->on_board()) {   
+                enemies[i]->animate();
+            }
         }
     }
-    board->animate();
-    if(player->on_board()) {    player->animate();  }
-    for(int i = 0; i < NUM_ENEMIES-2; i++) {
-        if(enemies[i]->on_board()) {   
-            enemies[i]->animate();
-        }
-    }
+
+    check_won_lost();
     SDL_RenderPresent(renderer);
 }
 

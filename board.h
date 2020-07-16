@@ -31,9 +31,9 @@ class Board {
         int** cubes;
 
         //  represents how many cubes are the final color   
-        int correct_color;
+        int correct_color = 0;
         //  represents how many cubes there are total   
-        int total_cubes;
+        int total_cubes = 0;
 
         //  draw a trapezoid
     public:

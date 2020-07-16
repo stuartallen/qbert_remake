@@ -27,6 +27,9 @@ void Board::set_renderer(SDL_Renderer* in_r) {
 //  Updates the color at the input row and col  
 void Board::update_color(int r, int c) {
     //  TODO this will work differently for higher levels   
+    if(cubes[r][c] == 0) {
+        correct_color++;
+    }
     cubes[r][c] = FINAL_COLOR;
 }
 
