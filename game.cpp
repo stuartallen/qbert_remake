@@ -105,12 +105,13 @@ void Game::set_up_platforms() {
 }
 
 void Game::set_up_sounds() {
-    sounds = new Sound*[5];
+    sounds = new Sound*[6];
     sounds[QBERT_JUMP_SOUND_ID] = new Sound(QBERT_JUMP);
     sounds[BALL_JUMP_SOUND_ID] = new Sound(BALL_JUMP);
     sounds[COLLIDE_SOUND_ID] = new Sound(COLLIDE);
     sounds[FALL_SOUND_ID] = new Sound(FALL_LOSE);
     sounds[SNAKE_JUMP_SOUND_ID] = new Sound(SNAKE_JUMP);
+    sounds[PRE_SPAWN_SOUND_ID] = new Sound(PRE_SPAWN);
 }
 
 bool Game::going() {
@@ -121,9 +122,14 @@ void Game::update_snake_timer() {
     if(!enemies[SNAKE_ENEMY_ID]->get_spawned()) {
         if(SDL_GetTicks() - snake_timer_start >= SNAKE_WAIT) {
             enemies[SNAKE_ENEMY_ID]->spawn();
+            snake_spawn_sound_played = false;
+        } else if (SDL_GetTicks() - snake_timer_start >= SNAKE_WAIT - MINI_TIMER_WAIT && !snake_spawn_sound_played) {
+            sounds[PRE_SPAWN_SOUND_ID]->play();
+            snake_spawn_sound_played = true;
         }
     } else {
         snake_timer_start = SDL_GetTicks();
+        snake_spawn_sound_played = false;
     }
 }
 
@@ -131,9 +137,14 @@ void Game::update_ball_timer() {
     if(!enemies[BALL_ENEMY_ID]->get_spawned()) {
         if(SDL_GetTicks() - ball_timer_start >= BALL_WAIT) {
             enemies[BALL_ENEMY_ID]->spawn();
+            ball_spawn_sound_played = false;
+        } else if (SDL_GetTicks() - ball_timer_start >= BALL_WAIT - MINI_TIMER_WAIT && !ball_spawn_sound_played) {
+            sounds[PRE_SPAWN_SOUND_ID]->play();
+            ball_spawn_sound_played = true;
         }
     } else {
         ball_timer_start = SDL_GetTicks();
+        ball_spawn_sound_played = false;
     }
 }
 
