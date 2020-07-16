@@ -30,14 +30,6 @@
 #include <windows.h>
 #endif
 
-#define QBERT_JUMP "jump-9.wav"
-#define BALL_JUMP "jump-5.wav"
-#define SNAKE_JUMP "jump-4.wav"
-#define COLLIDE "explode-3.wav"
-#define FALL_LOSE "lose-5.wav"
-
-#define SPRITE_SHEET "QBert3Sheet1.bmp"
-
 using namespace std;
 
 //  Functions with SDL
@@ -88,6 +80,7 @@ void test_game() {
     }
 }
 
+#if 0
 //  does animating for game
 void guiMainLoop(Board& board, Sound** sounds)  {
     int screen_width, screen_height;
@@ -185,6 +178,7 @@ void guiMainLoop(Board& board, Sound** sounds)  {
     }
     destroy_window_renderer(window, renderer);
 }
+#endif
 
 //  Handles the events when a key is pressed
 void keyEvent(Player& player, bool& got_quit_event, SDL_Event& event, Sound** sounds) {
