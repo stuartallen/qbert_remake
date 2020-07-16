@@ -3,6 +3,16 @@ using namespace std;
 
 //  Constructor 
 Board::Board() {
+    SQUARE_WIDTH = 50;
+    total_cubes = 0;
+    cubes = new int*[BOARD_LEN];
+}
+
+void Board::set_renderer(SDL_Renderer* in_r) {
+    NO_TOUCH_COLOR = 0;
+    FINAL_COLOR = 1;
+    renderer = in_r;
+    SQUARE_WIDTH = 50;
     total_cubes = 0;
     cubes = new int*[BOARD_LEN];
     for(int i = 0; i < BOARD_LEN; i++) {
@@ -12,15 +22,6 @@ Board::Board() {
             total_cubes++;
         }
     }
-    cubes[1][1] = FINAL_COLOR;
-    x_mov = (unsigned int)(SQUARE_WIDTH * cos(2.0/6 * M_PI * 3 + 7*M_PI/6));
-    y_mov = (unsigned int)(SQUARE_WIDTH*HEIGHT_DILATION * (sin(2.0/6 * M_PI * 4 + 7*M_PI/6) + sin(2.0/6 * M_PI * 3 + 7*M_PI/6)));
-}
-
-
-
-void Board::set_renderer(SDL_Renderer* in_r) {
-    renderer = in_r;
 }
 
 //  Updates the color at the input row and col  
@@ -69,7 +70,6 @@ void Board::draw_cube(unsigned int x, unsigned int y, unsigned int row, unsigned
 
 //  draws all the platforms
 void Board::animate() {
-    SDL_RenderClear(renderer);
     for(int i = 0; i < BOARD_LEN; i++) {
         for(int j = 0; j < BOARD_LEN - i; j++) {
             unsigned int x_pos = x_orig + x_mov * i - x_mov * j;
@@ -83,12 +83,17 @@ void Board::set_screen_size(int in_w, int in_h) {
     screen_width = in_w;
     screen_height = in_h;
     x_orig = screen_width/2;
-    y_orig = screen_height/4;
+    y_orig = screen_height/4 + get_orig_to_on_top();
+    SQUARE_WIDTH = screen_width/19;
+    x_mov = (unsigned int)(SQUARE_WIDTH * cos(2.0/6 * M_PI * 3 + 7*M_PI/6));
+    y_mov = (unsigned int)(SQUARE_WIDTH*HEIGHT_DILATION * (sin(2.0/6 * M_PI * 4 + 7*M_PI/6) + sin(2.0/6 * M_PI * 3 + 7*M_PI/6)));
 }
 
 //  returns if a row and column is in the board 
 bool Board::in_board(int r, int c) {
-    return r < BOARD_LEN && c < BOARD_LEN;
+    return  r >= 0 &&
+            c >= 0 &&
+            r + c < BOARD_LEN;
 }
 
 //  returns if all the colors are the final color   
@@ -122,6 +127,15 @@ Board::~Board() {
 int Board::get_board_len() {    return BOARD_LEN;   }
 int Board::get_x_orig() {   return x_orig;  }
 int Board::get_y_orig() {   return y_orig;  }
-int Board::get_orig_to_on_top() {   return (int)(SQUARE_WIDTH * HEIGHT_DILATION);  }
+int Board::get_orig_to_on_top() {   return (int)(SQUARE_WIDTH * HEIGHT_DILATION + 10);  }
 int Board::get_x_mov() {    return x_mov;   }
 int Board::get_y_mov() {    return y_mov;   }
+
+//  Returns the pixel coordinate of a cube
+//  Remember to handle memory after calling
+int* Board::get_cube_location(int row, int col) {
+    int* pos = new int[2];
+    pos[0] = x_orig + x_mov * row - x_mov * col;
+    pos[1] = y_orig + y_mov * row + y_mov * col - get_orig_to_on_top();
+    return pos;
+}

@@ -14,17 +14,17 @@ class Board {
     private:
         int screen_width;
         int screen_height;
-        int x_orig = 250;
-        int y_orig = 250;
+        int x_orig;
+        int y_orig;
         unsigned int x_mov;
         unsigned int y_mov;
         const int BOARD_LEN = 7;
 
-        const unsigned int SQUARE_WIDTH = 50;
+        unsigned int SQUARE_WIDTH;
         const double HEIGHT_DILATION = 0.75;
 
-        const int NO_TOUCH_COLOR = 0;
-        const int FINAL_COLOR = 1;
+        int NO_TOUCH_COLOR = 0;
+        int FINAL_COLOR = 1;
 
         SDL_Renderer* renderer;
 
@@ -59,6 +59,8 @@ class Board {
         int get_orig_to_on_top();
         int get_x_mov();
         int get_y_mov();
+        //  Remember to handle memory after this function
+        int* get_cube_location(int, int);
 };
 
 #endif
