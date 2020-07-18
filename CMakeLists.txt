@@ -14,17 +14,16 @@ add_executable(qbert
 # ======================================================================
 # SDL2 
 # **** NEED TO DO THIS YOURSELF ****
-# WINDOWS: 
+# WINDOWS & Linux
 #   1) vcpkg install sdl2 sdl2-gfx sdl2-mixer
 #   2) be sure path to vcpkg "toolchainFile" is set via "Edit Local CMake Kits"
-#   2) set x86 build target
+#   3) set x86 build target (x86_64 on Linux)
 #   
 # MAC: 
 #   1) brew install sdl2 sdl2_gfx SDL2_mixer
 #   2) edit SDL2_DIR if necessary
 
 # ======================================================================
-# I think "APPLE" is the way to check for mac...
 if(APPLE)
   set( SDL2_DIR /usr/local/Cellar/sdl2/2.0.12_1 )
   set( SDL2_GFX_DIR /usr/local/Cellar/sdl2_gfx/1.0.4 )
@@ -54,5 +53,16 @@ elseif(WIN32)
 
   find_package(sdl2-mixer CONFIG REQUIRED)
   target_link_libraries(qbert PRIVATE SDL2::SDL2_mixer)
+
+elseif(UNIX)
+
+    find_package(SDL2 CONFIG REQUIRED)
+    target_link_libraries(qbert PRIVATE SDL2::SDL2main SDL2::SDL2-static)
+
+    find_package(sdl2-gfx CONFIG REQUIRED)
+    target_link_libraries(qbert PRIVATE SDL2::SDL2_gfx)
+
+    find_package(sdl2-mixer CONFIG REQUIRED)
+    target_link_libraries(qbert PRIVATE SDL2::SDL2_mixer)
 
 endif()

@@ -84,7 +84,7 @@ void Player::animate() {
         if(!transporting) {
             Creature::animate();
         }
-        for(int i = 0; i < num_enemies; i++) {
+        for(int i = 0; i < num_enemies-2; i++) {
             if( enemies[i]->get_x_pos() <= x_pos && 
                 enemies[i]->get_x_pos() + 50 >= x_pos &&
                 enemies[i]->get_y_pos() <= y_pos &&
