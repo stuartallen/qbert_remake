@@ -23,7 +23,7 @@ class Snake : public Creature {
         void set_snake_sprite(SpriteSheet*);
         void set_player(Player*);
         void set_jump_sound(Sound*);
-        void animate() override;
+        void animate(bool) override;
         bool transition_timer_done();
         float player_dist();
         float player_dist(int, int);

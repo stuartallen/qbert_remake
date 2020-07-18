@@ -164,72 +164,36 @@ void Game::check_won_lost() {
 
 void Game::loop(SDL_Event* event) {
 
-    if(won_or_lost == 1) {
-        cout << "game is going" << endl;
-
-        //SDL_Event* event = new SDL_Event;
-
-        if(event == nullptr) {
-            cout << "event is NULL" << endl;
-        }
-        cout << "event created" << endl;
-
-        /*
-        if (SDL_PollEvent(event) != 0) {    
-            cout << "event polled" << endl;
-            handle_key_press(event);    
-            cout << "key press handled" << endl;
-        } else {
-            cout << "No event" << endl;
-        }
-        */
-        cout << "poll event stuff done" << endl;
-
-        //delete event;
-
         // draw background
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
-        cout << "renderer cleared and background set" << endl;
 
         update_ball_timer();
-        cout << "ball timer updated" << endl;
         update_snake_timer();
-        cout << "snake time updated" << endl;
 
         for(int i = 0; i < NUM_PLATFORMS; i++) {    platforms[i]->animate();    }
-        cout << "platforms animated (before [as always])" << endl;
-        if(!player->on_board()) {   
-            player->animate();  
-            cout << "player animated (before)" << endl;
-        }
-        for(int i = 0; i < NUM_ENEMIES - 2; i++) {
 
+        if(!player->on_board()) {   
+            player->animate(won_or_lost == 1);  
+        }
+        for(int i = 0; i < NUM_ENEMIES - 1; i++) {
             if(!enemies[i]->on_board()) {  
-                enemies[i]->animate();
-                cout << "enemy " << i << " animated (before)" << endl;
+                enemies[i]->animate(won_or_lost == 1);
             }
         }
         board->animate();
-        cout << "board animated" << endl;
-        if(player->on_board()) {
-            cout << "before player animated" << endl;    
-            player->animate();  
-            cout << "player animated (after)" << endl;
+        if(player->on_board()) { 
+            player->animate(won_or_lost == 1);  
         }
-        for(int i = 0; i < NUM_ENEMIES - 2; i++) {
+        for(int i = 0; i < NUM_ENEMIES - 1; i++) {
             if(enemies[i]->on_board()) {   
-                enemies[i]->animate();
-                cout << "enemy " << i << " animated (after)" << endl;
+                enemies[i]->animate(won_or_lost == 1);
             }
         }
 
         SDL_RenderPresent(renderer);
-        cout << "presented to screen" << endl;
-    }
 
     check_won_lost();
-    cout << "updated won/lost" << endl;
 }
 
 void Game::handle_key_press(SDL_Event* event) {

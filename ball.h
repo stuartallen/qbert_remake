@@ -13,7 +13,7 @@ class Ball : public Creature {
         void spawn() override;
         void jump() override;
 
-        void animate() override;
+        void animate(bool) override;
 
         void set_spawned_true();
 

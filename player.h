@@ -30,7 +30,7 @@ class Player : public Creature {
         void set_platforms(Platform**, int);
         void spawn();
         void jump();
-        void animate();
+        void animate(bool);
         void set_screen_pos();
         bool get_alive();
 };

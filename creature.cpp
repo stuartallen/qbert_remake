@@ -29,8 +29,10 @@ Creature::~Creature() {
     delete [] bez_pts;
 }
 
-void Creature::animate() {
-    set_screen_pos();
+void Creature::animate(bool moving) {
+    if(moving) {
+        set_screen_pos();
+    }
     SDL_Rect rect;
     rect.x = x_pos;
     rect.y = y_pos;

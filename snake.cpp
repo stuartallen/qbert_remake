@@ -38,19 +38,19 @@ void Snake::set_player(Player* in_p) {
     player = in_p;
 }
 
-void Snake::animate() {
+void Snake::animate(bool moving) {
     if(spawned) {
         if(!snake_mode) {
             snake_mode = check_if_bottom();
             if(!snake_mode) {
                 ball->set_spawned_true();
-                ball->animate();
+                ball->animate(moving);
             } else {
                 timer_start = SDL_GetTicks();
             }
         } else {
             if(transition_timer_done()) {
-                Creature::animate();
+                Creature::animate(moving);
 
                 ball->set_off_screen();
 

@@ -73,13 +73,9 @@ void test_game() {
 
     int loop_num = 0;
     while(game.going()) {
-        cout << "loop num " << loop_num++ << endl;
         SDL_Event event;
-        cout << "event created" << endl;
         while (SDL_PollEvent(&event)) {    
-            cout << "event polled" << endl;
             game.handle_key_press(&event);    
-            cout << "key press handled" << endl;
         }
 
         game.loop(&event);

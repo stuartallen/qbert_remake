@@ -19,9 +19,9 @@ void Ball::spawn() {
     Creature::set_screen_pos();
 }
 
-void Ball::animate() {
+void Ball::animate(bool moving) {
     if(spawned) {
-        Creature::animate();
+        Creature::animate(moving);
         if(rand() % 2 == 0) {
             Creature::move(1,0);
         } else {

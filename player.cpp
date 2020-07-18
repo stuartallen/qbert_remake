@@ -40,7 +40,7 @@ void Player::jump() {
     if(!jumping && Creature::on_board()) {  board->update_color(row, col);  }
 }
 
-void Player::animate() {
+void Player::animate(bool moving) {
     if(!on_board()) {   
         if(alive) {
             if(!transporting) {
@@ -74,15 +74,15 @@ void Player::animate() {
             } else {
                 fall_sound->play();
                 alive = false;  
-                Creature::animate();
+                Creature::animate(moving);
             }
         } else {
-            Creature::animate();
+            Creature::animate(moving);
         }
     }
     if(alive) {
         if(!transporting) {
-            Creature::animate();
+            Creature::animate(moving);
         }
         for(int i = 0; i < num_enemies-2; i++) {
             if( enemies[i]->get_x_pos() <= x_pos && 

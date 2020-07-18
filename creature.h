@@ -50,7 +50,7 @@ class Creature {
         
         //  virtual functions
         virtual void spawn() = 0;
-        virtual void animate();
+        virtual void animate(bool moving);
         void set_screen_pos();
 
         void move(int, int);
