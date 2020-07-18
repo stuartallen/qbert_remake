@@ -1,6 +1,8 @@
 #include "creature.h"
 
 Creature::Creature() { 
+    x_pos = 0;
+    y_pos = 0;
     jump_x = 0;
     jump_y = 0;
     old_row = 0;

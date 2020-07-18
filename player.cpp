@@ -93,7 +93,8 @@ void Player::animate() {
                 coll_sound->play();
             }
         }
-    } else {    }
+    } else {    
+    }
 }
 
 void Player::set_screen_pos() {

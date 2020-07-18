@@ -25,8 +25,8 @@ using namespace std;
 
 class Game {
     private:
-        SDL_Renderer* renderer;
-        SpriteSheet** sprites;
+        SDL_Renderer* renderer = nullptr;
+        SpriteSheet** sprites = nullptr;
 
         int screen_width;
         int screen_height;
@@ -55,7 +55,6 @@ class Game {
         const int SNAKE_BALL_SPRITE_FRAMES = 3;
         const int SNAKE_BALL_SPRITE_SWITCH_TIME = 200;
 
-
         const int NUM_SOUNDS = 8;
         const int QBERT_JUMP_SOUND_ID = 0;
         const int BALL_JUMP_SOUND_ID = 1;
@@ -68,7 +67,7 @@ class Game {
         const int SNAKE_ENEMY_ID = 1;
         const int BALL_ENEMY_ID = 0;
 
-        Board* board;
+        Board* board = nullptr;
         Player* player = nullptr;
         Creature** enemies = nullptr;
         const int NUM_ENEMIES = 2;
@@ -84,12 +83,12 @@ class Game {
         void set_up_platforms();
         void set_up_sounds();
 
-        void handle_key_press(SDL_Event&);
+        
 
-        int snake_timer_start;
+        int snake_timer_start = 0;
         const int SNAKE_WAIT = 7500;
         bool snake_spawn_sound_played = false;
-        int ball_timer_start;
+        int ball_timer_start = 0;
         const int BALL_WAIT = 2000;
         bool ball_spawn_sound_played = false;
         const int MINI_TIMER_WAIT = 500;
@@ -100,7 +99,7 @@ class Game {
         Game(SDL_Renderer*, int, int);
         ~Game();
 
-        void loop();
+        void loop(SDL_Event*);
 
         void update_snake_timer();
         void update_ball_timer();
@@ -108,6 +107,8 @@ class Game {
         bool going();
 
         void check_won_lost();
+
+        void handle_key_press(SDL_Event*);
 };
 
 #endif

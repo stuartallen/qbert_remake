@@ -59,11 +59,6 @@ int main(int argc, char* argv[]) {
     //  Seed random
     srand( time(NULL));
 
-    //  Initialize sounds
-    //Sound** sounds = setUpSounds();
-
-    //Board board;
-    //guiMainLoop(board, sounds);
     test_game();
     return 0;
 }
@@ -76,8 +71,18 @@ void test_game() {
     //Game *game = new Game(renderer, screen_width, screen_height);
     Game game(renderer, screen_width, screen_height);
 
+    int loop_num = 0;
     while(game.going()) {
-        game.loop();
+        cout << "loop num " << loop_num++ << endl;
+        SDL_Event event;
+        cout << "event created" << endl;
+        while (SDL_PollEvent(&event)) {    
+            cout << "event polled" << endl;
+            game.handle_key_press(&event);    
+            cout << "key press handled" << endl;
+        }
+
+        game.loop(&event);
     }
 }
 
