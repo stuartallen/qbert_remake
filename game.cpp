@@ -183,14 +183,14 @@ void Game::loop() {
 
         for(int i = 0; i < NUM_PLATFORMS; i++) {    platforms[i]->animate();    }
         if(!player->on_board()) {   player->animate();  }
-        for(int i = 0; i < NUM_ENEMIES; i++) {
+        for(int i = 0; i < NUM_ENEMIES-2; i++) {
             if(!enemies[i]->on_board()) {  
                 enemies[i]->animate();
             }
         }
         board->animate();
         if(player->on_board()) {    player->animate();  }
-        for(int i = 0; i < NUM_ENEMIES; i++) {
+        for(int i = 0; i < NUM_ENEMIES-2; i++) {
             if(enemies[i]->on_board()) {   
                 enemies[i]->animate();
             }
