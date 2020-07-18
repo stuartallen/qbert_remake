@@ -63,10 +63,10 @@ void Snake::animate(bool moving) {
                 for(int i = 1; i < 4; i++) {
                     if(dists[i] <= dists[min_dir]) { min_dir = i;   }
                 }
-                if(min_dir == 0) {  move(1,0); }
-                else if(min_dir == 1) { move(0,1); }
-                else if(min_dir == 2) { move(-1,0);  }
-                else {  move(0,-1);  }
+                if(min_dir == 0) {  move(1,0); set_sprite_dir(SpriteSheet::BR);}
+                else if(min_dir == 1) { move(0,1); set_sprite_dir(SpriteSheet::BL);}
+                else if(min_dir == 2) { move(-1,0); set_sprite_dir(SpriteSheet::TL); }
+                else {  move(0,-1); set_sprite_dir(SpriteSheet::TR); }
             } else {
                 ball->set_spawned_true();
                 row = ball->get_old_row();

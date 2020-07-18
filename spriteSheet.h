@@ -53,6 +53,7 @@ class SpriteSheet {
                             int tr_x, int tr_y);
 
         void set_dir(int);
+        bool get_has_dir();
         //void operator=(const SpriteSheet&);
 };
 

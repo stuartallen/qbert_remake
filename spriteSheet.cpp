@@ -108,3 +108,5 @@ void SpriteSheet::set_offsets( int bl_x, int bl_y,
 void SpriteSheet::set_dir(int in_dir) {
     if(has_dir) {  cur_dir = in_dir;   }
 }
+
+bool SpriteSheet::get_has_dir() {   return has_dir; }
