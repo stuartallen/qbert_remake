@@ -36,8 +36,8 @@ Game::~Game() {
 }
 
 void Game::set_up_sprites() {
-    sprites = new SpriteSheet*[3];
-    for(int i = 0; i < 3; i++) {
+    sprites = new SpriteSheet*[NUM_SPRITES];
+    for(int i = 0; i < NUM_SPRITES; i++) {
         sprites[i] = new SpriteSheet;
     }
     sprites[QBERT_SPRITE_ID]->set_up(SPRITE_SHEET, 
@@ -71,19 +71,32 @@ void Game::set_up_sprites() {
                                             SNAKE_BALL_SPRITE_FRAMES,
                                             SNAKE_BALL_SPRITE_SWITCH_TIME,
                                             false);
+    sprites[SNAKE_SPRITE_ID]->set_up(   SPRITE_SHEET,
+                                        renderer,
+                                        SNAKE_X_SPRITE_POS,
+                                        SNAKE_Y_SPRITE_POS,
+                                        SNAKE_SPRITE_WIDTH,
+                                        SNAKE_SPRITE_HEIGHT,
+                                        SNAKE_SPRITE_FRAMES,
+                                        SNAKE_SPRITE_SWITCH_TIME,
+                                        true);
+    sprites[SNAKE_SPRITE_ID]->set_offsets(  SNAKE_X_SPRITE_POS, SNAKE_Y_SPRITE_POS,
+                                            SNAKE_X_SPRITE_POS + SNAKE_SPRITE_FRAMES * SNAKE_SPRITE_WIDTH, SNAKE_Y_SPRITE_POS,
+                                            SNAKE_X_SPRITE_POS, SNAKE_Y_SPRITE_POS + SNAKE_BALL_SPRITE_HEIGHT,
+                                            SNAKE_X_SPRITE_POS + SNAKE_SPRITE_FRAMES * SNAKE_SPRITE_WIDTH, SNAKE_Y_SPRITE_POS + SNAKE_BALL_SPRITE_HEIGHT);
 }
 
 void Game::set_up_enemies() {
     enemies = new Creature*[NUM_ENEMIES];
 
-    Ball* redball = new Ball(board, sprites[1]);
+    Ball* redball = new Ball(board, sprites[SNAKE_SPRITE_ID]);
     redball->set_renderer(renderer);
     redball->set_jump_sound(sounds[BALL_JUMP_SOUND_ID]);
 
-    Snake* snake = new Snake(board, sprites[2]);
+    Snake* snake = new Snake(board, sprites[SNAKE_BALL_SPRITE_ID]);
     snake->set_renderer(renderer);
     snake->set_player(player);
-    snake->set_snake_sprite(sprites[1]);
+    snake->set_snake_sprite(sprites[SNAKE_BALL_SPRITE_ID]);
     snake->set_jump_sound(sounds[SNAKE_JUMP_SOUND_ID]);
 
     enemies[0] = redball;
@@ -106,7 +119,7 @@ void Game::set_up_platforms() {
 }
 
 void Game::set_up_sounds() {
-    sounds = new Sound*[6];
+    sounds = new Sound*[NUM_SOUNDS];
     sounds[QBERT_JUMP_SOUND_ID] = new Sound(QBERT_JUMP);
     sounds[BALL_JUMP_SOUND_ID] = new Sound(BALL_JUMP);
     sounds[COLLIDE_SOUND_ID] = new Sound(COLLIDE);

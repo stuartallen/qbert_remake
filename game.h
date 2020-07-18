@@ -31,6 +31,8 @@ class Game {
         int screen_width;
         int screen_height;
 
+        const int NUM_SPRITES = 5;
+
         const int QBERT_SPRITE_ID = 0;
         const int QBERT_X_SPRITE_POS = 106;
         const int QBERT_Y_SPRITE_POS = 0;
@@ -55,7 +57,17 @@ class Game {
         const int SNAKE_BALL_SPRITE_FRAMES = 3;
         const int SNAKE_BALL_SPRITE_SWITCH_TIME = 200;
 
-        const int NUM_SOUNDS = 8;
+        const int SNAKE_SPRITE_ID = 3;
+        const int SNAKE_X_SPRITE_POS = 35;
+        const int SNAKE_Y_SPRITE_POS = 136;
+        const int SNAKE_SPRITE_WIDTH = 40;
+        const int SNAKE_SPRITE_HEIGHT = 64;
+        const int SNAKE_SPRITE_FRAMES = 4;
+        const int SNAKE_SPRITE_SWITCH_TIME = 200;
+
+        const int PLAT_SPRITE_ID = 4;
+
+        const int NUM_SOUNDS = 7;
         const int QBERT_JUMP_SOUND_ID = 0;
         const int BALL_JUMP_SOUND_ID = 1;
         const int COLLIDE_SOUND_ID = 2;
