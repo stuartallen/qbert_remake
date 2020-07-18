@@ -20,7 +20,7 @@ Game::Game(SDL_Renderer* in_r, int s_w, int s_h) {
     set_up_platforms();
 
     // the plus one is for the snake when it's in ball form
-    player->set_enemies(enemies, NUM_ENEMIES + 1);
+    player->set_enemies(enemies, NUM_ENEMIES);
     player->set_coll_sound(sounds[COLLIDE_SOUND_ID]);
     player->set_fall_sound(sounds[FALL_SOUND_ID]);
     player->set_platforms(platforms, NUM_PLATFORMS);
@@ -204,6 +204,7 @@ void Game::loop(SDL_Event* event) {
             cout << "player animated (before)" << endl;
         }
         for(int i = 0; i < NUM_ENEMIES; i++) {
+
             if(!enemies[i]->on_board()) {  
                 enemies[i]->animate();
                 cout << "enemy " << i << " animated (before)" << endl;
