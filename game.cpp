@@ -203,7 +203,7 @@ void Game::loop(SDL_Event* event) {
             player->animate();  
             cout << "player animated (before)" << endl;
         }
-        for(int i = 0; i < NUM_ENEMIES; i++) {
+        for(int i = 0; i < NUM_ENEMIES - 2; i++) {
 
             if(!enemies[i]->on_board()) {  
                 enemies[i]->animate();
@@ -217,7 +217,7 @@ void Game::loop(SDL_Event* event) {
             player->animate();  
             cout << "player animated (after)" << endl;
         }
-        for(int i = 0; i < NUM_ENEMIES; i++) {
+        for(int i = 0; i < NUM_ENEMIES - 2; i++) {
             if(enemies[i]->on_board()) {   
                 enemies[i]->animate();
                 cout << "enemy " << i << " animated (after)" << endl;
