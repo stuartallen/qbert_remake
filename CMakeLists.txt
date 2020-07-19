@@ -11,6 +11,8 @@ add_executable(qbert
   spriteSheet.cpp ball.cpp snake.cpp platform.cpp game.cpp
   )
 
+  target_compile_options(qbert PRIVATE -Wall -Wextra)
+
 # ======================================================================
 # SDL2 
 # **** NEED TO DO THIS YOURSELF ****

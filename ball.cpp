@@ -7,6 +7,8 @@ Ball::Ball(Board* in_board, SpriteSheet* in_sprites) {
     spawned = false;
 }
 
+Ball::~Ball() {}
+
 void Ball::spawn() {
     spawned = true;
     if(rand() % 2 == 0) {

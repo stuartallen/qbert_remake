@@ -24,13 +24,14 @@ class Player : public Creature {
         Sound* fall_sound = nullptr;
     public:
         Player(Board*, SpriteSheet*);
+        ~Player() override;
         void set_coll_sound(Sound*);
         void set_fall_sound(Sound*);
         void set_enemies(Creature**, int);
         void set_platforms(Platform**, int);
-        void spawn();
-        void jump();
-        void animate(bool);
+        void spawn() override;
+        void jump() override;
+        void animate(bool) override;
         void set_screen_pos();
         bool get_alive();
 };

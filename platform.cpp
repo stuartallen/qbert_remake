@@ -77,7 +77,7 @@ void Platform::animate() {
         rect.x = x_pos;
         rect.y = y_pos;
         rect.w = 100;
-        rect.h = 100;
+        rect.h = 50;
         sprites->draw(&rect);
     }
 }

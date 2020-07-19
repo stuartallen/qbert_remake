@@ -12,6 +12,8 @@ Player::Player(Board* in_board, SpriteSheet* in_sprites) {
     sprites = in_sprites;
 }
 
+Player::~Player() {}
+
 void Player::set_coll_sound(Sound* in_s) {
     coll_sound = in_s;
 }

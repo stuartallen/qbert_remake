@@ -30,7 +30,11 @@ Game::Game(SDL_Renderer* in_r, int s_w, int s_h) {
 }
 
 Game::~Game() {
+    for(int i = 0; i < NUM_PLATFORMS; i++) {
+        delete platforms[i];
+    }
     delete [] platforms;
+
     delete [] sounds;
     delete [] enemies;
 }
@@ -184,7 +188,7 @@ void Game::check_won_lost() {
     }
 }
 
-void Game::loop(SDL_Event* event) {
+void Game::loop() {
 
         // draw background
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);

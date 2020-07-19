@@ -46,7 +46,7 @@ class Creature {
         //  cannot be virtual
         Creature();
         Creature(Board*, SpriteSheet*);
-        ~Creature();
+        virtual ~Creature();
         
         //  virtual functions
         virtual void spawn() = 0;

@@ -51,10 +51,7 @@ void Snake::animate(bool moving) {
         } else {
             if(transition_timer_done()) {
                 Creature::animate(moving);
-
                 ball->set_off_screen();
-
-                float cur_dist = player_dist();
                 int min_dir = 0;
                 float dists[4] = {player_dist(row + 1, col),
                                 player_dist(row, col + 1),

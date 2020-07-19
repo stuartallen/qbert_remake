@@ -17,7 +17,7 @@ class Snake : public Creature {
         Ball* ball = nullptr;
     public:
         Snake(Board*, SpriteSheet*);
-        ~Snake();
+        ~Snake() override;
         void spawn() override;
 
         void set_snake_sprite(SpriteSheet*);

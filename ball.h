@@ -10,6 +10,7 @@ class Ball : public Creature {
     private:
     public:
         Ball(Board*, SpriteSheet*);
+        ~Ball() override;
         void spawn() override;
         void jump() override;
 

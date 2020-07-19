@@ -71,14 +71,13 @@ void test_game() {
     //Game *game = new Game(renderer, screen_width, screen_height);
     Game game(renderer, screen_width, screen_height);
 
-    int loop_num = 0;
     while(game.going()) {
         SDL_Event event;
         while (SDL_PollEvent(&event)) {    
             game.handle_key_press(&event);    
         }
 
-        game.loop(&event);
+        game.loop();
     }
 }
 

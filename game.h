@@ -104,13 +104,13 @@ class Game {
 
         
 
-        int snake_timer_start = 0;
-        const int SNAKE_WAIT = 7500;
+        int unsigned snake_timer_start = 0;
+        const unsigned int SNAKE_WAIT = 7500;
         bool snake_spawn_sound_played = false;
-        int ball_timer_start = 0;
-        const int BALL_WAIT = 2000;
+        unsigned int ball_timer_start = 0;
+        const unsigned int BALL_WAIT = 2000;
         bool ball_spawn_sound_played = false;
-        const int MINI_TIMER_WAIT = 500;
+        const unsigned int MINI_TIMER_WAIT = 500;
 
         int won_or_lost = 1;
     public:
@@ -118,7 +118,7 @@ class Game {
         Game(SDL_Renderer*, int, int);
         ~Game();
 
-        void loop(SDL_Event*);
+        void loop();
 
         void update_snake_timer();
         void update_ball_timer();
