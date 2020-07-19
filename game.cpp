@@ -34,9 +34,22 @@ Game::~Game() {
         delete platforms[i];
     }
     delete [] platforms;
-
+    for(int i = 0; i < NUM_SOUNDS; i++) {
+        delete sounds[i];
+    }
     delete [] sounds;
+    // -1 for the snakes ball
+    for(int i = 0; i < NUM_ENEMIES - 1; i++) {
+        delete enemies[i];
+    }
+    
     delete [] enemies;
+    for(int i = 0; i < NUM_SPRITES; i++) {
+        delete sprites[i];
+    }
+    delete [] sprites;
+    delete board;
+    
 }
 
 void Game::set_up_sprites() {

@@ -56,7 +56,7 @@ void Player::animate(bool moving) {
             }
             if(transporting) {
                 x_pos = platforms[plat_id]->get_x_pos();
-                y_pos = platforms[plat_id]->get_y_pos();
+                y_pos = platforms[plat_id]->get_y_pos() - board->get_orig_to_on_top()/2;
                 SDL_Rect rect;
                 rect.x = x_pos;
                 rect.y = y_pos;

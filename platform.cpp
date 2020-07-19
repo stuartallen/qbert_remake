@@ -52,14 +52,19 @@ Platform::Platform(Board* in_board, SpriteSheet* in_sprites) {
 }
 
 Platform::~Platform() {
-    //delete board;
+    for(int i = 0; i < 4; i++) {
+        delete bez_pts[i];
+    }
+    delete [] bez_pts;
 }
 
 void Platform::set_loc(int r, int c) {
     row = r;
     col = c;
-    x_pos = board->get_cube_location(row, col)[0];
-    y_pos = board->get_cube_location(row, col)[1];
+    int* pos = board->get_cube_location(row, col);
+    x_pos = pos[0];
+    y_pos = pos[1];
+    delete [] pos;
 }
 
 void Platform::animate() {
@@ -88,7 +93,7 @@ int Platform::get_row() { return row;   }
 int Platform::get_col() { return col;   }
 void Platform::start_moving() {    start_move = true;   }
 
-int Platform::get_x_orig() {    return bez_pts[3][0];   };
-int Platform::get_y_orig() {    return bez_pts[3][1];   };
+int Platform::get_x_orig() {    return bez_pts[3][0];   }
+int Platform::get_y_orig() {    return bez_pts[3][1];   }
 bool Platform::get_moving() {   return moving;  }
 bool Platform::get_start_moving() { return start_move;    }
