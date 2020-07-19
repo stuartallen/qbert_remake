@@ -67,6 +67,12 @@ class Game {
         const int SNAKE_SPRITE_SECOND_LAYER_OFFSET = 40;
 
         const int PLAT_SPRITE_ID = 4;
+        const int PLAT_X_SPRITE_POS = 80;
+        const int PLAT_Y_SPRITE_POS = 1000;
+        const int PLAT_SPRITE_WIDTH = 40;
+        const int PLAT_SPRITE_HEIGHT = 20;
+        const int PLAT_SPRITE_FRAMES = 3;
+        const int PLAT_SPRITE_SWITCH_TIME = 100;
 
         const int NUM_SOUNDS = 7;
         const int QBERT_JUMP_SOUND_ID = 0;

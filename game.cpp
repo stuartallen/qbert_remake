@@ -84,6 +84,15 @@ void Game::set_up_sprites() {
                                             SNAKE_X_SPRITE_POS + SNAKE_SPRITE_FRAMES * SNAKE_SPRITE_WIDTH, SNAKE_Y_SPRITE_POS + SNAKE_BALL_SPRITE_HEIGHT + SNAKE_SPRITE_SECOND_LAYER_OFFSET,
                                             SNAKE_X_SPRITE_POS, SNAKE_Y_SPRITE_POS,
                                             SNAKE_X_SPRITE_POS + SNAKE_SPRITE_FRAMES * SNAKE_SPRITE_WIDTH, SNAKE_Y_SPRITE_POS);
+    sprites[PLAT_SPRITE_ID]->set_up(SPRITE_SHEET,
+                                    renderer,
+                                    PLAT_X_SPRITE_POS,
+                                    PLAT_Y_SPRITE_POS,
+                                    PLAT_SPRITE_WIDTH,
+                                    PLAT_SPRITE_HEIGHT,
+                                    PLAT_SPRITE_FRAMES,
+                                    PLAT_SPRITE_SWITCH_TIME,
+                                    false);
 }
 
 void Game::set_up_enemies() {
@@ -112,8 +121,8 @@ void Game::set_up_qbert() {
 
 void Game::set_up_platforms() {
     platforms = new Platform*[NUM_PLATFORMS];
-    Platform* plat1 = new Platform(board, sprites[1]);
-    Platform* plat2 = new Platform(board, sprites[1]);
+    Platform* plat1 = new Platform(board, sprites[PLAT_SPRITE_ID]);
+    Platform* plat2 = new Platform(board, sprites[PLAT_SPRITE_ID]);
     platforms[0] = plat1;
     platforms[1] = plat2;
 }
