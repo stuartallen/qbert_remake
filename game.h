@@ -61,9 +61,10 @@ class Game {
         const int SNAKE_X_SPRITE_POS = 35;
         const int SNAKE_Y_SPRITE_POS = 136;
         const int SNAKE_SPRITE_WIDTH = 40;
-        const int SNAKE_SPRITE_HEIGHT = 64;
+        const int SNAKE_SPRITE_HEIGHT = 60;
         const int SNAKE_SPRITE_FRAMES = 4;
         const int SNAKE_SPRITE_SWITCH_TIME = 200;
+        const int SNAKE_SPRITE_SECOND_LAYER_OFFSET = 40;
 
         const int PLAT_SPRITE_ID = 4;
 

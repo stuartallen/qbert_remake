@@ -80,10 +80,10 @@ void Game::set_up_sprites() {
                                         SNAKE_SPRITE_FRAMES,
                                         SNAKE_SPRITE_SWITCH_TIME,
                                         true);
-    sprites[SNAKE_SPRITE_ID]->set_offsets(  SNAKE_X_SPRITE_POS, SNAKE_Y_SPRITE_POS,
-                                            SNAKE_X_SPRITE_POS + SNAKE_SPRITE_FRAMES * SNAKE_SPRITE_WIDTH, SNAKE_Y_SPRITE_POS,
-                                            SNAKE_X_SPRITE_POS, SNAKE_Y_SPRITE_POS + SNAKE_BALL_SPRITE_HEIGHT,
-                                            SNAKE_X_SPRITE_POS + SNAKE_SPRITE_FRAMES * SNAKE_SPRITE_WIDTH, SNAKE_Y_SPRITE_POS + SNAKE_BALL_SPRITE_HEIGHT);
+    sprites[SNAKE_SPRITE_ID]->set_offsets(  SNAKE_X_SPRITE_POS, SNAKE_Y_SPRITE_POS + SNAKE_BALL_SPRITE_HEIGHT + SNAKE_SPRITE_SECOND_LAYER_OFFSET,
+                                            SNAKE_X_SPRITE_POS + SNAKE_SPRITE_FRAMES * SNAKE_SPRITE_WIDTH, SNAKE_Y_SPRITE_POS + SNAKE_BALL_SPRITE_HEIGHT + SNAKE_SPRITE_SECOND_LAYER_OFFSET,
+                                            SNAKE_X_SPRITE_POS, SNAKE_Y_SPRITE_POS,
+                                            SNAKE_X_SPRITE_POS + SNAKE_SPRITE_FRAMES * SNAKE_SPRITE_WIDTH, SNAKE_Y_SPRITE_POS);
 }
 
 void Game::set_up_enemies() {
@@ -105,7 +105,7 @@ void Game::set_up_enemies() {
 }
 
 void Game::set_up_qbert() {
-    player = new Player(board, sprites[0]);
+    player = new Player(board, sprites[QBERT_SPRITE_ID]);
     player->set_renderer(renderer);
     player->set_jump_sound(sounds[QBERT_JUMP_SOUND_ID]);
 }
@@ -189,20 +189,24 @@ void Game::loop(SDL_Event* event) {
         if(!player->on_board()) {   
             player->animate(won_or_lost == 1);  
         }
+        
         for(int i = 0; i < NUM_ENEMIES - 1; i++) {
             if(!enemies[i]->on_board()) {  
                 enemies[i]->animate(won_or_lost == 1);
             }
         }
+        
         board->animate();
         if(player->on_board()) { 
             player->animate(won_or_lost == 1);  
         }
+        
         for(int i = 0; i < NUM_ENEMIES - 1; i++) {
             if(enemies[i]->on_board()) {   
                 enemies[i]->animate(won_or_lost == 1);
             }
         }
+        
 
         SDL_RenderPresent(renderer);
 
